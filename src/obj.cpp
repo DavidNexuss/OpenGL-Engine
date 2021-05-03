@@ -106,12 +106,12 @@ MaterialInstanceID createMaterial(aiMesh* mesh,const aiScene* scene)
 {
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    /*
+    
     auto it = ctx.loadedMaterials.find(material);
     if(it != ctx.loadedMaterials.end())
     {
         return it->second;
-    }*/
+    }
 
     vector<Texture> diffuseTextures = loadMaterialTextures(material,aiTextureType_DIFFUSE);
     vector<Texture> specularTextures = loadMaterialTextures(material,aiTextureType_SPECULAR);
