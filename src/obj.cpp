@@ -34,7 +34,7 @@ const static size_t attributesSize[] = {3,3,2,3,3,3};
 struct ObjectContext
 {
     map<string,Texture> loadedTextures;
-    vector<Model> modelGroup;
+    map<aiMaterial*,MaterialInstanceID> loadedMaterials;
     MaterialID materialID;
 };
 
@@ -106,6 +106,13 @@ MaterialInstanceID createMaterial(aiMesh* mesh,const aiScene* scene)
 {
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+    /*
+    auto it = ctx.loadedMaterials.find(material);
+    if(it != ctx.loadedMaterials.end())
+    {
+        return it->second;
+    }*/
+
     vector<Texture> diffuseTextures = loadMaterialTextures(material,aiTextureType_DIFFUSE);
     vector<Texture> specularTextures = loadMaterialTextures(material,aiTextureType_SPECULAR);
     vector<Texture> normalTextures = loadMaterialTextures(material,aiTextureType_NORMALS);
@@ -116,7 +123,7 @@ MaterialInstanceID createMaterial(aiMesh* mesh,const aiScene* scene)
     if(specularTextures.size() > 0) minstance.setTexture(specularTextures[0],1);
     if(normalTextures.size() > 0)   minstance.setTexture(normalTextures[0],2);
 
-    return MaterialInstanceLoader::loadMaterialInstance(minstance);
+    return ctx.loadedMaterials[material] = MaterialInstanceLoader::loadMaterialInstance(minstance);
 }
 Model processMesh(aiMesh* mesh,const aiScene* scene)
 {
@@ -193,9 +200,9 @@ void processNode(aiNode *node, ModelGroup& modelGroup,const aiScene *scene)
 
 ModelGroup loadMeshFromFile(const std::string& path,MaterialID materialID,bool flipUv)
 {
+    ModelGroup modelGroup;
     string fullPath = Directory::objectPrefix + path;
-    
-    ctx = ObjectContext();
+
     ctx.materialID = materialID;
 
     Assimp::Importer importer;
@@ -207,6 +214,8 @@ ModelGroup loadMeshFromFile(const std::string& path,MaterialID materialID,bool f
     }
     string directory = fullPath.substr(0, fullPath.find_last_of('/'));
 
-    processNode(scene->mRootNode,ctx.modelGroup,scene);
-    return ctx.modelGroup;
+    processNode(scene->mRootNode,modelGroup,scene);
+    ctx = ObjectContext();
+
+    return modelGroup;
 }

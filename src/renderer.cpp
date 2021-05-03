@@ -51,20 +51,20 @@ namespace Renderer
         Model skyBox = ModelLoader::createSkyBox();
 
         TextureLoader::skyBoxID = TextureLoader::loadCubemap(TextureData::load({
-                    
+                    /*
             "sky/right.jpg",
             "sky/left.jpg",
             "sky/top.jpg",
             "sky/bottom.jpg",
             "sky/front.jpg",
             "sky/back.jpg"
-            /*
+            */
             "night-skyboxes/SwedishRoyalCastle/posx.jpg",
             "night-skyboxes/SwedishRoyalCastle/negx.jpg",
             "night-skyboxes/SwedishRoyalCastle/posy.jpg",
             "night-skyboxes/SwedishRoyalCastle/negy.jpg",
             "night-skyboxes/SwedishRoyalCastle/posz.jpg",
-            "night-skyboxes/SwedishRoyalCastle/negz.jpg" */ }));
+            "night-skyboxes/SwedishRoyalCastle/negz.jpg" }));
         do{
 
             REGISTER_FRAME();
