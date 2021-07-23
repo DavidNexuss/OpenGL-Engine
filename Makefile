@@ -1,5 +1,5 @@
 GCC = g++
-CFLAGS = -Wall -I lib/
+CFLAGS = -Wall -I lib/ -I src/
 LDFLAGS =
 
 PROGRAM = engine
@@ -10,7 +10,7 @@ IDIR = src
 SDIR = as
 
 LIB = lib
-LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -limgui
+LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -limgui -lpthread
 
 
 OUT = $(BIN)/$(PROGRAM)
