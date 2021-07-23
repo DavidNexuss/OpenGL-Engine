@@ -27,7 +27,6 @@ struct Material
     std::vector<GLuint> uniforms;
     std::vector<MaterialInstanceID> usedInstances;
     
-    std::string materialName;
     std::vector<GLuint> textureUniforms;
 
     bool isSkyboxMaterial = false;

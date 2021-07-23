@@ -8,7 +8,6 @@ using namespace std;
 
 Material::Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const list<string>& uniforms)
 {
-    this->materialName = materialName;
     programID = compileShader(vertexShaderPath.c_str(),fragmentShaderPath.c_str());
     
     if (programID < 0)
@@ -111,6 +110,7 @@ Material Material::createDefaultMaterial()
 {
     return Material(getDefaultFragemntShaderPath(),getDefaultVertexShaderPath(),{});
 }
+
 MaterialID MaterialLoader::debugMaterialID = -1;
 MaterialInstanceID MaterialLoader::debugMaterialInstanceID = -1;
 vector<Material> MaterialLoader::materials;
