@@ -5,6 +5,7 @@
 #include "material_instance.h"
 #include "renderer.h"
 #include "sorted_vector.h"
+#include "id.h"
 
 struct Model
 {
@@ -34,7 +35,7 @@ struct Model
         if (depthMask) glDepthMask(GL_FALSE);
 
         Renderer::useMaterial(materialID);
-        if (materialInstanceID != -1) Renderer::useMaterialInstance(materialInstanceID);
+        if (materialInstanceID != ID::invalid_id) Renderer::useMaterialInstance(materialInstanceID);
 
         Renderer::useMesh(meshID);
         

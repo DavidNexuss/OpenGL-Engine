@@ -2,6 +2,7 @@
 #include "directory.h"
 #include "debug.h"
 #include "load_shader.h"
+#include "id.h"
 
 using namespace std;
 
@@ -44,11 +45,10 @@ void Material::loadShaderUniforms(const list<string>& uniformsList)
     uniforms[UNIFORM_SKYBOX] = glGetUniformLocation(programID,"skybox");
     
     //User uniform lookup
-    size_t i = 0;
     for(const auto& uniform : uniformsList)
     {
         GLuint uniform_location = glGetUniformLocation(programID,uniform.c_str());
-        if(uniform_location == -1)
+        if(uniform_location == ID::invalid_id)
         {
             throw std::runtime_error("Asked uniform not found");
         }
@@ -58,11 +58,11 @@ void Material::loadShaderUniforms(const list<string>& uniformsList)
     
     //TextureLoader uniform lookup
     GLuint location = 0;
-    for (size_t i = 0; i < TextureLoader::maxTextureUnits and location != -1; i++)
+    for (size_t i = 0; i < TextureLoader::maxTextureUnits and location != ID::invalid_id; i++)
     {
         string uniformName = "texture" + to_string(i);
         location = glGetUniformLocation(programID,uniformName.c_str());
-        if(location != -1)
+        if(location != ID::invalid_id)
         {
             textureUniforms.push_back(location);
         }
@@ -87,7 +87,7 @@ void Material::useInstance(MaterialInstanceID materialInstanceID)
 
     for (size_t i = 0; i < textureUniforms.size(); i++)
     {
-        if (instance.assignedTextureUnits[i] != -1)
+        if (instance.assignedTextureUnits[i] != ID::invalid_id)
         {
             TextureLoader::useTexture(instance.assignedTextureUnits[i],i,isSkyboxMaterial ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D);
             glUniform1i(textureUniforms[i],i);

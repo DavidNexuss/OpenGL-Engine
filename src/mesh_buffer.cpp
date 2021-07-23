@@ -21,7 +21,7 @@ size_t MeshBuffer::allocateRegion()
 void MeshBuffer::generateNormals()
 {
     size_t normalsPointer = allocateRegion();
-    for (int i = 0,j = 0; i < vertexCount * vertexStride; i += 3 * vertexStride, j += 9)
+    for (size_t i = 0,j = 0; i < vertexCount * vertexStride; i += 3 * vertexStride, j += 9)
     {
         const glm::vec3 x = *(glm::vec3 *)&meshBuffer[i];
         const glm::vec3 y = *(glm::vec3 *)&meshBuffer[i + vertexStride];
@@ -37,7 +37,7 @@ void MeshBuffer::generateNormals()
 void MeshBuffer::generateTangents()
 {
     size_t tangentsPointer = allocateRegion();
-    for (int i = 0,j = 0; i < vertexCount * vertexStride; i += 3 * vertexStride, j += 9)
+    for (size_t i = 0,j = 0; i < vertexCount * vertexStride; i += 3 * vertexStride, j += 9)
     {
         const glm::vec3 v0 = *(glm::vec3 *)&meshBuffer[i];
         const glm::vec3 v1 = *(glm::vec3 *)&meshBuffer[i + vertexStride];
