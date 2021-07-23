@@ -30,6 +30,7 @@ void loadSpecificMaterials()
     Material light("light",{"shinness"});
 
     MaterialLoader::loadMaterial(light);
+    MaterialLoader::loadMaterial(Material("glass",list<string>()));
     MaterialLoader::debugMaterialID = MaterialLoader::loadMaterial(Material("unshaded",{"shadecolor"}));
     MaterialLoader::debugMaterialInstanceID = MaterialInstanceLoader::loadMaterialInstance(MaterialInstance({vec4(1.0,1.0,1.0,1.0)}));
 
@@ -76,14 +77,12 @@ void loadSpecificWorld()
         Light::load(cube2.transformMatrix[3],vec3(color) * 2.0f);
     }
 
-
+    // ModelLoader::loadModel(loadMeshFromFile("sphere.obj",3,true));
     ModelGroup baby = loadMeshFromFile("baby.obj",2,true);
     baby[0].transformMatrix = glm::scale(mat4(1.0f),vec3(3.0f));
     ModelLoader::loadModel(baby);
 
-    ModelLoader::loadModel(loadMeshFromFile("backpack.obj",2)) /* .apply([](const glm::mat4& matrix){
-        return glm::rotate<float>(matrix,M_PI,vec3(0,1,0));
-    }) */ ;
+    ModelLoader::loadModel(loadMeshFromFile("backpack.obj",2));
     
 }
 
