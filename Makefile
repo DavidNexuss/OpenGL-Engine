@@ -10,7 +10,7 @@ IDIR = src
 SDIR = as
 
 LIB = lib
-LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp $(LIB)/imgui.a
+LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -limgui
 
 
 OUT = $(BIN)/$(PROGRAM)
