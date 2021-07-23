@@ -5,13 +5,10 @@
 
 using namespace std;
 
-Material::Material(const string& materialName,const list<string>& uniforms)
+Material::Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const list<string>& uniforms)
 {
     this->materialName = materialName;
-    string fragmentPath = Directory::materialPrefix + materialName + "_fragment.glsl";
-    string vertexPath = Directory::materialPrefix + materialName + "_vertex.glsl";
-
-    programID = compileShader(vertexPath.c_str(),fragmentPath.c_str());
+    programID = compileShader(vertexShaderPath.c_str(),fragmentShaderPath.c_str());
     
     if (programID < 0)
     {
@@ -20,7 +17,14 @@ Material::Material(const string& materialName,const list<string>& uniforms)
     }
 
     loadShaderUniforms(uniforms);
+
 }
+
+Material::Material(const string& materialName,const list<string>& uniforms) : Material(
+            Directory::materialPrefix + materialName + "_fragment.glsl",
+            Directory::materialPrefix + materialName + "_vertex.glsl",uniforms) { }
+
+Material::Material(const string& materialName) : Material(materialName,{}) { }
 
 void Material::loadShaderUniforms(const list<string>& uniformsList)
 { 
@@ -93,6 +97,20 @@ void Material::useInstance(MaterialInstanceID materialInstanceID)
     if (swap) REGISTER_MATERIAL_INSTANCE_SWAP();
 }
 
+string Material::getDefaultVertexShaderPath() 
+{
+    return string(Directory::materialPrefix) + "default_vertex.glsl";
+}
+
+string Material::getDefaultFragemntShaderPath()
+{
+    return string(Directory::materialPrefix) + "default_fragemnt.glsl";
+}
+
+Material Material::createDefaultMaterial()
+{
+    return Material(getDefaultFragemntShaderPath(),getDefaultVertexShaderPath(),{});
+}
 MaterialID MaterialLoader::debugMaterialID = -1;
 MaterialInstanceID MaterialLoader::debugMaterialInstanceID = -1;
 vector<Material> MaterialLoader::materials;

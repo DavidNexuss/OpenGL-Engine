@@ -22,7 +22,7 @@ enum UniformBasics
 struct Material
 {
     const static int scene_uniform_count = UNIFORM_COUNT;
-    
+
     GLuint programID;
     std::vector<GLuint> uniforms;
     std::vector<MaterialInstanceID> usedInstances;
@@ -32,15 +32,15 @@ struct Material
 
     bool isSkyboxMaterial = false;
 
+    Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const std::list<std::string>& uniforms);
     Material(const std::string& materialName,const std::list<std::string>& uniforms);
+    Material(const std::string& materialName);
 
     void loadShaderUniforms(const std::list<std::string>& uniformsList);
-
     bool addTexture(Texture textureID,int textureUnit);
-
     void useInstance(MaterialInstanceID materialInstanceID);
 
-    inline void bind()
+    inline void bind() const 
     {
         glUseProgram(programID);
         if (uniforms[UNIFORM_SKYBOX] != GL_INVALID_INDEX)
@@ -49,11 +49,15 @@ struct Material
         }
     }
     
-    inline bool isLightSensitive() const
+    inline bool isLightSensitive() const 
     {
         return uniforms[UNIFORM_LIGHTPOSITION] != GL_INVALID_INDEX;
     }
 
+    static std::string getDefaultFragemntShaderPath();
+    static std::string getDefaultVertexShaderPath();
+
+    static Material createDefaultMaterial();
 };
 
 #define UNIFORM_SET MaterialLoader::get_current()->uniforms
