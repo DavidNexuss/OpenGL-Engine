@@ -11,10 +11,11 @@ VRP Util::getSceneVRP()
     for (size_t i = 0; i <models.size(); i++)
     {
         Mesh& mesh = MeshLoader::meshes[ModelLoader::models[i].meshID];
+        auto buffer = mesh.getMeshBuffer();
         for (size_t j = 0; j < mesh.vertexCount; j++)
         {
-            size_t b = mesh.vertexStride * j;
-            vec4 v = models[i].transformMatrix * vec4(mesh.meshPtr()[b],mesh.meshPtr()[b + 1],mesh.meshPtr()[b + 2],1.0);
+            size_t b = buffer->getVertexStride() * j;
+            vec4 v = models[i].transformMatrix * vec4(buffer->raw()[b],buffer->raw()[b + 1],buffer->raw()[b + 2],1.0);
             
             min.x = glm::min(v.x,min.x);
             min.y = glm::min(v.y,min.y);

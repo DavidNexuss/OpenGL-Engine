@@ -22,12 +22,13 @@ class MeshBuffer
 
     void bindRegions() const;
     
-    inline void bufferData() const
-    {
+    inline void bufferData() const {
         glBufferData(GL_ARRAY_BUFFER, meshBuffer.size() * sizeof(GLfloat), (const GLfloat*)&meshBuffer[0], GL_STATIC_DRAW);
     }
-    inline const GLfloat* raw() const
-    {
+    inline const GLfloat* raw() const {
         return (const GLfloat*)&meshBuffer[0];
+    }
+    inline size_t getVertexStride() const {
+        return vertexStride;
     }
 };
