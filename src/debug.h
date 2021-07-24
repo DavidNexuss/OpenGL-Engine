@@ -60,6 +60,11 @@ class Debug
             GLsizei length,
             const GLchar *message,
             const void *userParam);
+    
+    static int getFrameRate() 
+    {
+        return int(1.0f / (currentTime - lastTime));
+    }
 };
 
 #define DEBUG
