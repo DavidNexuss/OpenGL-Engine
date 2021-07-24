@@ -46,7 +46,7 @@ namespace GUI
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
-
+	
     namespace Util
     {
         void displayEditor(TextEditor& editor)

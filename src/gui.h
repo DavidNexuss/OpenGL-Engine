@@ -15,4 +15,8 @@ namespace GUI {
     void addUnit(const GuiUnit& unit);
     void dispose();
     void render();
+
+    inline bool isMouseOnGUI() {
+        return ImGui::GetIO().WantCaptureMouse;
+    }
 };
