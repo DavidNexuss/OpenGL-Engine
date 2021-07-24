@@ -2,13 +2,15 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 #include <ImGuiColorTextEdit/TextEditor.h>
+#include <directory.h>
 
 using namespace std;
 namespace GUI
 {
     vector<GuiUnit> guiUnits;
+	vector<ImFont*> fonts;
     
-    void initialize(GLFWwindow* window,const char* glsl_version)
+	void initialize(GLFWwindow* window,const char* glsl_version)
     {
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -46,7 +48,27 @@ namespace GUI
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
-	
+
+	size_t loadFont(const string& fontname,int size) 
+	{
+		return loadFont(fontname,size,fonts.size());
+	}
+
+    size_t loadFont(const string& fontname,int size,size_t id)
+	{
+		string path = (string(Directory::fontPaths) + fontname);
+		ImFont* pFont = ImGui::GetIO().Fonts->AddFontFromFileTTF(path.c_str(), size);
+		if (id == fonts.size()) fonts.push_back(pFont);
+		else fonts[id] = pFont;
+
+		return id;
+	}
+    
+	void setFont(int id)
+	{
+		ImGui::PushFont(fonts[id]);
+	}
+
     namespace Util
     {
         void displayEditor(TextEditor& editor)

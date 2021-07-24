@@ -4,7 +4,6 @@
 #include "renderer.h"
 #include "camera.h"
 #include "viewport.h"
-#include "gui.h"
 
 namespace Engine
 {

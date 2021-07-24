@@ -1,5 +1,5 @@
 #include "viewport.h"
-#include <gui.h>
+#include <gui/gui.h>
 
 namespace Viewport
 {
@@ -12,7 +12,7 @@ namespace Viewport
 void Viewport::cursor_position_callback(Window* window, double x, double y)
 {
     if(GUI::isMouseOnGUI()) return;
-    
+
     xpos = x;
     ypos = y;
 }

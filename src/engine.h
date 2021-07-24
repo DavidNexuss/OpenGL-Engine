@@ -4,7 +4,7 @@
 #include <material.h>
 #include <texture.h>
 #include <renderer.h>
-#include <gui.h>
+#include <gui/gui.h>
 #include <io/resource.h>
 #include <mesh.h>
 #include <mesh_builder.h>
