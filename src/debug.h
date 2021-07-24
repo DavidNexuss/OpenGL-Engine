@@ -84,5 +84,7 @@ class Debug
     #define REGISTER_MATERIAL_INSTANCE_SWAP()
     #define REGISTER_UNIFORM_FLUSH()
     #define REGISTER_LIGHT_FLUSH()
+    #define REGISTER_WATCH_ADDITION()
+    #define REGISTER_WATCH_REMOVAL()
     #define LOG_FRAME()
 #endif

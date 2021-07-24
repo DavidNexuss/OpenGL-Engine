@@ -2,7 +2,7 @@ GCC = g++
 CFLAGS = -Wall -I lib/ -I src/
 LDFLAGS =
 
-PROGRAM = engine
+PROGRAM = engine.a
 
 ODIR = obj
 BIN = bin
@@ -10,7 +10,7 @@ IDIR = src
 SDIR = as
 
 LIB = lib
-LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -limgui -lpthread
+LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -lpthread lib/imgui.a lib/imgui_editor.a
 
 
 OUT = $(BIN)/$(PROGRAM)
@@ -35,6 +35,12 @@ lib/imgui.a: $(IMGUI_OBJS)
 	ar rvs $@ $^
 
 lib/imgui/%.o: lib/imgui/%.cpp
+	$(GCC) $(CFLAGS) -c $^ -o $@
+
+lib/imgui_editor.a: lib/ImGuiColorTextEdit/TextEditor.o
+	ar rvs $@ $^
+
+lib/ImGuiColorTextEdit/%.o: lib/ImGuiColorTextEdit/%.cpp
 	$(GCC) $(CFLAGS) -c $^ -o $@
 
 $(ODIR):
@@ -70,8 +76,8 @@ $(SDIR)/%.s : $(IDIR)/**/**/%.cpp
 	$(GCC) -g -o $@ $(CFLAGS) -S $^
 
 $(OUT): $(OBJECTS) $(LIBS)
-	$(GCC) $(LDFLAGS) -o $(BIN)/$(PROGRAM) $(OBJECTS) $(LIBS)
-
+	ar rvs $@ $^
+	
 clean: $(ODIR) $(BIN)
 	rm -rf $(ODIR)
 	rm -rf $(BIN)

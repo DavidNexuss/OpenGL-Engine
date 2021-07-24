@@ -53,6 +53,7 @@ class Resource
 
     const std::vector<uint8_t>& asBuffer();
     const char* asString();
+    
     bool valid();
     void onReload();
     void use();

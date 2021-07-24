@@ -33,6 +33,8 @@ class Uniform
     UNIFORMS_LIST(UNIFORMS_CONSTRUCTOR)
     #undef UNIFORMS_CONSTRUCTOR
 
+    inline void update() { forward = true; }
+    
 };
 
 using UniformID = size_t;

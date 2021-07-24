@@ -18,5 +18,6 @@ namespace Renderer
         glDrawArrays(GL_TRIANGLES,0,MeshLoader::meshes[MeshLoader::currentMesh].vertexCount);
     }
     
-    int renderLoop(Window* window);
+    void configureRenderer();
+    void render();
 }

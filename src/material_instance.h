@@ -30,6 +30,12 @@ class MaterialInstance
         assignedTextureUnits[unitID] = textureID;
     }
 
+    inline Uniform& getUniform(int index)
+    {
+        uniformValues[index].update();
+        return uniformValues[index];
+    }
+
 };
 
 using MaterialInstanceID = size_t;
