@@ -13,8 +13,10 @@ namespace TextureLoader
 
     extern std::vector<TextureData> texturesData;                                // textureID -> textureData
     extern std::vector<GLuint> glTexturesIds;                                    // textureID -> GLID
-    extern std::vector<Texture> texturesUnits;             // slot -> textureID
+    extern std::vector<Texture> texturesUnits;                                   // slot -> textureID
     extern Texture skyBoxID;
+    
+    extern Texture loadInternalTexture(GLuint textID);
     extern Texture loadTexture(const TextureData& textureData);
     extern Texture loadCubemap(const std::vector<TextureData> &cubemaps);
 

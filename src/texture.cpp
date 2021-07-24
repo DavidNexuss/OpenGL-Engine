@@ -6,6 +6,12 @@ std::vector<GLuint> TextureLoader::glTexturesIds;                               
 std::vector<Texture> TextureLoader::texturesUnits(TextureLoader::maxTextureUnits,-1);             // slot -> textureID
 Texture TextureLoader::skyBoxID;
 
+Texture TextureLoader::loadInternalTexture(GLuint textId)
+{
+    glTexturesIds.push_back(textId);
+    return glTexturesIds.size() - 1;
+}
+
 Texture TextureLoader::loadTexture(const TextureData& textureData)
 {
     if (!textureData.data ) return -1;
@@ -21,8 +27,7 @@ Texture TextureLoader::loadTexture(const TextureData& textureData)
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData.width, textureData.height, 0, format, GL_UNSIGNED_BYTE, textureData.data);
     glGenerateMipmap(GL_TEXTURE_2D);
     texturesData.push_back(textureData);
-    glTexturesIds.push_back(texId);
-    return texturesData.size() - 1;
+    return TextureLoader::loadInternalTexture(texId);
 }
 
 Texture TextureLoader::loadCubemap(const vector<TextureData> &cubemaps)
@@ -43,6 +48,5 @@ Texture TextureLoader::loadCubemap(const vector<TextureData> &cubemaps)
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                      0, GL_RGB, cubemaps[i].width, cubemaps[i].height, 0, cubemaps[i].format(), GL_UNSIGNED_BYTE, cubemaps[i].data);
     }
-    glTexturesIds.push_back(texId);
-    return glTexturesIds.size() - 1;
+    return TextureLoader::loadInternalTexture(texId);
 }
