@@ -1,4 +1,5 @@
 #include <io/resource.h>
+#include <io/inotify/inotify_handler.h>
 
 ResourceHeader ResourceHeader::fromFile(const std::string& filepath)
 {
@@ -8,13 +9,26 @@ ResourceHeader ResourceHeader::fromFile(const std::string& filepath)
     return header;
 }
 
-ResourceHeader& ResourceHeader::makeAsync()
+ResourceHeader& ResourceHeader::makeSync()
 {
-    asyncLoading = true;
+    asyncLoading = false;
     return *this;
 }
 
+ResourceHeader& ResourceHeader::makeWatch()
+{
+    fileWatch = true;
+    return *this;
+}
+
+void Resource::createWatch() {
+    inotify = InotifyHandler::addInotify(header.path);
+    inotify->resource = this;
+}
+
 void Resource::load() {
+    if(inotify == nullptr && header.fileWatch) createWatch();
+
     data = std::async(header.asyncLoading ? std::launch::async : std::launch::deferred ,[&](){
         std::shared_ptr<ResourceBuffer> data = std::make_shared<ResourceBuffer>();
         
@@ -32,6 +46,12 @@ void Resource::acquire() {
     if(data.valid()) {
         readyData = data.get();
     }
+}
+
+void Resource::use()
+{
+    acquire();
+    reload(readyData->buffer);
 }
 
 Resource::Resource(const ResourceHeader& _header) {
@@ -57,4 +77,15 @@ const char* Resource::asString() {
 bool Resource::valid() {
     acquire();
     return readyData->valid();
+}
+
+namespace ResourceManager
+{
+    std::map<std::string,ResourcePtr> loadedResources;
+    
+    ResourcePtr loadFromFile(const std::string& path) {
+        auto it = loadedResources.find(path);
+        if(it != loadedResources.end()) return it->second;
+        return loadedResources[path] = std::make_shared<Resource>(ResourceHeader::fromFile(path));
+    }
 }

@@ -13,6 +13,9 @@ int Debug::missingUniforms = 0;
 float Debug::lastTime = 0.0f;
 float Debug::currentTime = 0.0f;
 
+int Debug::watchesAdded = 0;
+int Debug::watchesRemoved = 0;
+
 void Debug::glError(GLenum source,
         GLenum type,
         GLuint id,

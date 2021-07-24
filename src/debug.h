@@ -16,6 +16,9 @@ class Debug
     static float lastTime;
     static float currentTime;
 
+    static int watchesAdded;
+    static int watchesRemoved;
+
     inline static void reset()
     {
         materialSwaps = 0;
@@ -28,7 +31,7 @@ class Debug
         currentTime = glfwGetTime();
     }
 
-    inline static void print()
+    inline static void print(int verbose_level = 0)
     {
 
         std::cerr << "Frame debug information: " << std::endl;
@@ -42,6 +45,12 @@ class Debug
         std::cerr << "----" << std::endl;
         std::cerr << "Missing uniforms: " << missingUniforms << std::endl;
         std::cerr << "----" << std::endl;
+
+        if(verbose_level > 0) {
+            std::cerr << "Watches added " << watchesAdded << std::endl;
+            std::cerr << "Watches removed " << watchesRemoved << std::endl;
+            std::cerr << "Total Watches: " << (watchesAdded - watchesRemoved) << std::endl;
+        }
     }
 
     static void glError(GLenum source,
@@ -63,6 +72,8 @@ class Debug
     #define REGISTER_MATERIAL_INSTANCE_SWAP() Debug::materialInstanceSwaps++
     #define REGISTER_UNIFORM_FLUSH() Debug::uniformsFlush++
     #define REGISTER_LIGHT_FLUSH() Debug::lightFlush++
+    #define REGISTER_WATCH_ADDITION() Debug::watchesAdded++
+    #define REGISTER_WATCH_REMOVAL() Debug::watchesRemoved++
     #define LOG_FRAME() Debug::print()    
 #else
     #define REGISTER_MISSED_UNIFORM()
