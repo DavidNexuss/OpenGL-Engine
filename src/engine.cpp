@@ -8,6 +8,16 @@
 namespace Engine
 {
     Window *window;
+    float currentFrameTime = 0.0f;
+    float lastFrameTime = 0.0f;
+    float deltaTime = 0.0f;
+
+    inline void computeDeltaTime()
+    {
+        lastFrameTime = currentFrameTime;
+        currentFrameTime = glfwGetTime();
+        deltaTime = currentFrameTime - lastFrameTime;
+    }
 }
 
 void Engine::createEngine(const std::string& titleName)
@@ -30,11 +40,13 @@ int Engine::renderLoop()
     Renderer::configureRenderer();
     do
     {
-        REGISTER_FRAME();
+        computeDeltaTime();
+        REGISTER_FRAME(currentFrameTime);
+        
         glViewport(0,0,Viewport::screenWidth,Viewport::screenHeight);
 
         Renderer::render();
-        GUI::render();
+        GUI::render(deltaTime);
         
         LOG_FRAME();
 

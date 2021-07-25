@@ -8,18 +8,18 @@ using namespace std;
 namespace GUI
 {
     vector<GuiUnit> guiUnits;
+	list<TemporalUnit> temporalUnits;
 	vector<ImFont*> fonts;
     
 	void initialize(GLFWwindow* window,const char* glsl_version)
     {
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
-        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-        //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
-        //ImGui::StyleColorsClassic();
 
         // Setup Platform/Renderer backends
         ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -35,7 +35,11 @@ namespace GUI
     {
         guiUnits.push_back(unit);
     }
-    void render()
+	void addTemporalUnit(float targetTime,const GuiUnit& temporalUnit)
+	{
+		temporalUnits.push_back({temporalUnit,targetTime});
+	}
+    void render(float deltaTime)
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -44,6 +48,12 @@ namespace GUI
         for (size_t i = 0; i < guiUnits.size(); i++) {
             guiUnits[i]();
         }
+
+		for(auto it = temporalUnits.begin(); it != temporalUnits.end(); ++it) {
+			it->targetTime -= deltaTime;
+			if(it->targetTime < 0) it = temporalUnits.erase(it);
+			else it->unit();
+		}
         
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

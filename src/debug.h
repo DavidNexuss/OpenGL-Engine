@@ -19,7 +19,7 @@ class Debug
     static int watchesAdded;
     static int watchesRemoved;
 
-    inline static void reset()
+    inline static void reset(float time)
     {
         materialSwaps = 0;
         materialInstanceSwaps = 0;
@@ -28,7 +28,7 @@ class Debug
         uniformsFlush = 0;
         lightFlush = 0;
         lastTime = currentTime;
-        currentTime = glfwGetTime();
+        currentTime = time;
     }
 
     inline static void print(int verbose_level = 0)
@@ -70,7 +70,7 @@ class Debug
 #define DEBUG
 #ifdef DEBUG 
     #define REGISTER_MISSED_UNIFORM() Debug::missingUniforms++
-    #define REGISTER_FRAME() Debug::reset()
+    #define REGISTER_FRAME(time) Debug::reset(time)
     #define REGISTER_MATERIAL_SWAP() Debug::materialSwaps++
     #define REGISTER_MESH_SWAP() Debug::meshSwaps++
     #define REGISTER_TEXTURE_SWAP() Debug::textureSwaps++
@@ -82,7 +82,7 @@ class Debug
     #define LOG_FRAME() Debug::print()    
 #else
     #define REGISTER_MISSED_UNIFORM()
-    #define REGISTER_FRAME()
+    #define REGISTER_FRAME(time)
     #define REGISTER_MATERIAL_SWAP()
     #define REGISTER_MESH_SWAP()
     #define REGISTER_TEXTURE_SWAP()
