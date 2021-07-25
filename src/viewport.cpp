@@ -26,6 +26,8 @@ void Viewport::framebuffer_size_callback(Window* window, int width, int height)
 
 void Viewport::scroll_callback(Window* window, double xoffset, double yoffset)
 {
+    if(GUI::isMouseOnGUI()) return;
+
     scrollX = xoffset;
     scrollY = yoffset;
 }
