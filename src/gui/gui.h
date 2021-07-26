@@ -5,25 +5,44 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 #include "window.h"
-
-using GuiUnit = std::function<void(void)>;
-
+#include <memory>
 namespace GUI {
 
-    struct TemporalUnit
+    struct GuiUnitFunctionObject
     {
-        GuiUnit unit;
+        bool doRender = true;
+        virtual bool core() = 0;
+        virtual bool render() = 0;
+    };
+    using GuiUnitFunction = std::shared_ptr<GuiUnitFunctionObject>;
+
+    template <typename T>
+    struct GuiUnitFunctionLambda : public GuiUnitFunctionObject
+    {
+        T t;
+        GuiUnitFunctionLambda(T t) : t(std::move(t)) { }
+        virtual bool render() override { return t(); }
+        virtual bool core() override { return t(); }
+    };
+    template <class T>
+    auto makeSimpleGuiUnit(T &&t) {
+        return GuiUnitFunction(new GuiUnitFunctionLambda<std::decay_t<T>>{std::forward<T>(t)});
+    }
+
+
+    struct GuiUnit
+    {
+        GuiUnitFunction func;
         float targetTime;
+        bool temporal;
     };
 
     extern std::vector<GuiUnit> guiUnits;
-    extern std::list<TemporalUnit> temporalUnits;
-
     extern std::vector<ImFont*> fonts;
 
     void initialize(GLFWwindow* window,const char* glsl_version);
-    void addUnit(const GuiUnit& unit);
-    void addTemporalUnit(float targetTime,const GuiUnit& unit);
+    void addUnit(const GuiUnitFunction& unit);
+    void addUnit(float targetTime,const GuiUnitFunction& unit);
     void dispose();
     void render(float deltaTime);
 

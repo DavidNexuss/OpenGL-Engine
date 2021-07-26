@@ -37,11 +37,11 @@ void InotifyContext::check(map<int,Inotify*>& map,list<Inotify*>& reload)
     for (p = eventBuffer; p < eventBuffer + numEvents;)
     {
         event = (struct inotify_event*)p;
-        if(event->mask & (IN_MODIFY | IN_DELETE_SELF | IN_CLOSE_WRITE)) {
+        if(event->mask & (IN_MODIFY | IN_DELETE_SELF | IN_CLOSE_WRITE | IN_MOVE_SELF)) {
             reload.push_back(map[event->wd]);
         }
 
-        if(event->mask & (IN_DELETE_SELF))
+        if(event->mask & (IN_DELETE_SELF | IN_MOVE_SELF))
         {
             Inotify* inotify = map[event->wd];
             map.erase(inotify->watcherID);

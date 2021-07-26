@@ -2,7 +2,6 @@
 #include "material_instance.h"
 #include "texture.h"
 #include <vector>
-#include <list>
 
 enum UniformBasics
 {
@@ -19,11 +18,13 @@ enum UniformBasics
     UNIFORM_COUNT
 };
 
-struct Material
+struct Material : public EngineComponent
 {
     const static int scene_uniform_count = UNIFORM_COUNT;
 
     GLuint programID;
+
+    std::vector<std::string> uniformNames;
     std::vector<GLuint> uniforms;
     std::vector<MaterialInstanceID> usedInstances;
     
@@ -31,11 +32,11 @@ struct Material
 
     bool isSkyboxMaterial = false;
 
-    Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const std::list<std::string>& uniforms);
-    Material(const std::string& materialName,const std::list<std::string>& uniforms);
+    Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const std::vector<std::string>& uniforms);
+    Material(const std::string& materialName,const std::vector<std::string>& uniforms);
     Material(const std::string& materialName);
 
-    void loadShaderUniforms(const std::list<std::string>& uniformsList);
+    void loadShaderUniforms(const std::vector<std::string>& uniformsList);
     bool addTexture(Texture textureID,int textureUnit);
     void useInstance(MaterialInstanceID materialInstanceID);
 

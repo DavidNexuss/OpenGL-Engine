@@ -10,7 +10,7 @@ IDIR = src
 SDIR = as
 
 LIB = lib
-LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -lpthread lib/imgui.a lib/imgui_editor.a
+LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -lpthread lib/imgui.a lib/imgui_editor.a lib/stb_image.a
 
 
 OUT = $(BIN)/$(PROGRAM)
@@ -41,6 +41,13 @@ lib/imgui_editor.a: lib/ImGuiColorTextEdit/TextEditor.o
 	ar rvs $@ $^
 
 lib/ImGuiColorTextEdit/%.o: lib/ImGuiColorTextEdit/%.cpp
+	$(GCC) $(CFLAGS) -c $^ -o $@
+
+
+lib/stb_image.a: lib/stb_image/stb_image.o
+	ar rvs $@ $^
+
+lib/stb_image/%.o: lib/stb_image/%.cpp
 	$(GCC) $(CFLAGS) -c $^ -o $@
 
 $(ODIR):

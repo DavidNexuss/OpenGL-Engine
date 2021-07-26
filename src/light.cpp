@@ -6,11 +6,17 @@ namespace Light
 
     std::vector<glm::vec3> lightsPositions;
     std::vector<glm::vec3> lightsColor;
+    std::vector<LightComponent> lightsComponent;
+
+    std::string defaultLightName() {
+        return "Light " + lightsComponent.size();
+    }
 
     LightID load(glm::vec3 pos,glm::vec3 color)
     {
         lightsPositions.push_back(pos);
         lightsColor.push_back(color);
+        lightsComponent.push_back({defaultLightName()});
         flushUniforms = true;
         return lightsPositions.size() - 1;
     }

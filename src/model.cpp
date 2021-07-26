@@ -9,7 +9,7 @@ bool Model::lastcullFrontFace = false;
 
 Model ModelLoader::createSkyBox()
 {
-    Material cubeMap_material("cubemap",list<string>());
+    Material cubeMap_material("cubemap",vector<string>());
     cubeMap_material.isSkyboxMaterial = true;
 
     MaterialID cubeMap_material_id = MaterialLoader::loadMaterial(cubeMap_material);

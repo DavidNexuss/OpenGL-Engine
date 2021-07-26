@@ -48,6 +48,7 @@ namespace InotifyHandler
                 }
 
                 for(const auto& watcher : reload) {
+                    watcher->resource->load();
                     watcher->resource->use();
                 }
             }

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Material::Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const list<string>& uniforms)
+Material::Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const vector<string>& uniforms)
 {
     programID = compileShader(vertexShaderPath.c_str(),fragmentShaderPath.c_str());
     
@@ -20,14 +20,15 @@ Material::Material(const std::string& fragmentShaderPath,const std::string& vert
 
 }
 
-Material::Material(const string& materialName,const list<string>& uniforms) : Material(
+Material::Material(const string& materialName,const vector<string>& uniforms) : Material(
             Directory::materialPrefix + materialName + "_fragment.glsl",
             Directory::materialPrefix + materialName + "_vertex.glsl",uniforms) { }
 
 Material::Material(const string& materialName) : Material(materialName,{}) { }
 
-void Material::loadShaderUniforms(const list<string>& uniformsList)
+void Material::loadShaderUniforms(const vector<string>& uniformsList)
 { 
+    this->uniformNames = uniformsList;
     for(int i = 0; i < scene_uniform_count; i++)
         uniforms.push_back(-1);
 

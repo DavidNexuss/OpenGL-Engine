@@ -3,9 +3,10 @@
 #include "core.h"
 #include "uniform.h"
 #include "texture.h"
+#include "engine_component.h"
 #include <vector>
 
-class MaterialInstance
+class MaterialInstance : public EngineComponent
 {
     public:
     std::vector<Uniform> uniformValues;

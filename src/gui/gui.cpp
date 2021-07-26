@@ -1,14 +1,15 @@
 #include "gui.h"
+#include "gui_ext.h"
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 #include <ImGuiColorTextEdit/TextEditor.h>
 #include <directory.h>
+#include <limits>
 
 using namespace std;
 namespace GUI
 {
     vector<GuiUnit> guiUnits;
-	list<TemporalUnit> temporalUnits;
 	vector<ImFont*> fonts;
     
 	void initialize(GLFWwindow* window,const char* glsl_version)
@@ -31,13 +32,13 @@ namespace GUI
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
-    void addUnit(const GuiUnit& unit)
+    void addUnit(const GuiUnitFunction& unit)
     {
-        guiUnits.push_back(unit);
+		guiUnits.push_back({unit,0.0,false});
     }
-	void addTemporalUnit(float targetTime,const GuiUnit& temporalUnit)
+	void addUnit(float targetTime,const GuiUnitFunction& temporalUnit)
 	{
-		temporalUnits.push_back({temporalUnit,targetTime});
+		guiUnits.push_back({temporalUnit,targetTime,true});
 	}
     void render(float deltaTime)
     {
@@ -45,14 +46,19 @@ namespace GUI
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        for (size_t i = 0; i < guiUnits.size(); i++) {
-            guiUnits[i]();
-        }
-
-		for(auto it = temporalUnits.begin(); it != temporalUnits.end(); ++it) {
-			it->targetTime -= deltaTime;
-			if(it->targetTime < 0) it = temporalUnits.erase(it);
-			else it->unit();
+		auto it = guiUnits.begin();
+		while(it != guiUnits.end())
+		{
+			if(!it->temporal) it->func->render();
+			else{
+				if(it->targetTime < 0) {
+					it = guiUnits.erase(it);
+					continue;
+				}
+				it->func->render();
+				it->targetTime -= deltaTime;
+			}
+			++it;
 		}
         
         ImGui::Render();
@@ -150,5 +156,10 @@ namespace GUI
 		    editor.Render("TextEditor");
 		    ImGui::End();
         }
+
+		void openResource(TextEditor& editor,Resource& resource)
+		{
+			editor.SetText(resource.asString());
+		}
     }
 }

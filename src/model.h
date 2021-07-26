@@ -6,8 +6,10 @@
 #include "renderer.h"
 #include "sorted_vector.h"
 #include "id.h"
+#include "engine_component.h"
+#include <string>
 
-struct Model
+struct Model : public EngineComponent
 {
     MeshID meshID;
     MaterialID materialID;
@@ -75,7 +77,9 @@ namespace ModelLoader
     extern sorted_vector<Model> models;
     static inline ModelID loadModel(const Model& model)
     {
-        return models.push_back(model);
+        Model m = model;
+        m.name = std::to_string(models.native().size());
+        return models.push_back(m);
     }
 
     static inline Model& get(ModelID modelID) { return models[modelID]; }

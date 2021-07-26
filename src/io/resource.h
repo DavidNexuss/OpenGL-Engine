@@ -42,7 +42,6 @@ class Resource
     std::shared_ptr<ResourceBuffer> readyData;
     std::shared_ptr<Inotify> inotify;
 
-    void load();
     void acquire();
     void createWatch();
 
@@ -57,6 +56,7 @@ class Resource
     bool valid();
     void onReload();
     void use();
+    void load();
 };
 
 using ResourcePtr = std::shared_ptr<Resource>;

@@ -3,10 +3,16 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <gui/gui_ext.h>
+#include <gui/debug/gui_debug.h>
 
 using namespace std;
 using namespace glm;
 
+
+float randf()
+{
+    return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+}
 void loadSpecificWorld()
 {
     
@@ -14,6 +20,14 @@ void loadSpecificWorld()
     cube.materialID = MaterialLoader::loadMaterial(Material("base",{"surface"}));
     cube.materialInstanceID = MaterialInstanceLoader::loadMaterialInstance(MaterialInstance({glm::vec3(0.4)}));
     ModelLoader::loadModel(cube);
+
+    for (int i = 0; i < 100; i++)
+    {
+        Model cube2 = cube;
+        cube2.transformMatrix = glm::translate(glm::mat4(1.0),glm::vec3(randf(),randf(),randf()) * 30.0f);
+        ModelLoader::loadModel(cube2);
+    }
+    
 }
 
 
@@ -22,20 +36,15 @@ int main(int argc, char** argv)
     Engine::createEngine("Test Engine");
     loadSpecificWorld();
 
-    GUI::addUnit([](){
-        auto& uniform = MaterialInstanceLoader::get(0).getUniform(0);
-        ImGui::Begin("Choose color");
-        ImGui::ColorPicker3("Surface color",&uniform.VEC3.x);
-        ImGui::End();
+    GUI::addUnit(GUI::makeSimpleGuiUnit([](){
+        bool window = true;
+        GUI::Debug::renderModelTree(&window);
+        GUI::Debug::renderMaterialInstanceMenu(0,0,nullptr);
+        return true;
+    }));
 
-    });
 
-    TextEditor editor;
-    GUI::addUnit([&](){
-        GUI::Util::displayEditor(editor);
-    });
-
-    GUI::addUnit([&](){
+    GUI::addUnit(2.0,GUI::makeSimpleGuiUnit([&](){
         
         static int corner = 0;
         ImGuiIO& io = ImGui::GetIO();
@@ -59,9 +68,21 @@ int main(int argc, char** argv)
         {
             ImGui::Text((string("Framerate:  ") + to_string(Debug::getFrameRate())).c_str());
         }
-    ImGui::End();
+        ImGui::End();
+        return true;
+    }));
+/*
+    TextEditor editor;
+    Resource text = Resource(ResourceHeader::fromFile("res/materials/base_vertex.glsl").makeWatch(),[&](const vector<uint8_t>& data){
+        editor.SetText((const char*)data.data());
     });
-
+    
+    GUI::Util::openResource(editor,text);
+    GUI::addUnit(GUI::makeSimpleGuiUnit([&](){
+        GUI::Util::displayEditor(editor);
+        return true;
+    }));
+*/
   //  GUI::setFont(GUI::loadFont("mono.ttf",16));
     return Engine::renderLoop();
 }
