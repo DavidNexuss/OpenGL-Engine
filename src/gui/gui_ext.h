@@ -7,7 +7,9 @@ namespace GUI
 {
     namespace Util
     {
-        void displayEditor(TextEditor& editor);
+        void renderEditor(TextEditor& editor);
         void openResource(TextEditor& editor,Resource& resource);
+
+        ImGuiWindowFlags overlayFlags(int corner,float x,float y);
     }
 }
