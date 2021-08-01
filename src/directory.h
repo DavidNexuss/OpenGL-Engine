@@ -1,4 +1,5 @@
 #pragma once 
+#include <string>
 
 namespace Directory
 {
@@ -6,4 +7,7 @@ namespace Directory
     extern const char* materialPrefix;
     extern const char* objectPrefix;
     extern const char* fontPaths;
+
+    std::string getDefaultVertexShaderPath();
+    std::string getDefaultFragemntShaderPath();
 }

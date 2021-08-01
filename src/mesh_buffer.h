@@ -3,6 +3,11 @@
 #include "core.h"
 #include "mesh_region.h"
 
+/**
+ * @brief class for programmatic mesh generation
+ * 
+ */
+
 class MeshBuffer
 {
 

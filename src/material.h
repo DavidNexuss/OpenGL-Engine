@@ -40,22 +40,17 @@ struct Material : public EngineComponent
     bool addTexture(Texture textureID,int textureUnit);
     void useInstance(MaterialInstanceID materialInstanceID);
 
-    inline void bind() const 
-    {
+    inline void bind() const {
         glUseProgram(programID);
         if (uniforms[UNIFORM_SKYBOX] != GL_INVALID_INDEX)
         {
             glUniform1i(uniforms[UNIFORM_SKYBOX],TextureLoader::bindSkyBox());
         }
     }
-    
-    inline bool isLightSensitive() const 
-    {
+
+    inline bool isLightSensitive() const {
         return uniforms[UNIFORM_LIGHTPOSITION] != GL_INVALID_INDEX;
     }
-
-    static std::string getDefaultFragemntShaderPath();
-    static std::string getDefaultVertexShaderPath();
 
     static Material createDefaultMaterial();
 };

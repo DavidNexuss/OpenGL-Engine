@@ -7,8 +7,6 @@
 using namespace glm;
 using namespace std;
 
-const float zoomDamping = 0.6f;
-
 Camera::Camera()
 {
     fov = 90.0f;
@@ -29,7 +27,6 @@ Camera::Camera()
 
 void Camera::update()
 {
-
     if(type == THIRDPERSON || type == THIRDPERSON_MANUAL)
     {
         projectionMatrix = glm::perspective(glm::radians(fov * zoomFactor), float(Viewport::screenWidth) / float(Viewport::screenHeight), 0.1f, 500.0f);

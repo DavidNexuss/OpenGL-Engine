@@ -83,7 +83,6 @@ namespace ModelLoader
     }
 
     static inline Model& get(ModelID modelID) { return models[modelID]; }
-
     static inline const std::vector<Model>& native() { return models.native(); }
     
     Model createSkyBox();

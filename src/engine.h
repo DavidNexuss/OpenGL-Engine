@@ -12,7 +12,19 @@
 
 namespace Engine
 {
+    /**
+     * @brief Initializes all engine systems and creates window
+     */ 
     void createEngine(const std::string& windowTitle);
+    
+    /**
+     * @brief dispose all engine resources
+     */
     void disposeEngine();
+
+    /**
+     * @brief enters in renderLoop
+     * @returns 0 if exited successfully
+     */
     int renderLoop();
 };

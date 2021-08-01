@@ -10,7 +10,7 @@ void MaterialInstance::useUniform(UniformID id,GLuint glUniformID)
         return;
     }
 
-    uniformValues[id].forward = false;
+    uniformValues[id].dirty = false;
     const Uniform& current = uniformValues[id];
 
     switch(current.type)

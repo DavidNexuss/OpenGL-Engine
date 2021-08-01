@@ -14,6 +14,10 @@ enum UniformType
     #undef UNIFORMS_ENUMS_DECLARATION
 };
 
+/**
+ * @class Uniform
+ * @brief Variant class to hold a GLSL uniform internal type
+ */
 
 class Uniform
 {
@@ -26,14 +30,14 @@ class Uniform
     };
 
     UniformType type;
-    bool forward;
+    bool dirty;
 
     Uniform() { }
-    #define UNIFORMS_CONSTRUCTOR(v,T) constexpr Uniform(const T& _##v) : v(_##v),type(UniformType::v),forward(true) { }
+    #define UNIFORMS_CONSTRUCTOR(v,T) constexpr Uniform(const T& _##v) : v(_##v),type(UniformType::v),dirty(true) { }
     UNIFORMS_LIST(UNIFORMS_CONSTRUCTOR)
     #undef UNIFORMS_CONSTRUCTOR
 
-    inline void update() { forward = true; }
+    inline void setDirty() { dirty = true; }
     
 };
 

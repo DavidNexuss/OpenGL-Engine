@@ -28,9 +28,10 @@ void Engine::createEngine(const std::string& titleName)
     glfwSetFramebufferSizeCallback(window, Viewport::framebuffer_size_callback);
     glfwSetScrollCallback(window, Viewport::scroll_callback);
 
-    glDebugMessageCallback(&Debug::glError,NULL);
-    glEnable(GL_DEBUG_OUTPUT);
-    
+    #ifdef DEBUG
+        glDebugMessageCallback(&Debug::glError,NULL);
+        glEnable(GL_DEBUG_OUTPUT);
+    #endif
     CameraLoader::loadCamera(Camera());
     GUI::initialize(window,"#version 100");
 }

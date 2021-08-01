@@ -6,6 +6,11 @@
 #include <vector>
 
 using Texture = size_t;
+
+/**
+ * @brief Manages OpenGL textures and its identifiers
+ */
+
 namespace TextureLoader
 {
     const static size_t maxTextureUnits = 16;

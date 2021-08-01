@@ -77,11 +77,12 @@ void Material::useInstance(MaterialInstanceID materialInstanceID)
     // Set all uniforms
     for (size_t i = 0; i < usedInstances.size(); i++)
     {
-        if (usedInstances[i] != materialInstanceID || instance.uniformValues[i].forward)
+        bool different;
+        if ((different = usedInstances[i] != materialInstanceID) || instance.uniformValues[i].dirty)
         {
             usedInstances[i] = materialInstanceID;
             MaterialInstanceLoader::materialInstances[materialInstanceID].useUniform(i,uniforms[i + scene_uniform_count]);
-            swap = true;
+            swap |= different;
         }
     }
 
@@ -97,19 +98,9 @@ void Material::useInstance(MaterialInstanceID materialInstanceID)
     if (swap) REGISTER_MATERIAL_INSTANCE_SWAP();
 }
 
-string Material::getDefaultVertexShaderPath() 
-{
-    return string(Directory::materialPrefix) + "default_vertex.glsl";
-}
-
-string Material::getDefaultFragemntShaderPath()
-{
-    return string(Directory::materialPrefix) + "default_fragemnt.glsl";
-}
-
 Material Material::createDefaultMaterial()
 {
-    return Material(getDefaultFragemntShaderPath(),getDefaultVertexShaderPath(),{});
+    return Material(Directory::getDefaultFragemntShaderPath(),Directory::getDefaultVertexShaderPath(),{});
 }
 
 MaterialID MaterialLoader::debugMaterialID = -1;

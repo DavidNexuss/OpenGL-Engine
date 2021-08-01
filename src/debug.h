@@ -2,6 +2,10 @@
 #include <iostream>
 #include "core.h"
 
+/**
+ * @class Debug
+ * @brief Serves as global interface for collecting debug data generated for every frame and displaying them
+ */ 
 class Debug
 {
     public:
@@ -67,7 +71,8 @@ class Debug
     }
 };
 
-#define DEBUG
+// Debug macros, disable debug logging in non debug builds
+//#define DEBUG
 #ifdef DEBUG 
     #define REGISTER_MISSED_UNIFORM() Debug::missingUniforms++
     #define REGISTER_FRAME(time) Debug::reset(time)

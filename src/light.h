@@ -4,6 +4,13 @@
 
 using LightID = size_t;
 using LightComponent = EngineComponent;
+
+/**
+ * @brief Manages pointlights.
+ * Lights are stored in continous memory using a vector of positions and a vector of colors, this allows us to send all data directly to shaders using
+ * a uniform vector. In consequence Lights are managed using an ECS aproach.
+ */
+
 namespace Light
 {
     const static size_t maxLights = 6;

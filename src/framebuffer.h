@@ -1,5 +1,9 @@
 #include <glfw.h>
 
+/**
+ * @class OpenGL frameBuffer abstraction to draw screen to a buffer using native or scaled resolution
+ */
+
 class FrameBuffer
 {
     GLuint fb = 0,color = 0,depth = 0;
@@ -26,6 +30,7 @@ class FrameBuffer
     void dispose_framebuffer();
     float get_render_width() const;
     float get_render_height() const;
+    
     void set_resize_factor(float factor);
     float get_resize_factor() const;
 
