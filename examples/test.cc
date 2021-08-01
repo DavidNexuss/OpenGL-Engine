@@ -20,14 +20,6 @@ void loadSpecificWorld()
     cube.materialID = MaterialLoader::loadMaterial(Material("base",{"surface"}));
     cube.materialInstanceID = MaterialInstanceLoader::loadMaterialInstance(MaterialInstance({glm::vec3(0.4)}));
     ModelLoader::loadModel(cube);
-
-    for (int i = 0; i < 100; i++)
-    {
-        Model cube2 = cube;
-        cube2.transformMatrix = glm::translate(glm::mat4(1.0),glm::vec3(randf(),randf(),randf()) * 30.0f);
-        ModelLoader::loadModel(cube2);
-    }
-    
 }
 
 
