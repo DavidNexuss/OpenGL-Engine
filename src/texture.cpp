@@ -4,7 +4,6 @@ using namespace std;
 std::vector<TextureData> TextureLoader::texturesData;                                // textureID -> textureData
 std::vector<GLuint> TextureLoader::glTexturesIds;                                    // textureID -> GLID
 std::vector<Texture> TextureLoader::texturesUnits(TextureLoader::maxTextureUnits,-1);             // slot -> textureID
-Texture TextureLoader::skyBoxID;
 
 Texture TextureLoader::loadInternalTexture(GLuint textId)
 {

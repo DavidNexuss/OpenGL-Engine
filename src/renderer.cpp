@@ -3,17 +3,19 @@
 #include "model.h"
 #include "viewport.h"
 #include "light.h"
+#include "world_material.h"
 
 namespace Renderer
 {
     size_t currentFrame = 1;
+    WorldMaterial worldMaterial;
 
     void useMaterial(MaterialID materialID)
     {
         if(MaterialLoader::currentMaterial != materialID)
         {
             MaterialLoader::currentMaterial = materialID;
-            MaterialLoader::materials[MaterialLoader::currentMaterial].bind();
+            MaterialLoader::materials[MaterialLoader::currentMaterial].bind(worldMaterial);
             REGISTER_MATERIAL_SWAP();
         }
 
@@ -58,10 +60,14 @@ namespace Renderer
         
         Scene::time += 0.1;
         Scene::update();
-//        skyBox.draw();
+        
+        //Render world
+        if(worldMaterial.skyBox.model != ID::invalid_id)
+            ModelLoader::models[worldMaterial.skyBox.model].draw();
 
-        for(size_t i = 0; i < models.size(); i++)
-        {
+        for(size_t i = 0; i < models.size(); i++) {
+            if(!models[i].enabled) continue;
+
             models[i].process();
             models[i].draw();
         }

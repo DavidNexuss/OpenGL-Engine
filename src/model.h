@@ -18,6 +18,7 @@ struct Model : public EngineComponent
     glm::mat4 transformMatrix;
     glm::mat3 normalMatrix;
 
+    bool enabled = true;
     bool depthMask = false;
     bool cullFrontFace = false;
 
@@ -70,8 +71,6 @@ struct Model : public EngineComponent
 
     }
 };
-
-using ModelID = size_t;
 namespace ModelLoader
 {
     extern sorted_vector<Model> models;
@@ -85,5 +84,5 @@ namespace ModelLoader
     static inline Model& get(ModelID modelID) { return models[modelID]; }
     static inline const std::vector<Model>& native() { return models.native(); }
     
-    Model createSkyBox();
+    ModelID createSkyBox(const std::vector<TextureData>& paths);
 };

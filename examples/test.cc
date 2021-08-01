@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <gui/gui_ext.h>
+#include <light.h>
 #include <gui/debug/gui_debug.h>
 
 using namespace std;
@@ -17,9 +18,24 @@ void loadSpecificWorld()
 {
     
     Model cube = Model(MeshLoader::loadMesh(MeshBuilder::createPrimitiveMesh(MeshBuilder::Cube,true)));
-    cube.materialID = MaterialLoader::loadMaterial(Material("base",{"surface"}));
-    cube.materialInstanceID = MaterialInstanceLoader::loadMaterialInstance(MaterialInstance({glm::vec3(0.4)}));
+    cube.materialID = MaterialLoader::loadMaterial(Material("ushader_untextured",
+    {"ka","kd","ks","specularStrength","reflectionStrength"}));
+
+    cube.materialInstanceID = MaterialInstanceLoader::loadMaterialInstance(
+        MaterialInstance({
+            glm::vec3(0.4),glm::vec3(0.4),glm::vec3(0.4),0.2f,0.2f
+        }));
     ModelLoader::loadModel(cube);
+    Light::load(glm::vec3(8.0),glm::vec3(1.0,1.0,1.0));
+
+    Renderer::worldMaterial.setSkyBox(TextureLoader::loadCubemap({
+        TextureData("canyon/right.png"),
+        TextureData("canyon/left.png"),
+        TextureData("canyon/top.png"),
+        TextureData("canyon/bottom.png"),
+        TextureData("canyon/front.png"),
+        TextureData("canyon/back.png")
+    }));
 }
 
 
@@ -42,24 +58,17 @@ int main(int argc, char** argv)
         static bool p_open = true;
         if(p_open)
         {
-            ImGui::Begin("FrameRate",&p_open, GUI::Util::overlayFlags(0,100,0));
+            ImGui::Begin("FrameRate",&p_open, GUI::Extra::overlayFlags(0,100,0));
             ImGui::Text((string("Framerate:  ") + to_string(Debug::getFrameRate())).c_str());
             ImGui::End();
         }
         return true;
     }));
 /*
-    TextEditor editor;
-    Resource text = Resource(ResourceHeader::fromFile("res/materials/base_vertex.glsl").makeWatch(),[&](const vector<uint8_t>& data){
-        editor.SetText((const char*)data.data());
-    });
-    
-    GUI::Util::openResource(editor,text);
-    GUI::addUnit(GUI::makeSimpleGuiUnit([&](){
-        GUI::Util::displayEditor(editor);
-        return true;
-    }));
+    GUI::Extra::EngineTextEditor* editor = new GUI::Extra::EngineTextEditor();
+    Resource text = Resource(ResourceHeader::fromFile("res/materials/base_vertex.glsl"));
+    editor->openResource(text);
+    GUI::addUnit(std::shared_ptr<GUI::GuiUnitObject>((GUI::GuiUnitObject*)editor));
 */
-  //  GUI::setFont(GUI::loadFont("mono.ttf",16));
     return Engine::renderLoop();
 }

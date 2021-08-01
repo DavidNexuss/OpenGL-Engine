@@ -14,12 +14,10 @@ using Texture = size_t;
 namespace TextureLoader
 {
     const static size_t maxTextureUnits = 16;
-    const static size_t skyBoxTextureUnit = 15;
 
     extern std::vector<TextureData> texturesData;                                // textureID -> textureData
     extern std::vector<GLuint> glTexturesIds;                                    // textureID -> GLID
     extern std::vector<Texture> texturesUnits;                                   // slot -> textureID
-    extern Texture skyBoxID;
     
     extern Texture loadInternalTexture(GLuint textID);
     extern Texture loadTexture(const TextureData& textureData);
@@ -35,11 +33,5 @@ namespace TextureLoader
             glBindTexture(mode,glTextureID);
             REGISTER_TEXTURE_SWAP();
         }
-    }
-
-    inline static size_t bindSkyBox()
-    {
-        useTexture(skyBoxID,skyBoxTextureUnit,GL_TEXTURE_CUBE_MAP);
-        return skyBoxTextureUnit;
     }
 };

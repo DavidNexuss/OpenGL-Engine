@@ -1,6 +1,7 @@
 #pragma once
 #include "material_instance.h"
 #include "texture.h"
+#include "world_material.h"
 #include <vector>
 
 enum UniformBasics
@@ -21,6 +22,7 @@ enum UniformBasics
 struct Material : public EngineComponent
 {
     const static int scene_uniform_count = UNIFORM_COUNT;
+    const static size_t skyBoxTextureUnit = 15;
 
     GLuint programID;
 
@@ -40,14 +42,21 @@ struct Material : public EngineComponent
     bool addTexture(Texture textureID,int textureUnit);
     void useInstance(MaterialInstanceID materialInstanceID);
 
-    inline void bind() const {
+    inline void bind(const WorldMaterial& world) const {
         glUseProgram(programID);
-        if (uniforms[UNIFORM_SKYBOX] != GL_INVALID_INDEX)
+
+        //Enable skybox if present and compatible with shader
+        Texture skyTexture;
+        if ((skyTexture = world.getSkyBoxTexture()) && isSkyBoxSensitive())
         {
-            glUniform1i(uniforms[UNIFORM_SKYBOX],TextureLoader::bindSkyBox());
+            TextureLoader::useTexture(skyTexture,skyBoxTextureUnit,GL_TEXTURE_CUBE_MAP);
+            glUniform1i(uniforms[UNIFORM_SKYBOX],skyBoxTextureUnit);
         }
     }
-
+    
+    inline bool isSkyBoxSensitive() const {
+        return uniforms[UNIFORM_SKYBOX] != GL_INVALID_INDEX;
+    }
     inline bool isLightSensitive() const {
         return uniforms[UNIFORM_LIGHTPOSITION] != GL_INVALID_INDEX;
     }
