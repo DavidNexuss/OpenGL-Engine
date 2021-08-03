@@ -5,6 +5,10 @@
 #include <gui/gui_ext.h>
 #include <light.h>
 #include <gui/debug/gui_debug.h>
+#include <mesh/sphereMesh.h>
+#include <obj.h>
+#include <mesh_builder.h>
+
 
 using namespace std;
 using namespace glm;
@@ -23,9 +27,9 @@ void loadSpecificWorld()
 
     cube.materialInstanceID = MaterialInstanceLoader::loadMaterialInstance(
         MaterialInstance({
-            glm::vec3(0.4),glm::vec3(0.4),glm::vec3(0.4),0.2f,0.2f
+            glm::vec3(0.4),glm::vec3(0.4),glm::vec3(0.4),50.0f,0.2f
         }));
-    ModelLoader::loadModel(cube);
+    //ModelLoader::loadModel(cube);
     Light::load(glm::vec3(8.0),glm::vec3(1.0,1.0,1.0));
 
     Renderer::worldMaterial.setSkyBox(TextureLoader::loadCubemap({
@@ -36,12 +40,28 @@ void loadSpecificWorld()
         TextureData("canyon/front.png"),
         TextureData("canyon/back.png")
     }));
+/*
+    MeshID sphere = MeshLoader::loadMesh(SphereMesh(2.0,64,64).generateMesh());
+    Model sphereModel = Model(sphere,cube.materialID);
+    sphereModel.materialInstanceID = cube.materialInstanceID;
+    ModelLoader::loadModel(sphereModel);
+*/
+    ModelGroup donut = loadMeshFromFile("donut.obj",cube.materialID);
+    donut[0].materialInstanceID = cube.materialInstanceID;
+    ModelLoader::loadModel(donut);
 }
 
 
 int main(int argc, char** argv)
 {
-    Engine::createEngine("Test Engine");
+    Engine::createEngine("Test Engine",{
+        .mssaLevel = 4,
+        .openglMajorVersion = 4,
+        .openglMinorVersion = 5,
+        .windowWidth = 1024,
+        .windowHeight = 768
+    });
+
     loadSpecificWorld();
 
     GUI::addUnit(GUI::makeSimpleGuiUnit([](){
@@ -52,7 +72,7 @@ int main(int argc, char** argv)
     }));
 
 
-    GUI::addUnit(2.0,GUI::makeSimpleGuiUnit([&](){
+    GUI::addUnit(GUI::makeSimpleGuiUnit([&](){
         
         static int corner = 0;
         static bool p_open = true;
