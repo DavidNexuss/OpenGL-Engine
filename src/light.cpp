@@ -26,9 +26,9 @@ namespace Light
         Material& mat = MaterialLoader::materials[MaterialLoader::currentMaterial];
         if (flushUniforms && mat.isLightSensitive())
         {
-            glUniform3fv(mat.uniforms[UNIFORM_LIGHTPOSITION],lightsPositions.size(),(GLfloat*)&lightsPositions[0]);
-            glUniform3fv(mat.uniforms[UNIFORM_LIGHTCOLOR],lightsColor.size(),(GLfloat*)&lightsColor[0]);
-            glUniform1i(mat.uniforms[UNIFORM_LIGHTCOUNT],lightsColor.size());
+            glUniform3fv(mat.uniforms[Standard::uLightPosition],lightsPositions.size(),(GLfloat*)&lightsPositions[0]);
+            glUniform3fv(mat.uniforms[Standard::uLightColor],lightsColor.size(),(GLfloat*)&lightsColor[0]);
+            glUniform1i(mat.uniforms[Standard::uLightCount],lightsColor.size());
             
             REGISTER_LIGHT_FLUSH();
         }

@@ -1,12 +1,20 @@
 #include "engine.h"
 #include "core.h"
-#include "window.h"
 #include "renderer.h"
 #include "camera.h"
 #include "viewport.h"
+#include <gui/gui.h>
+#include "debug.h"
+#include "window.h"
+#include <iostream>
+
+std::string EngineConfiguration::glslVersion() const {
+    return "#version " + std::to_string(openglMajorVersion) + std::to_string(openglMinorVersion) + "0 ";
+}
 
 namespace Engine
 {
+    EngineConfiguration configuration;
     Window *window;
     float currentFrameTime = 0.0f;
     float lastFrameTime = 0.0f;
@@ -20,9 +28,15 @@ namespace Engine
     }
 }
 
-void Engine::createEngine(const std::string& titleName)
+void Engine::createEngine(const std::string& titleName,const EngineConfiguration& configuration)
 {
-    window = createWindow(titleName);
+    Engine::configuration = configuration;
+    window = createWindow(titleName,
+    configuration.windowWidth,
+    configuration.windowHeight,
+    configuration.openglMajorVersion,
+    configuration.openglMinorVersion,
+    configuration.mssaLevel);
     
     glfwSetCursorPosCallback(window, Viewport::cursor_position_callback);
     glfwSetFramebufferSizeCallback(window, Viewport::framebuffer_size_callback);
@@ -33,12 +47,14 @@ void Engine::createEngine(const std::string& titleName)
         glEnable(GL_DEBUG_OUTPUT);
     #endif
     CameraLoader::loadCamera(Camera());
-    GUI::initialize(window,"#version 100");
+    GUI::initialize(window,configuration.glslVersion().c_str());
 }
 
 int Engine::renderLoop()
 {
-    Renderer::configureRenderer();
+    RenderConfiguration config;
+    config.useMssa = Engine::configuration.mssaLevel > 0;
+    Renderer::configureRenderer(config);
     do
     {
         computeDeltaTime();

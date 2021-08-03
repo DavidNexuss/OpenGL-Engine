@@ -2,28 +2,12 @@
 #include "material_instance.h"
 #include "texture.h"
 #include "world_material.h"
+#include "standard.h"
+#include "core.h"
 #include <vector>
-
-enum UniformBasics
-{
-    UNIFORM_PROJECTION_MATRIX = 0,
-    UNIFORM_VIEW_MATRIX,
-    UNIFORM_TRANSFORM_MATRIX,
-    UNIFORM_NORMAL_MATRIX,
-    UNIFORM_TIME,
-    UNIFORM_LIGHTCOLOR,
-    UNIFORM_LIGHTPOSITION,
-    UNIFORM_LIGHTCOUNT,
-    UNIFORM_VIEW_POS,
-    UNIFORM_SKYBOX,
-    UNIFORM_COUNT
-};
 
 struct Material : public EngineComponent
 {
-    const static int scene_uniform_count = UNIFORM_COUNT;
-    const static size_t skyBoxTextureUnit = 15;
-
     GLuint programID;
 
     std::vector<std::string> uniformNames;
@@ -49,16 +33,16 @@ struct Material : public EngineComponent
         Texture skyTexture;
         if ((skyTexture = world.getSkyBoxTexture()) && isSkyBoxSensitive())
         {
-            TextureLoader::useTexture(skyTexture,skyBoxTextureUnit,GL_TEXTURE_CUBE_MAP);
-            glUniform1i(uniforms[UNIFORM_SKYBOX],skyBoxTextureUnit);
+            TextureLoader::useTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP);
+            glUniform1i(uniforms[Standard::uSkyBox],Standard::tSkyBox);
         }
     }
     
     inline bool isSkyBoxSensitive() const {
-        return uniforms[UNIFORM_SKYBOX] != GL_INVALID_INDEX;
+        return uniforms[Standard::uSkyBox] != GL_INVALID_INDEX;
     }
     inline bool isLightSensitive() const {
-        return uniforms[UNIFORM_LIGHTPOSITION] != GL_INVALID_INDEX;
+        return uniforms[Standard::uLightPosition] != GL_INVALID_INDEX;
     }
 
     static Material createDefaultMaterial();

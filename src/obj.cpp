@@ -5,17 +5,19 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
+#include "standard.h"
 using namespace std;
+
+//Planning to deprecate....
 
 enum AttributeEnum
 {
-    A_POSITION = 1,
-    A_COLOR =    1 << 1,
-    A_UV =       1 << 2,
-    A_NORMAL =   1 << 3,
-    A_TANGENT =  1 << 4,
-    A_BITANGENT = 1 << 5
+    A_POSITION = 1 << Standard::aPosition,
+    A_COLOR =    1 << Standard::aColor,
+    A_UV =       1 << Standard::aUV,
+    A_NORMAL =   1 << Standard::aNormal,
+    A_TANGENT =  1 << Standard::aTangent,
+    A_BITANGENT = 1 << Standard::aBiTangent
 };
 
 const int attributesCount = 6;
@@ -39,15 +41,8 @@ struct ObjectContext
 };
 
 ObjectContext ctx;
-/*
-in vec3 aVertex;
-in vec3 aColor;
-in vec2 aUv;
-in vec3 aNormal;
-in vec3 aTangent;
-*/
 
-MeshID createMesh(const vector<Vertex>& vertices,const vector<size_t>& indices,const vector<size_t> attributes)
+MeshID createMesh(const vector<Vertex>& vertices,const vector<unsigned int>& indices,const vector<size_t> attributes)
 {
     GLuint VAO,VBO,EBO;
 
@@ -61,7 +56,7 @@ MeshID createMesh(const vector<Vertex>& vertices,const vector<size_t>& indices,c
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);  
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(size_t), 
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), 
                  &indices[0], GL_STATIC_DRAW);
 
     size_t offset = 0;
@@ -80,7 +75,8 @@ MeshID createMesh(const vector<Vertex>& vertices,const vector<size_t>& indices,c
 
     glBindVertexArray(0);
 
-    Mesh mesh(VAO,VBO,EBO,vertices.size());
+    Mesh mesh(VAO,VBO,EBO,indices.size());
+    mesh.indexed = true;
     return MeshLoader::loadMesh(mesh);
 }
 vector<Texture> loadMaterialTextures(aiMaterial *mat,aiTextureType type)
@@ -167,7 +163,7 @@ Model processMesh(aiMesh* mesh,const aiScene* scene)
         }
     }
 
-    vector<size_t> indices;
+    vector<unsigned int> indices;
     for (size_t i = 0; i < mesh->mNumFaces; i++)
     {
         const aiFace& face = mesh->mFaces[i];

@@ -72,7 +72,7 @@ class Debug
 };
 
 // Debug macros, disable debug logging in non debug builds
-//#define DEBUG
+#define DEBUG
 #ifdef DEBUG 
     #define REGISTER_MISSED_UNIFORM() Debug::missingUniforms++
     #define REGISTER_FRAME(time) Debug::reset(time)

@@ -7,6 +7,8 @@
 struct Mesh {
     GLuint vao,vbo,ebo;
     size_t vertexCount;
+    bool indexed = false;
+
     std::shared_ptr<MeshBuffer> meshBuffer;
 
     Mesh(const GLfloat* raw_meshBuffer,size_t _vertexCount,size_t _vertexStride) : vertexCount(_vertexCount),

@@ -65,14 +65,14 @@ void Camera::update()
 
 void Camera::flush()
 {
-        glUniformMatrix4fv(UNIFORMS(UNIFORM_PROJECTION_MATRIX),1,false,&projectionMatrix[0][0]);
-        glUniform3fv(UNIFORMS(UNIFORM_VIEW_POS),1,&invViewMatrix[3][0]);
+        glUniformMatrix4fv(UNIFORMS(Standard::uProjectionMatrix),1,false,&projectionMatrix[0][0]);
+        glUniform3fv(UNIFORMS(Standard::uViewPos),1,&invViewMatrix[3][0]);
         
         if(CURRENT_MATERIAL().isSkyboxMaterial)
         {
             mat4 skyView = mat4(mat3(viewMatrix));
-            glUniformMatrix4fv(UNIFORMS(UNIFORM_VIEW_MATRIX),1,false,&skyView[0][0]);
-        }else glUniformMatrix4fv(UNIFORMS(UNIFORM_VIEW_MATRIX),1,false,&viewMatrix[0][0]);
+            glUniformMatrix4fv(UNIFORMS(Standard::uViewMatrix),1,false,&skyView[0][0]);
+        }else glUniformMatrix4fv(UNIFORMS(Standard::uViewMatrix),1,false,&viewMatrix[0][0]);
 }
 
 std::vector<Camera> CameraLoader::cameras;

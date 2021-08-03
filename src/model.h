@@ -1,12 +1,11 @@
 #pragma once
 #include "mesh.h"
-
 #include "material.h"
 #include "material_instance.h"
 #include "renderer.h"
 #include "sorted_vector.h"
-#include "id.h"
 #include "engine_component.h"
+#include "standard.h"
 #include <string>
 
 struct Model : public EngineComponent
@@ -38,22 +37,22 @@ struct Model : public EngineComponent
         if (depthMask) glDepthMask(GL_FALSE);
 
         Renderer::useMaterial(materialID);
-        if (materialInstanceID != ID::invalid_id) Renderer::useMaterialInstance(materialInstanceID);
+        if (materialInstanceID != Standard::invalidId) Renderer::useMaterialInstance(materialInstanceID);
 
         Renderer::useMesh(meshID);
         
-        if(UNIFORMS(UNIFORM_TRANSFORM_MATRIX) != GL_INVALID_INDEX)
+        if(UNIFORMS(Standard::uTransformMatrix) != GL_INVALID_INDEX)
         {
-            glUniformMatrix4fv(UNIFORMS(UNIFORM_TRANSFORM_MATRIX),1,false,&transformMatrix[0][0]);
+            glUniformMatrix4fv(UNIFORMS(Standard::uTransformMatrix),1,false,&transformMatrix[0][0]);
         }
 
-        if (UNIFORMS(UNIFORM_NORMAL_MATRIX) != GL_INVALID_INDEX)
+        if (UNIFORMS(Standard::uNormalMatrix) != GL_INVALID_INDEX)
         {
             normalMatrix = glm::transpose(glm::inverse(transformMatrix));
-            glUniformMatrix3fv(UNIFORMS(UNIFORM_NORMAL_MATRIX),1,false,&normalMatrix[0][0]);
+            glUniformMatrix3fv(UNIFORMS(Standard::uNormalMatrix),1,false,&normalMatrix[0][0]);
         }
 
-        Renderer::drawMesh();
+        Renderer::drawMesh(MeshLoader::meshes[MeshLoader::currentMesh].indexed);
 
         if(depthMask) glDepthMask(GL_TRUE);
 

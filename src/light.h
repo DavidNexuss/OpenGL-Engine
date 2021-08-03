@@ -13,7 +13,6 @@ using LightComponent = EngineComponent;
 
 namespace Light
 {
-    const static size_t maxLights = 6;
     extern bool flushUniforms;
 
     extern std::vector<glm::vec3> lightsPositions;

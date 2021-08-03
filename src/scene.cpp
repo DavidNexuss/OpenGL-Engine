@@ -12,5 +12,5 @@ void Scene::update()
 void Scene::flush()
 {
     CameraLoader::cameras[camera].flush();
-    glUniform1f(UNIFORMS(UNIFORM_TIME),time);
+    glUniform1f(UNIFORMS(Standard::uTime),time);
 }

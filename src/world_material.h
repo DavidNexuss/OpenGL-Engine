@@ -1,6 +1,6 @@
 #pragma once
 #include "basics.h"
-#include "id.h"
+#include "standard.h"
 
 class WorldMaterial
 {
@@ -10,7 +10,7 @@ class WorldMaterial
         static MaterialID material;
         static void initialize();
 
-        Texture texture = ID::invalid_id;
+        Texture texture = Standard::invalidId;
     };
 
 

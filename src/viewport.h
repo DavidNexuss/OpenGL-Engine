@@ -1,5 +1,5 @@
 #pragma once
-#include "window.h"
+#include "core.h"
 
 /**
  * Mantiene todos los atributos del viewport y de glfw a procesar,incluido el input

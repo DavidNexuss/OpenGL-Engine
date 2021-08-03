@@ -2,7 +2,6 @@
 #include "directory.h"
 #include "debug.h"
 #include "load_shader.h"
-#include "id.h"
 
 using namespace std;
 
@@ -29,26 +28,15 @@ Material::Material(const string& materialName) : Material(materialName,{}) { }
 void Material::loadShaderUniforms(const vector<string>& uniformsList)
 { 
     this->uniformNames = uniformsList;
-    for(int i = 0; i < scene_uniform_count; i++)
-        uniforms.push_back(-1);
-
-    //Predefined uniforms lookup
-    uniforms[UNIFORM_PROJECTION_MATRIX] = glGetUniformLocation(programID,"projectionMatrix");
-    uniforms[UNIFORM_VIEW_MATRIX] = glGetUniformLocation(programID,"viewMatrix");
-    uniforms[UNIFORM_TRANSFORM_MATRIX] = glGetUniformLocation(programID,"transformMatrix");
-    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(programID,"normalMatrix");
-    uniforms[UNIFORM_TIME] = glGetUniformLocation(programID,"time");
-    uniforms[UNIFORM_LIGHTCOLOR] = glGetUniformLocation(programID,"lightColor");
-    uniforms[UNIFORM_LIGHTPOSITION] = glGetUniformLocation(programID,"lightPosition");
-    uniforms[UNIFORM_LIGHTCOUNT] = glGetUniformLocation(programID,"lightCount");
-    uniforms[UNIFORM_VIEW_POS] = glGetUniformLocation(programID,"viewPos");
-    uniforms[UNIFORM_SKYBOX] = glGetUniformLocation(programID,"skybox");
+    uniforms.resize(Standard::uniformCount);
+    
+    for (size_t i = 0; i < Standard::uniformCount; i++) uniforms[i] = glGetUniformLocation(programID,Standard::UniformsNames[i]);
     
     //User uniform lookup
     for(const auto& uniform : uniformsList)
     {
         GLuint uniform_location = glGetUniformLocation(programID,uniform.c_str());
-        if(uniform_location == ID::invalid_id)
+        if(uniform_location == Standard::invalidId)
         {
             throw std::runtime_error("Asked uniform not found");
         }
@@ -58,11 +46,11 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
     
     //TextureLoader uniform lookup
     GLuint location = 0;
-    for (size_t i = 0; i < TextureLoader::maxTextureUnits and location != ID::invalid_id; i++)
+    for (size_t i = 0; i < TextureLoader::maxTextureUnits and location != Standard::invalidId; i++)
     {
         string uniformName = "texture" + to_string(i);
         location = glGetUniformLocation(programID,uniformName.c_str());
-        if(location != ID::invalid_id)
+        if(location != Standard::invalidId)
         {
             textureUniforms.push_back(location);
         }
@@ -81,14 +69,14 @@ void Material::useInstance(MaterialInstanceID materialInstanceID)
         if ((different = usedInstances[i] != materialInstanceID) || instance.uniformValues[i].dirty)
         {
             usedInstances[i] = materialInstanceID;
-            MaterialInstanceLoader::materialInstances[materialInstanceID].useUniform(i,uniforms[i + scene_uniform_count]);
+            MaterialInstanceLoader::materialInstances[materialInstanceID].useUniform(i,uniforms[i + Standard::uniformCount]);
             swap |= different;
         }
     }
 
     for (size_t i = 0; i < textureUniforms.size(); i++)
     {
-        if (instance.assignedTextureUnits[i] != ID::invalid_id)
+        if (instance.assignedTextureUnits[i] != Standard::invalidId)
         {
             TextureLoader::useTexture(instance.assignedTextureUnits[i],i,isSkyboxMaterial ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D);
             glUniform1i(textureUniforms[i],i);
@@ -103,8 +91,8 @@ Material Material::createDefaultMaterial()
     return Material(Directory::getDefaultFragemntShaderPath(),Directory::getDefaultVertexShaderPath(),{});
 }
 
-MaterialID MaterialLoader::debugMaterialID = -1;
-MaterialInstanceID MaterialLoader::debugMaterialInstanceID = -1;
+MaterialID MaterialLoader::debugMaterialID = Standard::invalidId;
+MaterialID MaterialLoader::currentMaterial = Standard::invalidId;
+MaterialInstanceID MaterialLoader::debugMaterialInstanceID = Standard::invalidId;
 vector<Material> MaterialLoader::materials;
 vector<size_t> MaterialLoader::usedMaterials;
-MaterialID MaterialLoader::currentMaterial = -1;

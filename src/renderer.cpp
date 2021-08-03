@@ -43,11 +43,12 @@ namespace Renderer
     }
     
 
-    void configureRenderer()
+    void configureRenderer(const RenderConfiguration& config)
     {
         glEnable(GL_CULL_FACE);
         glCullFace(GL_FRONT);  
-        glEnable(GL_DEPTH_TEST);    
+        glEnable(GL_DEPTH_TEST); 
+        if(config.useMssa)glEnable(GL_MULTISAMPLE);
     }
 
     void render()
@@ -61,10 +62,11 @@ namespace Renderer
         Scene::time += 0.1;
         Scene::update();
         
-        //Render world
-        if(worldMaterial.skyBox.model != ID::invalid_id)
+        //Render skybox first
+        if(worldMaterial.skyBox.model != Standard::invalidId)
             ModelLoader::models[worldMaterial.skyBox.model].draw();
 
+        //Render world
         for(size_t i = 0; i < models.size(); i++) {
             if(!models[i].enabled) continue;
 
