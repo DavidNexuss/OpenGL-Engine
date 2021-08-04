@@ -8,6 +8,8 @@ class FrameBuffer
 {
     GLuint fb = 0,color = 0,depth = 0;
 
+    bool framebuffer_initialized = false;
+    
     int screen_width;
     int screen_height;
 

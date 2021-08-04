@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <cassert>
 
 using namespace std;
 
@@ -55,6 +56,7 @@ float FrameBuffer::get_resize_factor() const
 
 void FrameBuffer::initialize_framebuffer()
 {
+    assert(!framebuffer_initialized);
     glGenFramebuffers(1, &fb);
     glGenTextures(1, &color);
     glGenRenderbuffers(1, &depth);
@@ -81,7 +83,7 @@ void FrameBuffer::initialize_framebuffer()
     glBindRenderbuffer(GL_RENDERBUFFER, depth);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, get_render_width(), get_render_height());
     glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth);
-
+    framebuffer_initialized = true;
 }
 
 void FrameBuffer::dispose_framebuffer()
@@ -92,6 +94,7 @@ void FrameBuffer::dispose_framebuffer()
     glDeleteFramebuffers(1,&fb);
     glDeleteTextures(1, &color);
     glDeleteRenderbuffers(1, &depth);
+    framebuffer_initialized = false;
 }
 
 void FrameBuffer::begin(GLuint shaderRes) {
