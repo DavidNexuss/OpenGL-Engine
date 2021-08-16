@@ -4,11 +4,21 @@
 #include "viewport.h"
 #include "light.h"
 #include "world_material.h"
+#include <mesh/primitiveMesh.h>
 
+struct Posprocess
+{
+    FrameBuffer screenBuffer;
+    MaterialID material = -1;
+    static MeshID screenQuad;
+};
+
+MeshID Posprocess::screenQuad = -1;
 namespace Renderer
 {
     size_t currentFrame = 1;
     WorldMaterial worldMaterial;
+    Posprocess postprocess;
 
     void useMaterial(MaterialID materialID)
     {
@@ -42,6 +52,26 @@ namespace Renderer
         MaterialLoader::materials[MaterialLoader::currentMaterial].useInstance(instanceID);
     }
     
+    void addPostProcess(MaterialID mat)
+    {
+        if(Posprocess::screenQuad == Standard::invalidId)
+        {
+            Posprocess::screenQuad = MeshLoader::loadMesh(PrimitiveMesh::generateFromBuffers({
+                {Standard::aPosition,2,{
+                    -1.0,1.0,
+                     1.0,1.0,
+                    -1.0,-1.0,
+
+                     1.0,1.0,
+                     1.0,-1.0,
+                     -1.0,-1.0,
+
+                }}
+            }));
+        }
+        postprocess.screenBuffer.setAttachmentCount(1);
+        postprocess.material = mat;
+    }
 
     void configureRenderer(const RenderConfiguration& config)
     {
@@ -62,18 +92,44 @@ namespace Renderer
         Scene::time += 0.1;
         Scene::update();
         
-        //Render skybox first
-        if(worldMaterial.skyBox.model != Standard::invalidId)
-            ModelLoader::models[worldMaterial.skyBox.model].draw();
+        if(postprocess.material != Standard::invalidId)
+        {
+            postprocess.screenBuffer.begin(Viewport::screenWidth,Viewport::screenHeight);
+            
+            glCullFace(GL_BACK);
+            //Render skybox first
+            if(worldMaterial.skyBox.model != Standard::invalidId)
+                ModelLoader::models[worldMaterial.skyBox.model].draw();
 
-        //Render world
-        for(size_t i = 0; i < models.size(); i++) {
-            if(!models[i].enabled) continue;
+            //Render world
+            for(size_t i = 0; i < models.size(); i++) {
+                if(!models[i].enabled) continue;
 
-            models[i].process();
-            models[i].draw();
+                models[i].process();
+                models[i].draw();
+            }
+            postprocess.screenBuffer.end();
+
+            glCullFace(GL_FRONT);
+            useMaterial(postprocess.material);
+            useMesh(Posprocess::screenQuad);
+            MaterialLoader::materials[postprocess.material].useScreenAttachments(postprocess.screenBuffer);
+            drawMesh(false);
+
         }
+        else{
+            //Render skybox first
+            if(worldMaterial.skyBox.model != Standard::invalidId)
+                ModelLoader::models[worldMaterial.skyBox.model].draw();
 
+            //Render world
+            for(size_t i = 0; i < models.size(); i++) {
+                if(!models[i].enabled) continue;
+
+                models[i].process();
+                models[i].draw();
+            }
+        }
         Light::flushUniforms = false;
     }
 };
