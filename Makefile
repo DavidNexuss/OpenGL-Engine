@@ -15,11 +15,11 @@ LIBS = -lGL -lglfw -lGLU -lGLEW -lassimp -lpthread lib/imgui.a lib/imgui_editor.
 
 OUT = $(BIN)/$(PROGRAM)
 
-release: CFLAGS += -O3 -msse4 -mavx2
+release: CFLAGS += -O3 -msse4 -mavx2 -DNDEBUG
 release: LDFLAGS += -flto
 release: all
 
-debug: CFLAGS += -g
+debug: CFLAGS += -g -DDEBUG
 debug: all
 
 all: $(IDIR) $(ODIR) $(BIN) $(LIBS) $(OUT)
@@ -91,9 +91,17 @@ clean: $(ODIR) $(BIN)
 	rm -rf $(SDIR)
 
 clean-all: clean
-	rm -rf lib/imgui/*.o
+	rm -rf lib/imgui/*.o lib/stb_image/*.o lib/ImGuiColorTextEdit/*.o
 
 clean-dis: $(SDIR)
 	rm -rf $(SDIR)
 
 dis: all $(SDIR) $(S_CODE)
+
+include:
+	cp -r src bin/include
+	find bin/include -type f ! -name '*.h' | sh -c 'while read line; do rm -f $$line; done'
+
+install: release include
+	cp -r bin/include /usr/include/uengine
+	cp bin/engine.a /usr/lib/uengine.a
