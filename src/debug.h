@@ -72,7 +72,13 @@ class Debug
 };
 
 // Debug macros, disable debug logging in non debug builds
-#define DEBUG
+#ifndef NDEBUG
+    #ifndef DEBUG
+        #define DEBUG
+    #endif
+#endif
+
+//Register frame metadata macros
 #ifdef DEBUG 
     #define REGISTER_MISSED_UNIFORM() Debug::missingUniforms++
     #define REGISTER_FRAME(time) Debug::reset(time)
@@ -97,4 +103,15 @@ class Debug
     #define REGISTER_WATCH_ADDITION()
     #define REGISTER_WATCH_REMOVAL()
     #define LOG_FRAME()
+#endif
+
+//Debug macros
+
+#ifdef DEBUG
+#define ENGINE_ASSERT(x) do { if(!(x)) { \
+    std::cerr << __FILE__ << ": " << __LINE__ << " -> Assetion failed : " << #x << std::endl << std::flush; \
+    exit(1); \
+} } while (0)
+#else
+#define ENGINE_ASSERT(x)
 #endif
