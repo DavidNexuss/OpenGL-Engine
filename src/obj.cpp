@@ -12,11 +12,11 @@ using namespace std;
 
 enum AttributeEnum
 {
-    A_POSITION = 1 << Standard::aPosition,
-    A_COLOR =    1 << Standard::aColor,
-    A_UV =       1 << Standard::aUV,
-    A_NORMAL =   1 << Standard::aNormal,
-    A_TANGENT =  1 << Standard::aTangent,
+    A_POSITION = 1  << Standard::aPosition,
+    A_COLOR =    1  << Standard::aColor,
+    A_UV =       1  << Standard::aUV,
+    A_NORMAL =   1  << Standard::aNormal,
+    A_TANGENT =  1  << Standard::aTangent,
     A_BITANGENT = 1 << Standard::aBiTangent
 };
 
@@ -42,7 +42,7 @@ struct ObjectContext
 
 ObjectContext ctx;
 
-MeshID createMesh(const vector<Vertex>& vertices,const vector<unsigned int>& indices,const vector<size_t> attributes)
+MeshID createMesh(const vector<Vertex>& vertices,const vector<Standard::meshIndex>& indices,const vector<size_t> attributes)
 {
     GLuint VAO,VBO,EBO;
 
@@ -56,7 +56,7 @@ MeshID createMesh(const vector<Vertex>& vertices,const vector<unsigned int>& ind
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);  
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), 
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(Standard::meshIndex), 
                  &indices[0], GL_STATIC_DRAW);
 
     size_t offset = 0;
@@ -102,7 +102,6 @@ MaterialInstanceID createMaterial(aiMesh* mesh,const aiScene* scene)
 {
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    
     auto it = ctx.loadedMaterials.find(material);
     if(it != ctx.loadedMaterials.end())
     {
@@ -113,7 +112,19 @@ MaterialInstanceID createMaterial(aiMesh* mesh,const aiScene* scene)
     vector<Texture> specularTextures = loadMaterialTextures(material,aiTextureType_SPECULAR);
     vector<Texture> normalTextures = loadMaterialTextures(material,aiTextureType_NORMALS);
 
-    MaterialInstance minstance({Uniform(1.0f)});
+    aiColor3D kd,ka,ks;
+    float shinness;
+    material->Get(AI_MATKEY_COLOR_DIFFUSE,kd);
+    material->Get(AI_MATKEY_COLOR_SPECULAR,ks);
+    material->Get(AI_MATKEY_COLOR_AMBIENT,ka);
+    material->Get(AI_MATKEY_SHININESS,shinness);
+    
+    MaterialInstance minstance({
+        glm::vec3(ka.r, ka.g, ka.b),
+        glm::vec3(kd.r, kd.g, kd.b),
+        glm::vec3(ks.r, ks.g, ks.b),
+        shinness
+    });
 
     if(diffuseTextures.size() > 0)  minstance.setTexture(diffuseTextures[0],0);
     if(specularTextures.size() > 0) minstance.setTexture(specularTextures[0],1);
@@ -163,7 +174,7 @@ Model processMesh(aiMesh* mesh,const aiScene* scene)
         }
     }
 
-    vector<unsigned int> indices;
+    vector<Standard::meshIndex> indices;
     for (size_t i = 0; i < mesh->mNumFaces; i++)
     {
         const aiFace& face = mesh->mFaces[i];
