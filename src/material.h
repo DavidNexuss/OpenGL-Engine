@@ -4,6 +4,8 @@
 #include "world_material.h"
 #include "standard.h"
 #include "core.h"
+#include "framebuffer.h"
+
 #include <vector>
 
 struct Material : public EngineComponent
@@ -15,6 +17,7 @@ struct Material : public EngineComponent
     std::vector<MaterialInstanceID> usedInstances;
     
     std::vector<GLuint> textureUniforms;
+    std::vector<GLuint> screenTextureUniforms;
 
     bool isSkyboxMaterial = false;
 
@@ -24,7 +27,10 @@ struct Material : public EngineComponent
 
     void loadShaderUniforms(const std::vector<std::string>& uniformsList);
     bool addTexture(Texture textureID,int textureUnit);
+    
     void useInstance(MaterialInstanceID materialInstanceID);
+    void useScreenAttachments(const FrameBuffer& buffer);
+
 
     inline void bind(const WorldMaterial& world) const {
         glUseProgram(programID);

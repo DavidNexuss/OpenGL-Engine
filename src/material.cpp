@@ -2,6 +2,7 @@
 #include "directory.h"
 #include "debug.h"
 #include "load_shader.h"
+#include <iostream>
 
 using namespace std;
 
@@ -36,26 +37,40 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
     for(const auto& uniform : uniformsList)
     {
         GLuint uniform_location = glGetUniformLocation(programID,uniform.c_str());
-        if(uniform_location == Standard::invalidId)
-        {
-            throw std::runtime_error("Asked uniform not found");
+        if(uniform_location == Standard::invalidId) {
+            throw std::runtime_error("Asked uniform " + uniform + " not found");
         }
         uniforms.emplace_back(uniform_location);
         usedInstances.emplace_back();
     }
     
-    //TextureLoader uniform lookup
-    GLuint location = 0;
-    for (size_t i = 0; i < TextureLoader::maxTextureUnits and location != Standard::invalidId; i++)
-    {
-        string uniformName = "texture" + to_string(i);
-        location = glGetUniformLocation(programID,uniformName.c_str());
-        if(location != Standard::invalidId)
+    const auto uniformListLookup = [](GLuint programID,vector<GLuint>& uniforms,const string& pattern){
+        GLuint location = 0;
+        for (size_t i = 0; i < TextureLoader::maxTextureUnits and location != Standard::invalidId; i++)
         {
-            textureUniforms.push_back(location);
+            string uniformName = pattern + to_string(i);
+            location = glGetUniformLocation(programID,uniformName.c_str());
+            if(location != Standard::invalidId)
+            {
+                uniforms.push_back(location);
+            }
         }
-    }
+    };
 
+    uniformListLookup(programID,textureUniforms,"texture");
+    uniformListLookup(programID,screenTextureUniforms,"screenTexture");
+}
+
+void Material::useScreenAttachments(const FrameBuffer& buffer)
+{
+    for (size_t i = 0; i < buffer.textureAttachments.size() && i < screenTextureUniforms.size(); ++i) {
+        int texId = textureUniforms.size() + i;
+        if(texId >= Standard::maxUserTextureUnits) return;
+
+        TextureLoader::useTexture(buffer.textureAttachments[i],texId,GL_TEXTURE_2D);
+        glUniform1i(screenTextureUniforms[i],i);
+    }   
+        
 }
 void Material::useInstance(MaterialInstanceID materialInstanceID)
 {
