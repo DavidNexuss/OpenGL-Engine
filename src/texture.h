@@ -3,34 +3,29 @@
 #include "core.h"
 #include "debug.h"
 #include "texture_data.h"
+#include "internals.h"
 #include <vector>
-
-using Texture = size_t;
 
 /**
  * @brief Manages OpenGL textures and its identifiers
  */
-
+using Texture = GLuint;
 namespace TextureLoader
 {
     const static size_t maxTextureUnits = 16;
-
-    extern std::vector<TextureData> texturesData;                                // textureID -> textureData
-    extern std::vector<GLuint> glTexturesIds;                                    // textureID -> GLID
     extern std::vector<Texture> texturesUnits;                                   // slot -> textureID
     
     extern Texture loadInternalTexture(GLuint textID);
-    extern Texture loadTexture(const TextureData& textureData);
+    extern Texture loadTexture(const TextureData& textureData,bool filter = true);
     extern Texture loadCubemap(const std::vector<TextureData> &cubemaps);
 
     inline static void useTexture(Texture textureID,int textureUnit,GLenum mode)
     {
-        GLuint glTextureID = glTexturesIds[textureID];
         if (texturesUnits[textureUnit] != textureID)
         {
             texturesUnits[textureUnit] = textureID;
             glActiveTexture(GL_TEXTURE0 + textureUnit);
-            glBindTexture(mode,glTextureID);
+            glBindTexture(mode,textureID);
             REGISTER_TEXTURE_SWAP();
         }
     }
