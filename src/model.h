@@ -3,7 +3,7 @@
 #include "material.h"
 #include "material_instance.h"
 #include "renderer.h"
-#include "sorted_vector.h"
+#include "structures/storage.h"
 #include "engine_component.h"
 #include "standard.h"
 #include <string>
@@ -23,7 +23,7 @@ struct Model : public EngineComponent
 
     static bool lastcullFrontFace;
 
-
+    Model() { }
     Model(MeshID _meshID,MaterialID _materialID = 0) : meshID(_meshID), materialID(_materialID), transformMatrix(1.0f) { }
 
     inline void draw()
@@ -62,7 +62,7 @@ struct Model : public EngineComponent
 
     }
 
-    bool operator<(const Model& model)
+    bool operator<(const Model& model) const
     {
         return materialID < model.materialID || 
             (materialID == model.materialID && (materialInstanceID < model.materialInstanceID || 
@@ -70,18 +70,17 @@ struct Model : public EngineComponent
 
     }
 };
+
+using ModelID = size_t;
 namespace ModelLoader
 {
-    extern sorted_vector<Model> models;
-    static inline ModelID loadModel(const Model& model)
+    extern sorted_storage<Model> models;
+    static inline ModelID loadModel(Model&& model)
     {
-        Model m = model;
-        m.name = std::to_string(models.native().size());
-        return models.push_back(m);
+        model.name = std::to_string(models.internal().size());
+        return models.push_back(std::move(model));
     }
 
-    static inline Model& get(ModelID modelID) { return models[modelID]; }
-    static inline const std::vector<Model>& native() { return models.native(); }
-    
+    static inline std::vector<Model>& native() { return models.sorted_internal(); }
     ModelID createSkyBox(const std::vector<TextureData>& paths);
 };

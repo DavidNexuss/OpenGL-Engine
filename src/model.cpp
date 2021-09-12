@@ -4,7 +4,7 @@
 #include <list>
 using namespace std;
 
-sorted_vector<Model> ModelLoader::models;
+sorted_storage<Model> ModelLoader::models;
 
 bool Model::lastcullFrontFace = false;
 
@@ -25,6 +25,6 @@ ModelID ModelLoader::createSkyBox(const std::vector<TextureData>& paths)
     mat.setTexture(TextureLoader::loadCubemap(paths),0);
     MaterialInstanceID cubemap_material_instance = MaterialInstanceLoader::loadMaterialInstance(mat);
     cubeMap_model.materialInstanceID = cubemap_material_instance;
-    return loadModel(cubeMap_model); 
+    return loadModel(std::move(cubeMap_model)); 
 
 }

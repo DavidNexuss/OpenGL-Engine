@@ -83,7 +83,7 @@ namespace Renderer
 
     void render()
     {
-        auto& models = ModelLoader::models.native();
+        auto& models = ModelLoader::native();
         currentFrame++;
 
         glClearColor(0.0,0.0,0.0,1.0);
