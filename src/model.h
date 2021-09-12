@@ -82,5 +82,4 @@ namespace ModelLoader
     }
 
     static inline std::vector<Model>& native() { return models.sorted_internal(); }
-    ModelID createSkyBox(const std::vector<TextureData>& paths);
 };
