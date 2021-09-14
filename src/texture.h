@@ -3,7 +3,6 @@
 #include "core.h"
 #include "debug.h"
 #include "texture_data.h"
-#include "internals.h"
 #include <vector>
 
 /**
@@ -19,7 +18,7 @@ namespace TextureLoader
     extern Texture loadTexture(const TextureData& textureData,bool filter = true);
     extern Texture loadCubemap(const std::vector<TextureData> &cubemaps);
 
-    inline static void useTexture(Texture textureID,int textureUnit,GLenum mode)
+    inline static void useTexture(Texture textureID,size_t textureUnit,GLenum mode)
     {
         if (texturesUnits[textureUnit] != textureID)
         {

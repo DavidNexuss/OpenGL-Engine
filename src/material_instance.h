@@ -37,7 +37,7 @@ class MaterialInstance : public EngineComponent
     
     /** @brief sets textureID to assignedTextureUnits
      */
-    inline void setTexture(Texture textureID,int unitID) {
+    inline void setTexture(Texture textureID,size_t unitID) {
         assignedTextureUnits[unitID] = textureID;
     }
 
@@ -46,7 +46,7 @@ class MaterialInstance : public EngineComponent
      * and marks uniform as dirty.
      * @returns Uniform value
      */
-    inline Uniform& getUniform(int index) {
+    inline Uniform& getUniform(size_t index) {
         uniformValues[index].setDirty();
         return uniformValues[index];
     }
@@ -54,7 +54,7 @@ class MaterialInstance : public EngineComponent
      * @brief Returns uniform value given a Material Value index.
      * @returns Uniform value
      */
-    inline const Uniform& getUniform(int index) const {
+    inline const Uniform& getUniform(size_t index) const {
         return uniformValues[index];
     }
 
