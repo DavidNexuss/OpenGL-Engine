@@ -1,5 +1,5 @@
 GCC = g++
-CFLAGS = -Wall -I lib/ -I src/
+CFLAGS = -Wall -Wsuggest-final-types -Wsuggest-final-methods -I lib/ -I src/
 LDFLAGS =
 
 PROGRAM = engine.a
