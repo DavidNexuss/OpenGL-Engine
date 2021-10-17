@@ -6,8 +6,12 @@
 #include <light.h>
 #include <gui/debug/gui_debug.h>
 #include <mesh/sphereMesh.h>
+#include <mesh/voxel/voxelMesh.h>
+#include <mesh/voxel/hexelMesh.h>
+
 #include <obj.h>
 #include <mesh_builder.h>
+#include <debug.h>
 
 
 using namespace std;
@@ -18,19 +22,66 @@ float randf()
 {
     return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 }
+Mesh createQuad()
+{
+    return PrimitiveMesh::generateFromBuffers({
+        {Standard::aPosition,2,{
+            -1.0,1.0,
+             1.0,1.0,
+            -1.0,-1.0,
+
+             1.0,1.0,
+             1.0,-1.0,
+             -1.0,-1.0,
+
+        }}
+    });
+}
 void loadSpecificWorld()
 {
     
-    Model cube = Model(MeshLoader::loadMesh(MeshBuilder::createPrimitiveMesh(MeshBuilder::Cube,true)));
-    cube.materialID = MaterialLoader::loadMaterial(Material("ushader_untextured",
-    {"ka","kd","ks","specularStrength","reflectionStrength"}));
+    auto reflectiveMaterial = MaterialLoader::loadMaterial(Material("ushader_tiled",{"ka","kd","ks","specularStrength","reflectionStrength","tileStep","tileIndex"}));
+    auto screen = MaterialLoader::loadMaterial(Material("screen"));
 
-    cube.materialInstanceID = MaterialInstanceLoader::loadMaterialInstance(
+    TextureData tile("tileset.png");
+    glm::vec2 tileStep = glm::vec2(16,16) / glm::vec2(tile.width,tile.height);
+    auto reflectiveMaterialInstance = MaterialInstanceLoader::loadMaterialInstance(
         MaterialInstance({
-            glm::vec3(0.4),glm::vec3(0.4),glm::vec3(0.4),50.0f,0.2f
+            glm::vec3(0.4),glm::vec3(0.4),glm::vec3(0.4),50.0f,0.2f,tileStep,glm::vec2(0.0f)
         }));
-    //ModelLoader::loadModel(cube);
-    Light::load(glm::vec3(8.0),glm::vec3(1.0,1.0,1.0));
+
+    
+    MaterialInstanceLoader::materialInstances[reflectiveMaterialInstance].setTexture(TextureLoader::loadTexture(tile,false),2);
+    
+    /*VoxelMeshWorld voxelWorld;
+    voxelWorld.at(0,0,0) = 1;
+    voxelWorld.at(1,0,0) = 1;
+    voxelWorld.at(2,0,0) = 1;
+    voxelWorld.at(2,1,0) = 1;
+    voxelWorld.at(2,2,0) = 1;
+    voxelWorld.at(2,3,0) = 1;
+    voxelWorld.at(2,3,1) = 1;
+    voxelWorld.at(2,3,2) = 1;
+    voxelWorld.at(2,2,2) = 1;
+    voxelWorld.at(1,2,2) = 1;
+    
+    auto result = voxelWorld.rasterize();
+    std::cout << result.size() << std::endl;
+    
+    Model cube = Model(MeshLoader::loadMesh(result[0].mesh));*/
+
+    HexelMeshGenerator meshGenerator;
+    meshGenerator.create();
+    meshGenerator.addHex(0,0,0);
+    meshGenerator.addHex(1,0,0);
+    meshGenerator.addHex(0,1,1);
+    
+    
+    Model cube = Model(MeshLoader::loadMesh(meshGenerator.generateMesh()));
+
+    cube.materialID = reflectiveMaterial;
+    cube.materialInstanceID = reflectiveMaterialInstance;
+    ModelLoader::loadModel(std::move(cube));
 
     Renderer::worldMaterial.setSkyBox(TextureLoader::loadCubemap({
         TextureData("canyon/right.png"),
@@ -40,15 +91,21 @@ void loadSpecificWorld()
         TextureData("canyon/front.png"),
         TextureData("canyon/back.png")
     }));
+
+    ModelGroup donut = loadMeshFromFile("donut.obj",reflectiveMaterial);
+    donut[0].materialInstanceID = reflectiveMaterialInstance;
+    donut[0].transformMatrix = glm::translate(glm::mat4(1.0f),glm::vec3(0,0,5.0));
+    ModelLoader::loadModel(donut);
+
 /*
     MeshID sphere = MeshLoader::loadMesh(SphereMesh(2.0,64,64).generateMesh());
     Model sphereModel = Model(sphere,cube.materialID);
     sphereModel.materialInstanceID = cube.materialInstanceID;
     ModelLoader::loadModel(sphereModel);
 */
-    ModelGroup donut = loadMeshFromFile("donut.obj",cube.materialID);
-    donut[0].materialInstanceID = cube.materialInstanceID;
-    ModelLoader::loadModel(donut);
+
+    Light::load(glm::vec3(8.0),glm::vec3(1.0,1.0,1.0));
+
 }
 
 
@@ -84,6 +141,7 @@ int main(int argc, char** argv)
         }
         return true;
     }));
+//    Renderer::addPostProcess(MaterialLoader::loadMaterial(Material("screen")));
 /*
     GUI::Extra::EngineTextEditor* editor = new GUI::Extra::EngineTextEditor();
     Resource text = Resource(ResourceHeader::fromFile("res/materials/base_vertex.glsl"));

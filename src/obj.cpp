@@ -12,11 +12,11 @@ using namespace std;
 
 enum AttributeEnum
 {
-    A_POSITION = 1  << Standard::aPosition,
-    A_COLOR =    1  << Standard::aColor,
-    A_UV =       1  << Standard::aUV,
-    A_NORMAL =   1  << Standard::aNormal,
-    A_TANGENT =  1  << Standard::aTangent,
+    A_POSITION = 1 << Standard::aPosition,
+    A_COLOR =    1 << Standard::aColor,
+    A_UV =       1 << Standard::aUV,
+    A_NORMAL =   1 << Standard::aNormal,
+    A_TANGENT =  1 << Standard::aTangent,
     A_BITANGENT = 1 << Standard::aBiTangent
 };
 

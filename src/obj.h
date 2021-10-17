@@ -23,12 +23,12 @@ struct ModelGroupID
 
 namespace ModelLoader
 {
-    static inline ModelGroupID loadModel(const ModelGroup& modelGroup)
+    static inline ModelGroupID loadModel(ModelGroup& modelGroup)
     {
         ModelGroupID id;
         for(size_t i = 0; i < modelGroup.size(); i++)
         {
-            id.last = ModelLoader::loadModel(modelGroup[i]);
+            id.last = ModelLoader::loadModel(std::move(modelGroup[i]));
             if (i == 0) id.first = id.last;
         }
         return id;

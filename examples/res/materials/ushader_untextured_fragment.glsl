@@ -9,13 +9,15 @@ uniform samplerCube uSkybox;
 uniform vec3 ka;
 uniform vec3 kd;
 uniform vec3 ks;
-uniform float reflectionStrength;
 uniform float specularStrength;
+
+uniform float reflectionStrength;
 
 in vec3 fragPos;
 in vec3 normal;
+in vec3 color;
 
-out vec3 color;
+out vec3 fragColor;
 
 vec3 lightPass(vec3 N,int i)
 {
@@ -28,7 +30,7 @@ vec3 lightPass(vec3 N,int i)
     vec3 reflectDir = reflect(-L,N);
     float s = pow(max(dot(V,reflectDir),0.0),specularStrength);
 
-    return (s * ks + d * kd + ka) * uLightColor[i];
+    return (s * ks + d * (kd + color) + ka) * uLightColor[i];
 }
 
 vec3 reflectPass(vec3 N)
@@ -39,11 +41,11 @@ vec3 reflectPass(vec3 N)
 }
 void main()
 {
-    color = vec3(0.0);
+    fragColor = vec3(0.0);
     vec3 N = normalize(normal);
     for(int i = 0; i < uLightCount; i++) {
-        color += lightPass(N,i);
+        fragColor += lightPass(N,i);
     }
 
-    color = color * (1.0 - reflectionStrength) + reflectPass(N) * reflectionStrength;
+    fragColor = fragColor * (1.0 - reflectionStrength) + reflectPass(N) * reflectionStrength;
 }

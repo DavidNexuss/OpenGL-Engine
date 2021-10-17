@@ -6,8 +6,6 @@
 /**
  * This namespace defines constants and conventions used by the engine that the user
  * must follow for the right use of the engine
- * 
- * Any user is free to change this values 
  */
 namespace Standard
 {
@@ -75,7 +73,9 @@ namespace Standard
     //Mesh index size
     //Normally a 16bit unsigned int limit for indexes count should be more than enough for any mesh
     using meshIndex = unsigned short;
+    
     const static uint32_t meshIndexGL = GL_UNSIGNED_SHORT;  //For glDrawElements call
-
+    const static bool interleaveVBOData = true;
+    
     const static size_t invalidId = -1;
 }

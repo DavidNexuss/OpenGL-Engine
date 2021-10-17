@@ -21,5 +21,5 @@ void WorldMaterial::SkyBox::initialize()
     cubeMap_model.depthMask = true;
     cubeMap_model.cullFrontFace = true;
     cubeMap_model.enabled = false;
-    model = ModelLoader::loadModel(cubeMap_model);
+    model = ModelLoader::loadModel(std::move(cubeMap_model));
 }

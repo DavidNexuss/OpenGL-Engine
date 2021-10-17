@@ -13,6 +13,8 @@ struct PrimitiveMesh
         int attributeid;
 
         MeshAttribute(int n = 0) : buffer(n) { }
+
+        MeshAttribute(size_t capacity,int _size,int _attributeid) : size(_size), attributeid(_attributeid) { buffer.reserve(capacity); }
     };
 
     std::vector<MeshAttribute> attributes;
@@ -21,9 +23,16 @@ struct PrimitiveMesh
     std::vector<float> interleavedData(int& vertexSize) const;
     
     inline bool generated() const { return attributes.size(); }   
-    Mesh generateMesh();
+    inline void clear() {
+        attributes.clear();
+        indices.clear();
+    }
+    
     virtual void create() = 0;
+    Mesh generateMesh();
 
+    
+    
     static Mesh generateFromBuffer(const std::vector<float>& buffer,
                         const std::vector<std::pair<int /*attribute ptr*/ ,int /* attribute size*/ >>& attributes);
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "basics.h"
+#include "texture.h"
 #include "standard.h"
 
 class WorldMaterial

@@ -46,6 +46,7 @@ struct storage
  * index accessors unaffected.
  * Designed for reordering models if needed before rendering
  */
+
 template <typename T>
 struct sorted_storage : public storage<T>
 {
@@ -80,3 +81,42 @@ struct sorted_storage : public storage<T>
         return data;
     }
 };
+
+/**
+ * Same as storage but returns a sorted index vector for order vector traversal
+ */
+/*
+template <typename T>
+struct sorted_storage : public storage<T>
+{
+    using storage<T>::data;
+    using storage<T>::indices;
+    using storage<T>::dirty;
+
+    std::vector<size_t> sortedIndices;
+    
+    struct SortProxy
+    {
+        std::vector<T>& vectorData;
+        std::vector<size_t>& indices;
+
+        SortProxy(std::vector<T>& _vectorData,std::vector<size_t>& _indices) : vectorData(_vectorData), indices(_indices) { }
+
+        T& operator[] (size_t idx) { return vectorData[idx]; }
+    };
+
+    void sort()
+    {
+        size_t n = 0;
+        std::generate(sortedIndices.begin(),sortedIndices.end(),[n = 0]() mutable {return n++; });
+        std::sort(sortedData.begin(),sortedData.end(),[&](const size_t i,const size_t j){return data[i] < data[j]; });
+    }
+
+    SortProxy sorted_internal() {
+        if(dirty) sort();
+        dirty = false;
+        return {data,sortedIndices};
+    }
+
+
+};*/
