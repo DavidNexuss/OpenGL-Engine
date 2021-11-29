@@ -29,8 +29,7 @@ struct Material : public EngineComponent
     bool addTexture(Texture textureID,int textureUnit);
     
     void useInstance(MaterialInstanceID materialInstanceID);
-    void useScreenAttachments(const FrameBuffer& buffer);
-
+    int useScreenAttachments(const FrameBuffer& buffer,int startingTexture = 0);
 
     inline void bind(const WorldMaterial& world) const {
         glUseProgram(programID);

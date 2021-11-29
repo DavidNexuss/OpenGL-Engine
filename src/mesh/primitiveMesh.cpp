@@ -30,6 +30,16 @@ std::vector<float> PrimitiveMesh::interleavedData(int& vertexSize) const{
     assert(dataIdx == data.size());
     return data;
 }
+
+int PrimitiveMesh::initiliazeAttribute(size_t count,int size,int attributeid)
+{
+    int idx = attributes.size();
+    attributes.emplace_back(MeshAttribute(count));
+    attributes[idx].size = size;
+    attributes[idx].attributeid = attributeid;
+    return idx;
+}
+
 Mesh PrimitiveMesh::generateMesh()
 {
     if(!generated()) create();

@@ -77,5 +77,5 @@ namespace Standard
     const static uint32_t meshIndexGL = GL_UNSIGNED_SHORT;  //For glDrawElements call
     const static bool interleaveVBOData = true;
     
-    const static size_t invalidId = -1;
+    const static GLuint invalidId = -1;
 }

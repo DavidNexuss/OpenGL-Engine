@@ -3,6 +3,17 @@ using namespace std;
 
 std::vector<Texture> TextureLoader::texturesUnits(TextureLoader::maxTextureUnits,-1);             // slot -> textureID
 
+int getInternalFormat(int c)
+{
+    const static int channels[] = {GL_RED,GL_RG8,GL_RGB8,GL_RGBA8};
+    return channels[c - 1];
+}
+int getExternalFormat(int c)
+{
+    const static int channels[] = {GL_RED,GL_RG,GL_RGB,GL_RGBA};
+    return channels[c - 1];
+}
+
 Texture TextureLoader::loadTexture(const TextureData& textureData,bool filter)
 {
     if (!textureData.data ) return -1;
@@ -21,8 +32,11 @@ Texture TextureLoader::loadTexture(const TextureData& textureData,bool filter)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);    
     }
-    GLint format = textureData.nrChannels == 3 ? GL_RGB : GL_RGBA; 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureData.width, textureData.height, 0, format, GL_UNSIGNED_BYTE, textureData.data);
+    glTexImage2D(
+        GL_TEXTURE_2D, 0, 
+        GL_RGB, textureData.width, textureData.height, 0,
+        getExternalFormat(textureData.nrChannels), GL_UNSIGNED_BYTE, textureData.data);
+
     glGenerateMipmap(GL_TEXTURE_2D);
     return texId;
 }

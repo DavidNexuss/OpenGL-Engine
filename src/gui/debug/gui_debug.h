@@ -1,9 +1,12 @@
 #pragma once
+#include <renderer.h>
 
 namespace GUI
 {
     namespace Debug
     {
+
+        //Engine units menu
         void renderUniformMenu(const char* uniformName,int uniformID,int materialInstanceID,bool* windowEnable);
         void renderUniformWidget(const char* uniformName,int uniformID,int materialInstanceID);
 
@@ -26,6 +29,9 @@ namespace GUI
         void renderModelTree(bool* windowEnable);
         void renderLightTree(bool* windowEnable);
 
+        //Engine global configurations menu
+        
+        void renderRenderConfigMenu(bool *windowEnable, RenderConfiguration& config);
         void loadDebugGUI();
     }
 }

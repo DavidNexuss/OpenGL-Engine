@@ -61,16 +61,17 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
     uniformListLookup(programID,screenTextureUniforms,"screenTexture");
 }
 
-void Material::useScreenAttachments(const FrameBuffer& buffer)
+int Material::useScreenAttachments(const FrameBuffer& buffer,int startingIndex)
 {
-    for (size_t i = 0; i < buffer.textureAttachments.size() && i < screenTextureUniforms.size(); ++i) {
-        int texId = textureUniforms.size() + i;
-        if(texId >= Standard::maxUserTextureUnits) return;
+    int i = 0;
+    for (i = 0; i < buffer.textureAttachments.size() && (i + startingIndex) < screenTextureUniforms.size(); ++i) {
+        int texId = textureUniforms.size() + i + startingIndex;
+        if(texId >= Standard::maxUserTextureUnits) return i + startingIndex;
 
         TextureLoader::useTexture(buffer.textureAttachments[i],texId,GL_TEXTURE_2D);
-        glUniform1i(screenTextureUniforms[i],i);
+        glUniform1i(screenTextureUniforms[i + startingIndex],i);
     }   
-        
+    return i + startingIndex;
 }
 void Material::useInstance(MaterialInstanceID materialInstanceID)
 {

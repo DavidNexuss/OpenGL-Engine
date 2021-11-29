@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "viewport.h"
 #include <gui/gui.h>
+#include <gui/debug/gui_debug.h>
 #include "debug.h"
 #include "window.h"
 #include <iostream>
@@ -15,16 +16,25 @@ std::string EngineConfiguration::glslVersion() const {
 namespace Engine
 {
     EngineConfiguration configuration;
+    RenderConfiguration renderConfiguration;
+
     Window *window;
     float currentFrameTime = 0.0f;
     float lastFrameTime = 0.0f;
     float deltaTime = 0.0f;
 
-    inline void computeDeltaTime()
-    {
+    inline void computeDeltaTime() {
         lastFrameTime = currentFrameTime;
         currentFrameTime = glfwGetTime();
         deltaTime = currentFrameTime - lastFrameTime;
+    }
+
+    inline void engineGUI() {
+        GUI::Debug::renderRenderConfigMenu(nullptr,renderConfiguration);
+    }
+
+    inline void configure() {
+        Renderer::configureRenderer(renderConfiguration);
     }
 }
 
@@ -46,17 +56,20 @@ void Engine::createEngine(const std::string& titleName,const EngineConfiguration
         glDebugMessageCallback(&Debug::glError,NULL);
         glEnable(GL_DEBUG_OUTPUT);
     #endif
+
     CameraLoader::loadCamera(Camera());
     GUI::initialize(window,configuration.glslVersion().c_str());
+
+    GUI::addUnit(GUI::makeSimpleGuiUnit([&](){
+        Engine::engineGUI();
+        return true;
+    }));
 }
 
 int Engine::renderLoop()
 {
-    RenderConfiguration config;
-    config.useMssa = Engine::configuration.mssaLevel > 0;
-    Renderer::configureRenderer(config);
-    do
-    {
+    do {
+        Engine::configure();
         computeDeltaTime();
         REGISTER_FRAME(currentFrameTime);
         

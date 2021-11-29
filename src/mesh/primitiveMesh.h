@@ -27,7 +27,7 @@ struct PrimitiveMesh
         attributes.clear();
         indices.clear();
     }
-    
+    int initiliazeAttribute(size_t count,int size,int attributeid);
     virtual void create() = 0;
     Mesh generateMesh();
 

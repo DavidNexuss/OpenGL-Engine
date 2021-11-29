@@ -5,20 +5,51 @@
 #include "light.h"
 #include "world_material.h"
 #include <mesh/primitiveMesh.h>
+#include <iostream>
 
-struct Posprocess
-{
-    FrameBuffer screenBuffer;
-    MaterialID material = -1;
-    static MeshID screenQuad;
-};
+MeshID RenderNode::screenQuad = -1;
+RenderConfiguration Renderer::currentConfiguration;
 
-MeshID Posprocess::screenQuad = -1;
+RenderNode::RenderNode(MaterialID _material,int attachmentCount) : material(_material), FrameBuffer(attachmentCount) { }
+RenderNode::RenderNode(int attachmentCount) : RenderNode(-1,attachmentCount) { }
+
+void RenderNode::render(int screenWidth,int screenHeight) { 
+    if(children.size() == 0) {
+        begin(screenWidth,screenHeight);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_FRONT);  
+        glEnable(GL_DEPTH_TEST); 
+        
+        Renderer::renderPass();
+        end();
+    }
+    else {
+
+        for (size_t i = 0; i < children.size(); i++) {
+            children[i]->render(screenWidth,screenHeight);
+        }
+        int last = 0;
+        for (size_t i = 0; i < children.size(); i++) {
+            last = MaterialLoader::materials[material].useScreenAttachments(*(children[i]),last);
+        }
+
+
+        glCullFace(GL_FRONT);
+        Renderer::useMaterial(material);
+        Renderer::useMesh(screenQuad);
+        Renderer::drawMesh(false);
+    }
+}
+RenderNode* RenderNode::setChildren(std::vector<RenderNode*>&& _children) {
+    children = std::move(_children);
+    return this;
+}
+
 namespace Renderer
 {
     size_t currentFrame = 1;
     WorldMaterial worldMaterial;
-    Posprocess postprocess;
+    RenderNode* renderPipeline = nullptr;
 
     void useMaterial(MaterialID materialID)
     {
@@ -52,11 +83,12 @@ namespace Renderer
         MaterialLoader::materials[MaterialLoader::currentMaterial].useInstance(instanceID);
     }
     
-    void addPostProcess(MaterialID mat)
-    {
-        if(Posprocess::screenQuad == Standard::invalidId)
+    void setRenderPipeline(RenderNode* rootNode){
+        renderPipeline = rootNode;
+        if(RenderNode::screenQuad == -1)
         {
-            Posprocess::screenQuad = MeshLoader::loadMesh(PrimitiveMesh::generateFromBuffers({
+            std::cout << "Screen quad" << std::endl;
+            RenderNode::screenQuad = MeshLoader::loadMesh(PrimitiveMesh::generateFromBuffers({
                 {Standard::aPosition,2,{
                     -1.0,1.0,
                      1.0,1.0,
@@ -69,8 +101,6 @@ namespace Renderer
                 }}
             }));
         }
-        postprocess.screenBuffer.setAttachmentCount(1);
-        postprocess.material = mat;
     }
 
     void configureRenderer(const RenderConfiguration& config)
@@ -78,20 +108,46 @@ namespace Renderer
         glEnable(GL_CULL_FACE);
         glCullFace(GL_FRONT);  
         glEnable(GL_DEPTH_TEST); 
-        if(config.useMssa)glEnable(GL_MULTISAMPLE);
+        if(config.mssaLevel > 0)glEnable(GL_MULTISAMPLE);
+        if(config.wireRendering) {
+            glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        }
+        else {
+            glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+        }
+        currentConfiguration = config;
     }
 
+    void renderPass()
+    {
+        glCullFace(GL_BACK);
+        auto& models = ModelLoader::native();
+        if(worldMaterial.skyBox.model != Standard::invalidId && !currentConfiguration.skipSkybox)
+                ModelLoader::models[worldMaterial.skyBox.model].draw();
+
+            //Render world
+            for(size_t i = 0; i < models.size(); i++) {
+                if(!models[i].enabled) continue;
+
+                models[i].process();
+                models[i].draw();
+            }
+    }
     void render()
     {
         auto& models = ModelLoader::native();
         currentFrame++;
 
-        glClearColor(0.0,0.0,0.0,1.0);
+        glClearColor(currentConfiguration.clearColor.x, currentConfiguration.clearColor.y, currentConfiguration.clearColor.z,1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         Scene::time += 0.1;
         Scene::update();
         
+        if(renderPipeline != nullptr) {
+            renderPipeline->render(Viewport::screenWidth,Viewport::screenHeight);
+        } else renderPass();
+        /*
         if(postprocess.material != Standard::invalidId)
         {
             postprocess.screenBuffer.begin(Viewport::screenWidth,Viewport::screenHeight);
@@ -129,7 +185,7 @@ namespace Renderer
                 models[i].process();
                 models[i].draw();
             }
-        }
+        }*/
         Light::flushUniforms = false;
     }
 };
