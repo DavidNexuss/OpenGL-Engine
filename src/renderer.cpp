@@ -6,44 +6,9 @@
 #include "world_material.h"
 #include <mesh/primitiveMesh.h>
 #include <iostream>
+#include "render_node.h"
 
-MeshID RenderNode::screenQuad = -1;
 RenderConfiguration Renderer::currentConfiguration;
-
-RenderNode::RenderNode(MaterialID _material,int attachmentCount) : material(_material), FrameBuffer(attachmentCount) { }
-RenderNode::RenderNode(int attachmentCount) : RenderNode(-1,attachmentCount) { }
-
-void RenderNode::render(int screenWidth,int screenHeight) { 
-    if(children.size() == 0) {
-        begin(screenWidth,screenHeight);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);  
-        glEnable(GL_DEPTH_TEST); 
-        
-        Renderer::renderPass();
-        end();
-    }
-    else {
-
-        for (size_t i = 0; i < children.size(); i++) {
-            children[i]->render(screenWidth,screenHeight);
-        }
-        int last = 0;
-        for (size_t i = 0; i < children.size(); i++) {
-            last = MaterialLoader::materials[material].useScreenAttachments(*(children[i]),last);
-        }
-
-
-        glCullFace(GL_FRONT);
-        Renderer::useMaterial(material);
-        Renderer::useMesh(screenQuad);
-        Renderer::drawMesh(false);
-    }
-}
-RenderNode* RenderNode::setChildren(std::vector<RenderNode*>&& _children) {
-    children = std::move(_children);
-    return this;
-}
 
 namespace Renderer
 {
@@ -87,7 +52,6 @@ namespace Renderer
         renderPipeline = rootNode;
         if(RenderNode::screenQuad == -1)
         {
-            std::cout << "Screen quad" << std::endl;
             RenderNode::screenQuad = MeshLoader::loadMesh(PrimitiveMesh::generateFromBuffers({
                 {Standard::aPosition,2,{
                     -1.0,1.0,
@@ -122,7 +86,7 @@ namespace Renderer
     {
         glCullFace(GL_BACK);
         auto& models = ModelLoader::native();
-        if(worldMaterial.skyBox.model != Standard::invalidId && !currentConfiguration.skipSkybox)
+        if(!Standard::is_invalid(worldMaterial.skyBox.model) && !currentConfiguration.skipSkybox)
                 ModelLoader::models[worldMaterial.skyBox.model].draw();
 
             //Render world
@@ -135,7 +99,6 @@ namespace Renderer
     }
     void render()
     {
-        auto& models = ModelLoader::native();
         currentFrame++;
 
         glClearColor(currentConfiguration.clearColor.x, currentConfiguration.clearColor.y, currentConfiguration.clearColor.z,1.0);

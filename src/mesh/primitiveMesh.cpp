@@ -17,10 +17,9 @@ std::vector<float> PrimitiveMesh::interleavedData(int& vertexSize) const{
     int vertex = 0;
     while(vertex < count)
     {
-        int oldid = dataIdx;
         for (size_t buffer = 0; buffer < attributes.size(); buffer++) 
         {
-            for (size_t idx = 0; idx < attributes[buffer].size; idx++)
+            for (int idx = 0; idx < attributes[buffer].size; idx++)
             {
                 data[dataIdx++] = attributes[buffer].buffer[vertex][idx];
             }
@@ -135,7 +134,7 @@ std::vector<float> PrimitiveMesh::interleavedData(const std::vector<MeshGenerati
         for (size_t attr = 0; attr < buffers.size(); attr++) 
         {
             int s = buffers[attr].size;
-            for (size_t idx = 0; idx < s; idx++)
+            for (int idx = 0; idx < s; idx++)
             {
                 result[dataIdx++] = buffers[attr].buffer[vertex * s + idx];
             }

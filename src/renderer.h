@@ -8,19 +8,6 @@
 #include "framebuffer.h"
 
 
-struct RenderNode : public FrameBuffer{
-    static MeshID screenQuad;
-
-    std::vector<RenderNode*> children;
-    MaterialID material;
-
-    RenderNode(MaterialID _material,int attachmentCount);
-    RenderNode(int attachmentCount);
-
-    void render(int screenWidth, int screenHeight);
-    RenderNode* setChildren(std::vector<RenderNode*>&& children);
-};
-
 struct RenderConfiguration
 {
     int mssaLevel;
@@ -29,6 +16,7 @@ struct RenderConfiguration
     glm::vec3 clearColor;
 };
 
+class RenderNode;
 namespace Renderer
 {
     extern size_t currentFrame;

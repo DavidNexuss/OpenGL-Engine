@@ -51,6 +51,12 @@ struct Material : public EngineComponent
     }
 
     static Material createDefaultMaterial();
+
+    inline void bindScreenTexture(GLuint textureID,int screenTextureID) {
+        size_t textureUnit = textureUniforms.size() + screenTextureID;
+        TextureLoader::useTexture(textureID,textureUnit,GL_TEXTURE_2D);
+        glUniform1i(screenTextureUniforms[screenTextureID],textureUnit);
+    }
 };
 
 #define UNIFORM_SET MaterialLoader::get_current()->uniforms

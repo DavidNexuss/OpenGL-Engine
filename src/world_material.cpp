@@ -5,12 +5,12 @@
 #include "material.h"
 #include "model.h"
 
-ModelID WorldMaterial::SkyBox::model = Standard::invalidId;
-MaterialID WorldMaterial::SkyBox::material = Standard::invalidId;
+ModelID WorldMaterial::SkyBox::model = -1;
+MaterialID WorldMaterial::SkyBox::material = -1;
 
 void WorldMaterial::SkyBox::initialize()
  {
-    if(model != Standard::invalidId) return;
+    if(!Standard::is_invalid(model)) return;
             
     Material cubeMap_material("cubemap",{});
     cubeMap_material.isSkyboxMaterial = true;

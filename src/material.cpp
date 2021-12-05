@@ -37,7 +37,7 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
     for(const auto& uniform : uniformsList)
     {
         GLuint uniform_location = glGetUniformLocation(programID,uniform.c_str());
-        if(uniform_location == Standard::invalidId) {
+        if(Standard::is_invalid(uniform_location)) {
             throw std::runtime_error("Asked uniform " + uniform + " not found");
         }
         uniforms.emplace_back(uniform_location);
@@ -46,12 +46,11 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
     
     const auto uniformListLookup = [](GLuint programID,vector<GLuint>& uniforms,const string& pattern){
         GLuint location = 0;
-        for (size_t i = 0; i < TextureLoader::maxTextureUnits and location != Standard::invalidId; i++)
+        for (size_t i = 0; i < TextureLoader::maxTextureUnits and !Standard::is_invalid(location); i++)
         {
             string uniformName = pattern + to_string(i);
             location = glGetUniformLocation(programID,uniformName.c_str());
-            if(location != Standard::invalidId)
-            {
+            if(!Standard::is_invalid(location)) {
                 uniforms.push_back(location);
             }
         }
@@ -63,15 +62,18 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
 
 int Material::useScreenAttachments(const FrameBuffer& buffer,int startingIndex)
 {
-    int i = 0;
+    /*
+    size_t i = 0;
     for (i = 0; i < buffer.textureAttachments.size() && (i + startingIndex) < screenTextureUniforms.size(); ++i) {
-        int texId = textureUniforms.size() + i + startingIndex;
+        size_t texId = textureUniforms.size() + i + startingIndex;
+        size_t uniformId = i + startingIndex;
+
         if(texId >= Standard::maxUserTextureUnits) return i + startingIndex;
 
         TextureLoader::useTexture(buffer.textureAttachments[i],texId,GL_TEXTURE_2D);
-        glUniform1i(screenTextureUniforms[i + startingIndex],i);
+        glUniform1i(screenTextureUniforms[uniformId],texId);
     }   
-    return i + startingIndex;
+    return i + startingIndex;*/
 }
 void Material::useInstance(MaterialInstanceID materialInstanceID)
 {
@@ -92,7 +94,7 @@ void Material::useInstance(MaterialInstanceID materialInstanceID)
 
     for (size_t i = 0; i < textureUniforms.size(); i++)
     {
-        if (instance.assignedTextureUnits[i] != Standard::invalidId)
+        if (!Standard::is_invalid(instance.assignedTextureUnits[i]))
         {
             TextureLoader::useTexture(instance.assignedTextureUnits[i],i,isSkyboxMaterial ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D);
             glUniform1i(textureUniforms[i],i);
@@ -107,8 +109,8 @@ Material Material::createDefaultMaterial()
     return Material(Directory::getDefaultFragemntShaderPath(),Directory::getDefaultVertexShaderPath(),{});
 }
 
-MaterialID MaterialLoader::debugMaterialID = Standard::invalidId;
-MaterialID MaterialLoader::currentMaterial = Standard::invalidId;
-MaterialInstanceID MaterialLoader::debugMaterialInstanceID = Standard::invalidId;
+MaterialID MaterialLoader::debugMaterialID = -1;
+MaterialID MaterialLoader::currentMaterial = -1;
+MaterialInstanceID MaterialLoader::debugMaterialInstanceID = -1;
 vector<Material> MaterialLoader::materials;
 vector<size_t> MaterialLoader::usedMaterials;

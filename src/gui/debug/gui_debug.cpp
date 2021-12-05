@@ -6,6 +6,7 @@
 #include <model.h>
 #include <light.h>
 #include <list>
+#include <framebuffer.h>
 
 namespace GUI
 {
@@ -162,8 +163,35 @@ namespace GUI
             for(const auto el : windows)  {
                 renderModelMenu(el,(bool*)&vec[el].editMenu);
             }
-
         }
+
+
+        void renderFrameBufferWidget(int framebufferId) {
+
+            int width = 1920; //Loader::framebuffers[framebufferId]->getWidth();
+            int height = Loader::framebuffers[framebufferId]->getHeight();
+            ImVec2 displaySize = ImVec2(width/4, height/4);
+
+            if (ImGui::TreeNode("Depth buffer")) {
+                ImGui::Image((void*)(intptr_t)Loader::framebuffers[framebufferId]->stencilDepthBuffer,displaySize);
+            }
+
+            if (ImGui::TreeNode("Color attachments")) {
+                for (size_t i = 0; i < Loader::framebuffers[framebufferId]->colorAttachments.size(); i++)
+                {
+                    if (ImGui::TreeNode(("Attachment " + std::to_string(i)).c_str())) {
+                        ImGui::Image((void*)(intptr_t)Loader::framebuffers[framebufferId]->colorAttachments[i],displaySize);       
+                    }
+                }
+            }
+        }
+        void renderFrameBufferMenu(int framebufferId,bool* windowEnable) {
+            if(ImGui::Begin("frameBuffer",windowEnable)) {
+                renderFrameBufferWidget(framebufferId);
+            }
+            ImGui::End();
+        }
+
         void renderMaterialInstanceMenu(bool* windowEnabled)
         {
 
@@ -179,6 +207,19 @@ namespace GUI
         void renderLightTree(bool* windowEnable)
         {
             renderTree("LightTree",windowEnable,Light::lightsComponent,renderLightMenu);
+        }
+
+        void renderFrameBufferTree(bool* windowEnable)
+        {
+            if(ImGui::Begin("frameBufferTree",windowEnable)) {
+                
+                for (size_t i = 0; i < Loader::framebuffers.size(); i++) {
+                    
+                    renderFrameBufferWidget(i);
+                }
+                
+            }
+            ImGui::End();
         }
         void loadDebugGUI()
         {

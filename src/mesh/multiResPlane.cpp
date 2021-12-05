@@ -7,7 +7,7 @@ MultiResPlane::MultiResPlane(float _resolution) : resolution(_resolution)
 
 void MultiResPlane::create()
 {
-    int l = resolution + 2;
+    size_t l = resolution + 2;
     int n = l*l;
     int vertex = initiliazeAttribute(n,3,Standard::aPosition);
 

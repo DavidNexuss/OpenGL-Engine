@@ -11,7 +11,7 @@ class WorldMaterial
         static MaterialID material;
         static void initialize();
 
-        Texture texture = Standard::invalidId;
+        Texture texture = -1;
     };
 
 

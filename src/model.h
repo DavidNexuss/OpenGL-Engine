@@ -25,6 +25,7 @@ struct Model : public EngineComponent
 
     Model() { }
     Model(MeshID _meshID,MaterialID _materialID = 0) : meshID(_meshID), materialID(_materialID), transformMatrix(1.0f) { }
+    Model(MeshID _meshID,MaterialID _materialID, MaterialInstanceID _materialInstanceID) : meshID(_meshID), materialID(_materialID), materialInstanceID(_materialInstanceID), transformMatrix(1.0f) { }
 
     inline void draw()
     {
@@ -37,7 +38,7 @@ struct Model : public EngineComponent
         if (depthMask) glDepthMask(GL_FALSE);
 
         Renderer::useMaterial(materialID);
-        if (materialInstanceID != Standard::invalidId) Renderer::useMaterialInstance(materialInstanceID);
+        if (!Standard::is_invalid(materialInstanceID)) Renderer::useMaterialInstance(materialInstanceID);
 
         Renderer::useMesh(meshID);
         
@@ -79,6 +80,9 @@ namespace ModelLoader
     {
         model.name = std::to_string(models.internal().size());
         return models.push_back(std::move(model));
+    }
+    static inline ModelID loadModel(const Model& model) {
+        return models.push_back(Model(model));
     }
 
     static inline std::vector<Model>& native() { return models.sorted_internal(); }

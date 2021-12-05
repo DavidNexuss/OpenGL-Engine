@@ -17,6 +17,7 @@ struct Mesh {
     Mesh(GLuint _vao,GLuint _vbo,GLuint _ebo,size_t _vertexCount):
     vao(_vao),vbo(_vbo),ebo(_ebo),vertexCount(_vertexCount) { }
 
+    Mesh() { }
     inline const std::shared_ptr<MeshBuffer> getMeshBuffer() const { return meshBuffer; }
 
 };

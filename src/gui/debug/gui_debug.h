@@ -25,10 +25,14 @@ namespace GUI
         void renderLightMenu(int lightID,bool* windowEnable);
         void renderLightWidget(int lightID);
 
+        void renderFrameBufferWidget(int framebufferId);
+        void renderFrameBufferMenu(int framebufferId,bool* windowEnable);
+
         void renderMaterialTree(bool* windowEnable);
         void renderModelTree(bool* windowEnable);
         void renderLightTree(bool* windowEnable);
-
+        void renderFrameBufferTree(bool* windowEnable);
+        
         //Engine global configurations menu
         
         void renderRenderConfigMenu(bool *windowEnable, RenderConfiguration& config);

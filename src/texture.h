@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "texture_data.h"
 #include <vector>
+#include <iostream>
 
 /**
  * @brief Manages OpenGL textures and its identifiers
@@ -20,8 +21,7 @@ namespace TextureLoader
 
     inline static void useTexture(Texture textureID,size_t textureUnit,GLenum mode)
     {
-        if (texturesUnits[textureUnit] != textureID)
-        {
+        if (texturesUnits[textureUnit] != textureID) {
             texturesUnits[textureUnit] = textureID;
             glActiveTexture(GL_TEXTURE0 + textureUnit);
             glBindTexture(mode,textureID);

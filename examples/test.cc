@@ -8,6 +8,7 @@
 #include <mesh/sphereMesh.h>
 #include <mesh/voxel/voxelMesh.h>
 #include <mesh/voxel/hexelMesh.h>
+#include <mesh/multiResPlane.h>
 
 #include <obj.h>
 #include <mesh_builder.h>
@@ -78,7 +79,6 @@ void loadSpecificWorld()
     
     
     Model cube = Model(MeshLoader::loadMesh(meshGenerator.generateMesh()));
-
     cube.materialID = reflectiveMaterial;
     cube.materialInstanceID = reflectiveMaterialInstance;
     ModelLoader::loadModel(std::move(cube));
@@ -104,8 +104,37 @@ void loadSpecificWorld()
     ModelLoader::loadModel(sphereModel);
 */
 
-    Light::load(glm::vec3(8.0),glm::vec3(1.0,1.0,1.0));
+}
 
+void loadPlaneWorld()
+{
+    auto reflectiveMaterial = MaterialLoader::loadMaterial(Material("heightmap",
+    {"ka","kd","ks","specularStrength","reflectionStrength","smoothStep","hieghtScale"}));
+    
+    auto reflectiveMaterialInstance = MaterialInstanceLoader::loadMaterialInstance(
+        MaterialInstance({
+            glm::vec3(0.4),glm::vec3(0.4),glm::vec3(0.4),50.0f,0.2f,0.5f,1.0f
+        }));
+
+    TextureData height("height.png");
+    MaterialInstanceLoader::materialInstances[reflectiveMaterialInstance].setTexture(TextureLoader::loadTexture(height,false),0);
+
+     Renderer::worldMaterial.setSkyBox(TextureLoader::loadCubemap({
+        TextureData("canyon/right.png"),
+        TextureData("canyon/left.png"),
+        TextureData("canyon/top.png"),
+        TextureData("canyon/bottom.png"),
+        TextureData("canyon/front.png"),
+        TextureData("canyon/back.png")
+    }));
+
+    Model plane = Model(MeshLoader::loadMesh(MultiResPlane(200).generateMesh()));
+    plane.transformMatrix = glm::translate(glm::mat4(1.0f),glm::vec3(-0.5f,-0.5,-0.5f));
+    plane.materialID = reflectiveMaterial;
+    plane.materialInstanceID = reflectiveMaterialInstance;
+    ModelLoader::loadModel(std::move(plane));
+
+    Light::load(glm::vec3(8.0),glm::vec3(1.0,1.0,1.0));
 }
 
 
@@ -119,8 +148,8 @@ int main(int argc, char** argv)
         .windowHeight = 768
     });
 
-    loadSpecificWorld();
-
+    //loadSpecificWorld();
+    loadPlaneWorld();
     GUI::addUnit(GUI::makeSimpleGuiUnit([](){
         bool window = true;
         GUI::Debug::renderModelTree(&window);
@@ -141,7 +170,11 @@ int main(int argc, char** argv)
         }
         return true;
     }));
-//    Renderer::addPostProcess(MaterialLoader::loadMaterial(Material("screen")));
+    /*
+    Renderer::setRenderPipeline(
+        (new RenderNode(MaterialLoader::loadMaterial(Material("screen")),1))->setChildren({new RenderNode(1)}));
+*/
+   // Renderer::addPostProcess(MaterialLoader::loadMaterial(Material("screen")));
 /*
     GUI::Extra::EngineTextEditor* editor = new GUI::Extra::EngineTextEditor();
     Resource text = Resource(ResourceHeader::fromFile("res/materials/base_vertex.glsl"));
