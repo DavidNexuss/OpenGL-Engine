@@ -65,8 +65,8 @@ namespace Standard
     //Default window hints
     const static int defaultWindowWidth = 1280;
     const static int defaultlWindowHeight = 720;
-    const static int defaultOpenglMajorVersion = 3;
-    const static int defaultOpenglMinorVersion = 0;
+    const static int defaultOpenglMajorVersion = 4;
+    const static int defaultOpenglMinorVersion = 5;
 
     const static int defaultMssaLevel = 4;
 
