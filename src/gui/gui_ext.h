@@ -1,7 +1,7 @@
 #pragma once
 #include "gui.h"
 #include "unit.h"
-#include <ImGuiColorTextEdit/TextEditor.h>
+#include <imguiText/TextEditor.h>
 #include <io/resource.h>
 
 namespace GUI

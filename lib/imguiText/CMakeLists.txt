@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.4)
+project(imguiText)
+file(GLOB_RECURSE SRCS *.cpp *.h)
+include_directories(../)
+include_directories(../../src)
+add_library(imguiText ${SRCS})

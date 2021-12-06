@@ -1,6 +1,6 @@
 #include "texture_data.h"
 #include "directory.h"
-#include <stb_image/stb_image.h>
+#include <stbimage/stb_image.h>
 #include <iostream>
 using namespace std;
 

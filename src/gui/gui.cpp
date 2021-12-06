@@ -2,7 +2,7 @@
 #include "gui_ext.h"
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
-#include <ImGuiColorTextEdit/TextEditor.h>
+#include <imguiText/TextEditor.h>
 #include <directory.h>
 #include <limits>
 
