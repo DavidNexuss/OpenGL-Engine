@@ -77,7 +77,7 @@ namespace GUI
         void renderMaterialInstanceWidget(int materialID,int materialInstanceID)
         {
             auto& matInstance = MaterialInstanceLoader::get(materialInstanceID);
-            Material* mat = materialID >= 0 ? &MaterialLoader::materials[materialID] : nullptr;
+            Material* mat = materialID >= 0 ? &Loader::materials[materialID] : nullptr;
             for (size_t i = 0; i < matInstance.uniformValues.size(); i++)
             {
                 const char* variableName = mat ? mat->uniformNames[i].c_str() : nullptr;
@@ -112,7 +112,7 @@ namespace GUI
         }
         void renderModelWidget(int modelID)
         {
-            Model& model = ModelLoader::models[modelID];
+            Model& model = Loader::models[modelID];
             ImGui::InputInt("meshID",(int*)&model.meshID);
             ImGui::InputInt("materialID",(int*)&model.materialID);
             ImGui::InputInt("materialInstanceID",(int*)&model.materialInstanceID);
@@ -144,9 +144,9 @@ namespace GUI
         }
 
         template <typename T>
-        void renderTree(const char* treeName,bool* window,const std::vector<T>& vec,void (*func)(int,bool*))
+        void renderTree(const char* treeName,bool* window,storage<T>& vec,void (*func)(int,bool*))
         {
-            std::list<int> windows;
+            std::vector<int> windows;
 
             if(ImGui::Begin(treeName,window))
             {
@@ -198,15 +198,15 @@ namespace GUI
         }
         void renderMaterialTree(bool* windowEnable)
         {
-            renderTree("MaterialTree",windowEnable,MaterialLoader::materials,renderMaterialMenu);
+            renderTree("MaterialTree",windowEnable,Loader::materials,renderMaterialMenu);
         }
         void renderModelTree(bool* windowEnable)
         {
-            renderTree("ModelTree",windowEnable,ModelLoader::native(),renderModelMenu);
+            renderTree("ModelTree",windowEnable,Loader::models,renderModelMenu);
         }
         void renderLightTree(bool* windowEnable)
         {
-            renderTree("LightTree",windowEnable,Light::lightsComponent,renderLightMenu);
+//            renderTree("LightTree",windowEnable,Light::lightsComponent,renderLightMenu);
         }
 
         void renderFrameBufferTree(bool* windowEnable)

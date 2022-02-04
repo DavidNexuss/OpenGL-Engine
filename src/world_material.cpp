@@ -5,8 +5,8 @@
 #include "material.h"
 #include "model.h"
 
-ModelID WorldMaterial::SkyBox::model = -1;
-MaterialID WorldMaterial::SkyBox::material = -1;
+ModelID WorldMaterial::SkyBox::model = Standard::engineInvalid;
+MaterialID WorldMaterial::SkyBox::material = Standard::engineInvalid;
 
 void WorldMaterial::SkyBox::initialize()
  {
@@ -14,12 +14,12 @@ void WorldMaterial::SkyBox::initialize()
             
     Material cubeMap_material("cubemap",{});
     cubeMap_material.isSkyboxMaterial = true;
-    material = MaterialLoader::loadMaterial(cubeMap_material);
-    MeshID cubeMap_mesh = MeshLoader::loadMesh(MeshBuilder::createPrimitiveMesh(MeshBuilder::SkyBox,true));
+    material = Loader::materials.add(cubeMap_material);
+    MeshID cubeMap_mesh = Loader::meshes.add(MeshBuilder::createPrimitiveMesh(MeshBuilder::SkyBox,true));
 
     Model cubeMap_model(cubeMap_mesh,material); 
     cubeMap_model.depthMask = true;
     cubeMap_model.cullFrontFace = true;
     cubeMap_model.enabled = false;
-    model = ModelLoader::loadModel(std::move(cubeMap_model));
+    model = Loader::models.add(cubeMap_model);
 }

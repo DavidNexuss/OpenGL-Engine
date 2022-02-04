@@ -131,21 +131,6 @@ imguiText/fast:
 .PHONY : imguiText/fast
 
 # target to build an object file
-CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/imguiText/CMakeFiles/imguiText.dir/build.make engine/lib/imguiText/CMakeFiles/imguiText.dir/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o
-.PHONY : CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o
-
-# target to preprocess a source file
-CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/imguiText/CMakeFiles/imguiText.dir/build.make engine/lib/imguiText/CMakeFiles/imguiText.dir/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i
-.PHONY : CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i
-
-# target to generate assembly for a file
-CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/imguiText/CMakeFiles/imguiText.dir/build.make engine/lib/imguiText/CMakeFiles/imguiText.dir/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s
-.PHONY : CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s
-
-# target to build an object file
 TextEditor.o:
 	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/imguiText/CMakeFiles/imguiText.dir/build.make engine/lib/imguiText/CMakeFiles/imguiText.dir/TextEditor.o
 .PHONY : TextEditor.o
@@ -169,9 +154,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... imguiText"
-	@echo "... CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o"
-	@echo "... CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i"
-	@echo "... CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s"
 	@echo "... TextEditor.o"
 	@echo "... TextEditor.i"
 	@echo "... TextEditor.s"

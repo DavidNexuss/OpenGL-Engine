@@ -109,8 +109,5 @@ Material Material::createDefaultMaterial()
     return Material(Directory::getDefaultFragemntShaderPath(),Directory::getDefaultVertexShaderPath(),{});
 }
 
-MaterialID MaterialLoader::debugMaterialID = -1;
-MaterialID MaterialLoader::currentMaterial = -1;
-MaterialInstanceID MaterialLoader::debugMaterialInstanceID = -1;
-vector<Material> MaterialLoader::materials;
-vector<size_t> MaterialLoader::usedMaterials;
+
+Loader::MaterialLoader Loader::materials;

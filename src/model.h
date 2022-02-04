@@ -53,7 +53,7 @@ struct Model : public EngineComponent
             glUniformMatrix3fv(UNIFORMS(Standard::uNormalMatrix),1,false,&normalMatrix[0][0]);
         }
 
-        Renderer::drawMesh(MeshLoader::meshes[MeshLoader::currentMesh].indexed);
+        Renderer::drawMesh(Loader::meshes[Renderer::currentMesh].indexed);
 
         if(depthMask) glDepthMask(GL_TRUE);
 
@@ -63,27 +63,15 @@ struct Model : public EngineComponent
 
     }
 
-    bool operator<(const Model& model) const
-    {
+    bool operator<(const Model& model) const {
         return materialID < model.materialID || 
             (materialID == model.materialID && (materialInstanceID < model.materialInstanceID || 
                 (materialInstanceID == model.materialInstanceID && meshID < model.meshID)));
-
     }
 };
 
 using ModelID = size_t;
-namespace ModelLoader
-{
-    extern sorted_storage<Model> models;
-    static inline ModelID loadModel(Model&& model)
-    {
-        model.name = std::to_string(models.internal().size());
-        return models.push_back(std::move(model));
-    }
-    static inline ModelID loadModel(const Model& model) {
-        return models.push_back(Model(model));
-    }
 
-    static inline std::vector<Model>& native() { return models.sorted_internal(); }
-};
+namespace Loader {
+    extern sorted_storage<Model> models;
+}

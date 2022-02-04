@@ -20,23 +20,28 @@ class RenderNode;
 namespace Renderer
 {
     extern size_t currentFrame;
+    extern size_t currentMaterial;
+    extern size_t currentMesh;
+    
     extern WorldMaterial worldMaterial;;
     extern RenderConfiguration currentConfiguration;
 
     void useMaterial(MaterialID id);
     void useMaterialInstance(MaterialInstanceID id);
     void useMesh(MeshID id);
-    
+
     void configureRenderer(const RenderConfiguration& config);
     void render();
     void renderPass();
 
     inline void drawMesh(bool indexed) {
         if(indexed) 
-            glDrawElements(GL_TRIANGLES,MeshLoader::meshes[MeshLoader::currentMesh].vertexCount,Standard::meshIndexGL,(void*)0);
+            glDrawElements(GL_TRIANGLES,Loader::meshes[Renderer::currentMesh].vertexCount,Standard::meshIndexGL,(void*)0);
         else 
-            glDrawArrays(GL_TRIANGLES,0,MeshLoader::meshes[MeshLoader::currentMesh].vertexCount);
+            glDrawArrays(GL_TRIANGLES,0,Loader::meshes[Renderer::currentMesh].vertexCount);
     }
 
     void setRenderPipeline(RenderNode* renderRoot);
 }
+
+#define UNIFORMS(x) Loader::materials[Renderer::currentMaterial].uniforms[x]

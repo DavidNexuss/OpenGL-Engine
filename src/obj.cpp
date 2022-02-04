@@ -77,7 +77,7 @@ MeshID createMesh(const vector<Vertex>& vertices,const vector<Standard::meshInde
 
     Mesh mesh(VAO,VBO,EBO,indices.size());
     mesh.indexed = true;
-    return MeshLoader::loadMesh(mesh);
+    return Loader::meshes.add(std::move(mesh));
 }
 vector<Texture> loadMaterialTextures(aiMaterial *mat,aiTextureType type)
 {

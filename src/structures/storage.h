@@ -1,44 +1,72 @@
 #pragma once
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
-/**
- * Similar to vector but with O(1) erase using an index map.
- * General purposes storage container designed for main components of the engine, models, textures, materials, material instances ...
- */
-template <typename T>
-struct storage
-{
+template<typename T>
+class storage {
+
+    protected:
     std::vector<T> data;
-    std::vector<size_t> indices;
+    std::vector<bool> removeMarched;
+    std::vector<size_t> toRemove;
     bool dirty = false;
 
-    size_t push_back(T&& object)
-    {
-        data.push_back(std::move(object));
-        indices.push_back(indices.size());
+    private:
+    void fix() {
+        removeMarched.resize(size());
+    }
+
+    public:
+    size_t add(const T& value) {
         dirty = true;
-        return indices.size() - 1;
+        fix();
+        if(toRemove.empty()) {
+            data.push_back(value);
+            removeMarched.resize(size());
+            return data.size() - 1;
+        }
+        else{
+            size_t i = toRemove[toRemove.size() - 1];
+            toRemove.pop_back();
+            removeMarched[i] = false;
+            data[i] = value;
+            std::cerr << "Reuse" << std::endl;
+            return i;
+        }
     }
 
-    void erase(size_t idx) {
-        
-        std::swap(data[idx],data[data.size() -1]);
-        data.pop_back();
-        indices.pop_back();
+    size_t size() const { return data.size(); }
+
+    void remove(size_t index) {
+        fix();
         dirty = true;
+        toRemove.push_back(index);
+        removeMarched[index] = 1;
     }
 
-    T& get(size_t idx) const {
-        return data[indices[idx]];
+    template <typename ... Args>
+    size_t emplace(Args&& ... args) {return insert(T(std::forward<Args>(args)...)); }
+
+    int next(int index) {
+        fix();
+        int i;
+        for(i = index; i < std::vector<T>::size() && removeMarched[i]; i++) { }
+        return i;
     }
 
-    const T& operator[] (size_t idx) const { return data[indices[idx]]; }
-    T& operator[] (size_t idx) { return data[indices[idx]]; }
-
-    std::vector<T>& internal() {
-        return data;
+    bool valid(int index) const {
+        return !removeMarched[index];
     }
+
+    bool isDirty() const { return dirty; }
+    void cleanDirty() { dirty = false; }
+
+    const T& at(int idx) const { return data[idx]; }
+    const T& operator[](int idx) const { return at(idx); }
+
+    T& at(int idx) { return data[idx]; }
+    T& operator[](int idx) { return at(idx); }
 };
 
 /**
@@ -51,72 +79,46 @@ template <typename T>
 struct sorted_storage : public storage<T>
 {
 
-    using storage<T>::data;
-    using storage<T>::indices;
-    using storage<T>::dirty;
+    struct sorted_view {
+        sorted_storage<T>& storage;
 
-    void sort()
-    {
-        struct comparable { T first; size_t second; };
-        std::vector<comparable> sortedData(data.size());
+        T& at(int idx) { return storage.data[storage.sortedIndexs[idx]]; }
+        T& operator[](int idx) { return at(idx); }
 
-        for(size_t i = 0; i < data.size(); i++) {
-            sortedData[i] = {data[i], indices[i]};
+        size_t size() const {
+            return storage.upperBound;
         }
-
-        std::sort(sortedData.begin(),sortedData.end(),[&](const comparable& lobj,const comparable& robj){ return (lobj.first < robj.first); });
-
-        for(size_t i = 0; i < indices.size(); i++) { 
-            indices[sortedData[i].second] = i;
-            data[i] = sortedData[i].first;
-        }
-
-    }
-
-    std::vector<T>& sorted_internal() {
-        if(dirty) {
-            sort();
-            dirty = false;
-        }
-        return data;
-    }
-};
-
-/**
- * Same as storage but returns a sorted index vector for order vector traversal
- */
-/*
-template <typename T>
-struct sorted_storage : public storage<T>
-{
-    using storage<T>::data;
-    using storage<T>::indices;
-    using storage<T>::dirty;
-
-    std::vector<size_t> sortedIndices;
-    
-    struct SortProxy
-    {
-        std::vector<T>& vectorData;
-        std::vector<size_t>& indices;
-
-        SortProxy(std::vector<T>& _vectorData,std::vector<size_t>& _indices) : vectorData(_vectorData), indices(_indices) { }
-
-        T& operator[] (size_t idx) { return vectorData[idx]; }
     };
 
-    void sort()
-    {
-        size_t n = 0;
-        std::generate(sortedIndices.begin(),sortedIndices.end(),[n = 0]() mutable {return n++; });
-        std::sort(sortedData.begin(),sortedData.end(),[&](const size_t i,const size_t j){return data[i] < data[j]; });
+    std::vector<size_t> sortedIndexs;
+    size_t upperBound;
+
+    void sort() {
+        sortedIndexs.resize(storage<T>::size());
+
+        for(size_t i = 0; i < storage<T>::data.size(); i++) {
+            sortedIndexs[i] = i;
+        }
+
+        std::sort(sortedIndexs.begin(),sortedIndexs.end(),
+        [&](size_t lhs ,size_t rhs){ 
+            bool validLhs = storage<T>::valid(lhs);
+            bool validRhs = storage<T>::valid(rhs);
+
+            bool diff = validLhs != validRhs;
+            return diff ? validLhs > validRhs : storage<T>::data[lhs] < storage<T>::data[rhs]; 
+        });
+
+        size_t i;
+        for(i = 0; i < storage<T>::size() && storage<T>::valid(sortedIndexs[i]); i++) { }
+        upperBound = i;
     }
 
-    SortProxy sorted_internal() {
-        if(dirty) sort();
-        dirty = false;
-        return {data,sortedIndices};
+    sorted_view getSortedView() {
+        if(storage<T>::isDirty()) { 
+            sort();
+            storage<T>::cleanDirty();
+        }
+        return sorted_view{*this};
     }
-
-
-};*/
+};

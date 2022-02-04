@@ -4,13 +4,13 @@
 using namespace glm;
 VRP Util::getSceneVRP()
 {
-    auto models = ModelLoader::native();
+    auto models = Loader::models.getSortedView();
     vec4 min = vec4(vec3(INFINITY),0);
     vec4 max = vec4(vec3(-INFINITY),0);
 
     for (size_t i = 0; i <models.size(); i++)
     {
-        Mesh& mesh = MeshLoader::meshes[ModelLoader::models[i].meshID];
+        Mesh& mesh = Loader::meshes[Loader::models[i].meshID];
         auto buffer = mesh.getMeshBuffer();
         for (size_t j = 0; j < mesh.vertexCount; j++)
         {

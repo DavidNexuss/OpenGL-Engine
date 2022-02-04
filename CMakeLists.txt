@@ -7,3 +7,5 @@ add_subdirectory(lib/imgui)
 add_subdirectory(lib/imguiText)
 add_subdirectory(lib/stbimage)
 target_link_libraries(engine imgui imguiText stbimage)
+
+set(CMAKE_CXX_FLAGS_DEBUG "-g -DNDEBUG")

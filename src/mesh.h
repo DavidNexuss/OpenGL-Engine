@@ -1,6 +1,7 @@
 #pragma once
 #include "core.h"
 #include "mesh_buffer.h"
+#include "structures/storage.h"
 #include <memory>
 #include <vector>
 
@@ -24,19 +25,7 @@ struct Mesh {
 
 using MeshID = size_t;
 
-namespace MeshLoader
+namespace Loader
 {
-    extern std::vector<Mesh> meshes;
-    extern MeshID currentMesh;     //TODO: FIx
-
-    inline static MeshID loadMesh(const Mesh& mesh)
-    {
-        meshes.emplace_back(mesh);
-        return meshes.size() - 1;
-    }
-
-    inline static Mesh& get(size_t index)
-    {
-        return meshes[index];
-    }
-};
+    extern storage<Mesh> meshes;
+}

@@ -1,5 +1,8 @@
 #include "light.h"
 #include "material.h"
+#include "renderer.h"
+#include <iostream>
+
 namespace Light
 {
     bool flushUniforms = true;
@@ -23,9 +26,9 @@ namespace Light
 
     void flush()
     {
-        Material& mat = MaterialLoader::materials[MaterialLoader::currentMaterial];
-        if (flushUniforms && mat.isLightSensitive())
-        {
+        Material& mat = Loader::materials[Renderer::currentMaterial];
+        
+        if (flushUniforms && mat.isLightSensitive()) {
             glUniform3fv(mat.uniforms[Standard::uLightPosition],lightsPositions.size(),(GLfloat*)&lightsPositions[0]);
             glUniform3fv(mat.uniforms[Standard::uLightColor],lightsColor.size(),(GLfloat*)&lightsColor[0]);
             glUniform1i(mat.uniforms[Standard::uLightCount],lightsColor.size());

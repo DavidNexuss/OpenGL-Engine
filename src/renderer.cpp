@@ -13,21 +13,21 @@ RenderConfiguration Renderer::currentConfiguration;
 namespace Renderer
 {
     size_t currentFrame = 1;
+    size_t currentMaterial = Standard::engineInvalid;
+    size_t currentMesh = Standard::engineInvalid;
+
     WorldMaterial worldMaterial;
     RenderNode* renderPipeline = nullptr;
 
     void useMaterial(MaterialID materialID)
     {
-        if(MaterialLoader::currentMaterial != materialID)
-        {
-            MaterialLoader::currentMaterial = materialID;
-            MaterialLoader::materials[MaterialLoader::currentMaterial].bind(worldMaterial);
+        if(currentMaterial != materialID) {
+            currentMaterial = materialID;
+            Loader::materials[currentMaterial].bind(worldMaterial);
             REGISTER_MATERIAL_SWAP();
         }
 
-        if (MaterialLoader::usedMaterials[MaterialLoader::currentMaterial] != currentFrame)
-        {
-            MaterialLoader::usedMaterials[MaterialLoader::currentMaterial] = currentFrame;
+        if (Loader::materials.updateForFrame(materialID,currentFrame)) {
             Scene::flush();
             Light::flush();
         }
@@ -35,24 +35,24 @@ namespace Renderer
 
     void useMesh(MeshID meshID)
     {
-        if (meshID != MeshLoader::currentMesh)
+        if (meshID != currentMesh)
         {
-            MeshLoader::currentMesh = meshID;
-            glBindVertexArray(MeshLoader::meshes[MeshLoader::currentMesh].vao);
+            currentMesh = meshID;
+            glBindVertexArray(Loader::meshes[Renderer::currentMesh].vao);
             REGISTER_MESH_SWAP();
         }
     }
     
     void useMaterialInstance(MaterialInstanceID instanceID)
     {
-        MaterialLoader::materials[MaterialLoader::currentMaterial].useInstance(instanceID);
+        Loader::materials[currentMaterial].useInstance(instanceID);
     }
     
     void setRenderPipeline(RenderNode* rootNode){
         renderPipeline = rootNode;
-        if(RenderNode::screenQuad == -1)
+        if(RenderNode::screenQuad == Standard::engineInvalid)
         {
-            RenderNode::screenQuad = MeshLoader::loadMesh(PrimitiveMesh::generateFromBuffers({
+            RenderNode::screenQuad = Loader::meshes.add(PrimitiveMesh::generateFromBuffers({
                 {Standard::aPosition,2,{
                     -1.0,1.0,
                      1.0,1.0,
@@ -85,17 +85,18 @@ namespace Renderer
     void renderPass()
     {
         glCullFace(GL_BACK);
-        auto& models = ModelLoader::native();
         if(!Standard::is_invalid(worldMaterial.skyBox.model) && !currentConfiguration.skipSkybox)
-                ModelLoader::models[worldMaterial.skyBox.model].draw();
+                Loader::models[worldMaterial.skyBox.model].draw();
 
-            //Render world
-            for(size_t i = 0; i < models.size(); i++) {
-                if(!models[i].enabled) continue;
+        auto models = Loader::models.getSortedView();
 
-                models[i].process();
-                models[i].draw();
-            }
+        //Render world
+        for(size_t i = 0; i < models.size(); i++) {
+            if(!models[i].enabled) continue;
+
+            models[i].process();
+            models[i].draw();
+        }
     }
     void render()
     {
@@ -110,45 +111,7 @@ namespace Renderer
         if(renderPipeline != nullptr) {
             renderPipeline->render(Viewport::screenWidth,Viewport::screenHeight);
         } else renderPass();
-        /*
-        if(postprocess.material != Standard::invalidId)
-        {
-            postprocess.screenBuffer.begin(Viewport::screenWidth,Viewport::screenHeight);
-            
-            glCullFace(GL_BACK);
-            //Render skybox first
-            if(worldMaterial.skyBox.model != Standard::invalidId)
-                ModelLoader::models[worldMaterial.skyBox.model].draw();
 
-            //Render world
-            for(size_t i = 0; i < models.size(); i++) {
-                if(!models[i].enabled) continue;
-
-                models[i].process();
-                models[i].draw();
-            }
-            postprocess.screenBuffer.end();
-
-            glCullFace(GL_FRONT);
-            useMaterial(postprocess.material);
-            useMesh(Posprocess::screenQuad);
-            MaterialLoader::materials[postprocess.material].useScreenAttachments(postprocess.screenBuffer);
-            drawMesh(false);
-
-        }
-        else{
-            //Render skybox first
-            if(worldMaterial.skyBox.model != Standard::invalidId)
-                ModelLoader::models[worldMaterial.skyBox.model].draw();
-
-            //Render world
-            for(size_t i = 0; i < models.size(); i++) {
-                if(!models[i].enabled) continue;
-
-                models[i].process();
-                models[i].draw();
-            }
-        }*/
         Light::flushUniforms = false;
     }
 };

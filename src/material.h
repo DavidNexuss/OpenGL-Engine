@@ -5,7 +5,7 @@
 #include "standard.h"
 #include "core.h"
 #include "framebuffer.h"
-
+#include "structures/storage.h"
 #include <vector>
 
 struct Material : public EngineComponent
@@ -59,29 +59,31 @@ struct Material : public EngineComponent
     }
 };
 
-#define UNIFORM_SET MaterialLoader::get_current()->uniforms
-
 using MaterialID = size_t;
-class MaterialLoader
-{
-    public:
-    static MaterialID debugMaterialID;
-    static MaterialInstanceID debugMaterialInstanceID;
 
-    static std::vector<Material> materials;
-    static std::vector<size_t> usedMaterials;
+namespace Loader {
+    class MaterialLoader : public storage<Material> {
+        
+        MaterialID debugMaterialID;
+        MaterialInstanceID debugMaterialInstanceID;
 
-    static MaterialID currentMaterial;
-    
-    inline static MaterialID loadMaterial(const Material& material)
-    {
-        materials.push_back(material);
-        usedMaterials.push_back(0);
-        MaterialID mat = materials.size() - 1;
-        return mat;
-    }
+        std::vector<Material> materials;
+        std::vector<size_t> usedMaterials;
+
+        public:
+        inline MaterialID add(const Material& mat) {
+            usedMaterials.push_back(0);
+            return storage<Material>::add(mat);
+        }
+
+        inline bool updateForFrame(size_t materialIdx,size_t frame) {
+            if(usedMaterials[materialIdx] != frame){
+                usedMaterials[materialIdx] = frame;
+                return true;
+            }
+            return false;
+        }
+    };
+
+    extern MaterialLoader materials;
 };
-
-#define UNIFORMS(x) MaterialLoader::materials[MaterialLoader::currentMaterial].uniforms[x]
-#define CURRENT_MATERIAL() MaterialLoader::materials[MaterialLoader::currentMaterial]
-

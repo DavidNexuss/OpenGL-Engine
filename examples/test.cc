@@ -81,6 +81,7 @@ void loadSpecificWorld()
     Model cube = Model(MeshLoader::loadMesh(meshGenerator.generateMesh()));
     cube.materialID = reflectiveMaterial;
     cube.materialInstanceID = reflectiveMaterialInstance;
+    Loader::loadModel(std::move(cube));
     ModelLoader::loadModel(std::move(cube));
 
     Renderer::worldMaterial.setSkyBox(TextureLoader::loadCubemap({

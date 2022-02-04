@@ -30,7 +30,8 @@ void RenderNode::render(int screenWidth,int screenHeight) {
         for (size_t i = 0; i < children.size(); i++) {
             const auto& textures = children[i]->framebuffer->colorAttachments;
             for (size_t j = 0; j < textures.size(); j++) {
-                MaterialLoader::materials[MaterialLoader::currentMaterial].bindScreenTexture(textures[j],last++);
+                Loader::materials[material].bind(Renderer::worldMaterial);
+                Loader::materials[material].bindScreenTexture(textures[j],last++);
             }
         }
 

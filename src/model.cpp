@@ -4,6 +4,6 @@
 #include <list>
 using namespace std;
 
-sorted_storage<Model> ModelLoader::models;
+sorted_storage<Model> Loader::models;
 
 bool Model::lastcullFrontFace = false;

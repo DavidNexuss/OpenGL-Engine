@@ -131,21 +131,6 @@ stbimage/fast:
 .PHONY : stbimage/fast
 
 # target to build an object file
-CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/stbimage/CMakeFiles/stbimage.dir/build.make engine/lib/stbimage/CMakeFiles/stbimage.dir/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o
-.PHONY : CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o
-
-# target to preprocess a source file
-CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/stbimage/CMakeFiles/stbimage.dir/build.make engine/lib/stbimage/CMakeFiles/stbimage.dir/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i
-.PHONY : CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i
-
-# target to generate assembly for a file
-CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/stbimage/CMakeFiles/stbimage.dir/build.make engine/lib/stbimage/CMakeFiles/stbimage.dir/CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s
-.PHONY : CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s
-
-# target to build an object file
 stb_image.o:
 	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/lib/stbimage/CMakeFiles/stbimage.dir/build.make engine/lib/stbimage/CMakeFiles/stbimage.dir/stb_image.o
 .PHONY : stb_image.o
@@ -169,9 +154,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... stbimage"
-	@echo "... CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.o"
-	@echo "... CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.i"
-	@echo "... CMakeFiles/3.22.0/CompilerIdCXX/CMakeCXXCompilerId.s"
 	@echo "... stb_image.o"
 	@echo "... stb_image.i"
 	@echo "... stb_image.s"
