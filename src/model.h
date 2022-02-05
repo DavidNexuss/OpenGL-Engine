@@ -13,7 +13,7 @@ struct Model : public EngineComponent
     MaterialID materialID = -1;
     MaterialInstanceID materialInstanceID = -1;
 
-    glm::mat4 transformMatrix;
+    glm::mat4 transformMatrix = glm::mat4(1.0);
     glm::mat3 normalMatrix;
 
     bool enabled = true;
@@ -23,8 +23,8 @@ struct Model : public EngineComponent
     static bool lastcullFrontFace;
 
     Model() { }
-    Model(MeshID _meshID,MaterialID _materialID = 0) : meshID(_meshID), materialID(_materialID), transformMatrix(1.0f) { }
-    Model(MeshID _meshID,MaterialID _materialID, MaterialInstanceID _materialInstanceID) : meshID(_meshID), materialID(_materialID), materialInstanceID(_materialInstanceID), transformMatrix(1.0f) { }
+    Model(MeshID _meshID,MaterialID _materialID = 0) : meshID(_meshID), materialID(_materialID) { }
+    Model(MeshID _meshID,MaterialID _materialID, MaterialInstanceID _materialInstanceID) : meshID(_meshID), materialID(_materialID), materialInstanceID(_materialInstanceID) { }
 
     void draw();
     inline void process() { }
@@ -36,7 +36,7 @@ struct Model : public EngineComponent
     }
 
     inline bool valid() const {
-        return meshID != -1 && materialID != -1;
+        return meshID.valid() && materialID.valid();
     }
 };
 

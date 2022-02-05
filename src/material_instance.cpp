@@ -37,4 +37,4 @@ void MaterialInstance::useUniform(UniformID id,GLuint glUniformID)
     REGISTER_UNIFORM_FLUSH();
 }
 
-std::vector<MaterialInstance> MaterialInstanceLoader::materialInstances;
+storage<MaterialInstance> Loader::materialInstances;

@@ -59,19 +59,17 @@ struct Material : public EngineComponent
     }
 };
 
-using MaterialID = size_t;
-
 namespace Loader {
     class MaterialLoader : public storage<Material> {
         
-        MaterialID debugMaterialID;
+        size_t debugMaterialID;
         MaterialInstanceID debugMaterialInstanceID;
 
         std::vector<Material> materials;
         std::vector<size_t> usedMaterials;
 
         public:
-        inline MaterialID add(const Material& mat) {
+        inline size_t add(const Material& mat) {
             usedMaterials.push_back(0);
             return storage<Material>::add(mat);
         }
@@ -87,3 +85,7 @@ namespace Loader {
 
     extern MaterialLoader materials;
 };
+
+
+using MaterialID = storage_pointer<Loader::MaterialLoader,Loader::materials>;
+

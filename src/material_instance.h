@@ -4,7 +4,7 @@
 #include "uniform.h"
 #include "texture.h"
 #include "engine_component.h"
-#include <vector>
+#include "structures/storage.h"
 
 /**
  * @class MaterialInstance
@@ -65,19 +65,8 @@ class MaterialInstance : public EngineComponent
     #undef UNIFORMS_FUNC_DECLARATION
 };
 
-using MaterialInstanceID = size_t;
+namespace Loader {
+    extern storage<MaterialInstance> materialInstances;
+}
 
-namespace MaterialInstanceLoader
-{
-    extern std::vector<MaterialInstance> materialInstances;
-
-    inline static MaterialInstanceID loadMaterialInstance(const MaterialInstance& materialInstance)
-    {
-        materialInstances.push_back(materialInstance);
-        return materialInstances.size() - 1;
-    }
-    inline static MaterialInstance& get(size_t index)
-    {
-        return materialInstances[index];
-    }
-};
+using MaterialInstanceID = STORAGE_POINTER_TYPE(Loader::materialInstances);

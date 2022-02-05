@@ -20,10 +20,9 @@ namespace GUI
             ImGui::End();
         }
 
-        void renderUniformWidget(const char* uniformName,int uniformID,int materialInstanceID)
+        void renderUniformWidget(const char* uniformName,int uniformID,MaterialInstanceID materialInstance)
         {
-            auto& mat = MaterialInstanceLoader::get(materialInstanceID);
-            auto& uniform = mat.getUniform(uniformID);
+            auto& uniform = materialInstance->getUniform(uniformID);
 
             const char* variableName = uniformName ? uniformName : "value";
             switch(uniform.type)
@@ -67,21 +66,19 @@ namespace GUI
             }
         }
 
-        void renderMaterialInstanceMenu(int materialID,int materialInstanceID,bool* windowEnable)
+        void renderMaterialInstanceMenu(MaterialID materialID,MaterialInstanceID materialInstanceID,bool* windowEnable)
         {
             if(ImGui::Begin("MaterialInstanceWidget",windowEnable)) {
                 renderMaterialInstanceWidget(materialID,materialInstanceID);
             }
             ImGui::End();
         }
-        void renderMaterialInstanceWidget(int materialID,int materialInstanceID)
+        void renderMaterialInstanceWidget(MaterialID material,MaterialInstanceID materialInstance)
         {
-            auto& matInstance = MaterialInstanceLoader::get(materialInstanceID);
-            Material* mat = materialID >= 0 ? &Loader::materials[materialID] : nullptr;
-            for (size_t i = 0; i < matInstance.uniformValues.size(); i++)
+            for (size_t i = 0; i < material->uniformNames.size(); i++)
             {
-                const char* variableName = mat ? mat->uniformNames[i].c_str() : nullptr;
-                renderUniformWidget(variableName,i,materialInstanceID);   
+                const char* uniformName = material->uniformNames[i].c_str();
+                renderUniformWidget(uniformName,i,materialInstance);   
             }
         }
 

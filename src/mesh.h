@@ -23,9 +23,9 @@ struct Mesh {
 
 };
 
-using MeshID = size_t;
-
 namespace Loader
 {
     extern storage<Mesh> meshes;
 }
+
+using MeshID = STORAGE_POINTER_TYPE(Loader::meshes);

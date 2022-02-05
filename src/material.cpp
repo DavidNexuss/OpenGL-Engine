@@ -75,28 +75,27 @@ int Material::useScreenAttachments(const FrameBuffer& buffer,int startingIndex)
     }   
     return i + startingIndex;*/
 }
-void Material::useInstance(MaterialInstanceID materialInstanceID)
+void Material::useInstance(MaterialInstanceID matInstance)
 {
     bool swap = false;
-    const MaterialInstance& instance = MaterialInstanceLoader::get(materialInstanceID);
 
     // Set all uniforms
     for (size_t i = 0; i < usedInstances.size(); i++)
     {
         bool different;
-        if ((different = usedInstances[i] != materialInstanceID) || instance.uniformValues[i].dirty)
+        if ((different = usedInstances[i] != matInstance) || matInstance->uniformValues[i].dirty)
         {
-            usedInstances[i] = materialInstanceID;
-            MaterialInstanceLoader::materialInstances[materialInstanceID].useUniform(i,uniforms[i + Standard::uniformCount]);
+            usedInstances[i] = matInstance;
+            matInstance->useUniform(i,uniforms[i + Standard::uniformCount]);
             swap |= different;
         }
     }
 
     for (size_t i = 0; i < textureUniforms.size(); i++)
     {
-        if (!Standard::is_invalid(instance.assignedTextureUnits[i]))
+        if (!Standard::is_invalid(matInstance->assignedTextureUnits[i]))
         {
-            TextureLoader::useTexture(instance.assignedTextureUnits[i],i,isSkyboxMaterial ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D);
+            TextureLoader::useTexture(matInstance->assignedTextureUnits[i],i,isSkyboxMaterial ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D);
             glUniform1i(textureUniforms[i],i);
         }
     }

@@ -120,17 +120,27 @@ struct sorted_storage : public storage<T>
     }
 };
 
-template <typename Container, const Container& cont>
+template <typename Container, Container& cont>
 struct storage_pointer
 {
     using type = typename Container::type;
     size_t index;
 
-    storage_pointer() : index(-1) { }
+    storage_pointer() : index(validId()) { }
     storage_pointer(size_t _index) { index = _index; }
 
-    inline type* operator->() const {
+    type* operator->() const {
         return &cont[index];
     }
-    inline operator size_t () { return index; }
+
+    operator size_t () const { return index; }
+    bool valid() const { return index != validId(); }
+
+    static size_t validId() { return -1; }
+
+    bool operator <(size_t other) const { return index < other; }
+    bool operator <=(size_t other) const { return index <= other; }
+    bool operator ==(size_t other) const { return index == other; }
 };
+
+#define STORAGE_POINTER_TYPE(x) storage_pointer<decltype(x),x>

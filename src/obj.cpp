@@ -130,7 +130,7 @@ MaterialInstanceID createMaterial(aiMesh* mesh,const aiScene* scene)
     if(specularTextures.size() > 0) minstance.setTexture(specularTextures[0],1);
     if(normalTextures.size() > 0)   minstance.setTexture(normalTextures[0],2);
 
-    return ctx.loadedMaterials[material] = MaterialInstanceLoader::loadMaterialInstance(minstance);
+    return ctx.loadedMaterials[material] = Loader::materialInstances.add(minstance);
 }
 Model processMesh(aiMesh* mesh,const aiScene* scene)
 {
