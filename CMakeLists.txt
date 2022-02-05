@@ -1,3 +1,4 @@
+cmake_minimum_required(VERSION 3.22)
 project(Engine)
 file(GLOB_RECURSE SRC src/*.cpp src/*.h)
 include_directories(src)

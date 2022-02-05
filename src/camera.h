@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <glm/glm.hpp>
+#include "structures/storage.h"
 
 enum CameraType
 {
@@ -50,17 +51,7 @@ class Camera
 
 using CameraID = size_t;
 
-/**
- * @brief Camera Loader namesapce for loading cmaeras to the engine
- */
-
-namespace CameraLoader
+namespace Loader
 {
-    extern std::vector<Camera> cameras;
-
-    inline static CameraID loadCamera(const Camera& camera)
-    {
-        cameras.push_back(camera);
-        return cameras.size() - 1;
-    }
-};
+    extern storage<Camera> cameras;
+}

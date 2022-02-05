@@ -4,8 +4,8 @@
 #include "standard.h"
 #include "mesh.h"
 #include "basics.h"
-#include "world_material.h"
 #include "framebuffer.h"
+#include "sky.h"
 
 
 struct RenderConfiguration
@@ -23,7 +23,9 @@ namespace Renderer
     extern size_t currentMaterial;
     extern size_t currentMesh;
     
-    extern WorldMaterial worldMaterial;;
+    extern ModelID skyModel;
+    extern WorldMaterial worldMaterial;
+    
     extern RenderConfiguration currentConfiguration;
 
     void useMaterial(MaterialID id);

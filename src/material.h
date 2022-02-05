@@ -36,7 +36,7 @@ struct Material : public EngineComponent
 
         //Enable skybox if present and compatible with shader
         Texture skyTexture;
-        if ((skyTexture = world.getSkyBoxTexture()) && isSkyBoxSensitive())
+        if ((skyTexture = world.skyTexture) && isSkyBoxSensitive())
         {
             TextureLoader::useTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP);
             glUniform1i(uniforms[Standard::uSkyBox],Standard::tSkyBox);

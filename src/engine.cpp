@@ -57,7 +57,7 @@ void Engine::createEngine(const std::string& titleName,const EngineConfiguration
         glEnable(GL_DEBUG_OUTPUT);
     #endif
 
-    CameraLoader::loadCamera(Camera());
+    Loader::cameras.add(Camera());
     GUI::initialize(window,configuration.glslVersion().c_str());
 
     GUI::addUnit(GUI::makeSimpleGuiUnit([&](){

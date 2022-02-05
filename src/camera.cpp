@@ -77,4 +77,7 @@ void Camera::flush()
         }else glUniformMatrix4fv(current.uniforms[Standard::uViewMatrix],1,false,&viewMatrix[0][0]);
 }
 
-std::vector<Camera> CameraLoader::cameras;
+namespace Loader
+{
+    storage<Camera> cameras;
+}

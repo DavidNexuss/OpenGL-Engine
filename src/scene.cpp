@@ -7,11 +7,11 @@ float Scene::time = 0;
 
 void Scene::update()
 {
-    CameraLoader::cameras[camera].update();
+    Loader::cameras[camera].update();
 }
 
 void Scene::flush()
 {
-    CameraLoader::cameras[camera].flush();
+    Loader::cameras[camera].flush();
     glUniform1f(UNIFORMS(Standard::uTime),time);
 }

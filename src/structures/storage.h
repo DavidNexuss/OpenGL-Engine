@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 
+
 template<typename T>
 class storage {
 
@@ -18,6 +19,8 @@ class storage {
     }
 
     public:
+    using type = T;
+
     size_t add(const T& value) {
         dirty = true;
         fix();
@@ -69,12 +72,6 @@ class storage {
     T& operator[](int idx) { return at(idx); }
 };
 
-/**
- * Same as storage but providing a function to sort data and its indexes so data can be iterated sorted continuously and leave the
- * index accessors unaffected.
- * Designed for reordering models if needed before rendering
- */
-
 template <typename T>
 struct sorted_storage : public storage<T>
 {
@@ -121,4 +118,19 @@ struct sorted_storage : public storage<T>
         }
         return sorted_view{*this};
     }
+};
+
+template <typename Container, const Container& cont>
+struct storage_pointer
+{
+    using type = typename Container::type;
+    size_t index;
+
+    storage_pointer() : index(-1) { }
+    storage_pointer(size_t _index) { index = _index; }
+
+    inline type* operator->() const {
+        return &cont[index];
+    }
+    inline operator size_t () { return index; }
 };

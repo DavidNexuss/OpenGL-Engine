@@ -16,7 +16,9 @@ namespace Renderer
     size_t currentMaterial = Standard::engineInvalid;
     size_t currentMesh = Standard::engineInvalid;
 
+    ModelID skyModel = -1;
     WorldMaterial worldMaterial;
+
     RenderNode* renderPipeline = nullptr;
 
     void useMaterial(MaterialID materialID)
@@ -85,8 +87,9 @@ namespace Renderer
     void renderPass()
     {
         glCullFace(GL_BACK);
-        if(!Standard::is_invalid(worldMaterial.skyBox.model) && !currentConfiguration.skipSkybox)
-                Loader::models[worldMaterial.skyBox.model].draw();
+        Model& sky = Loader::models[skyModel];
+        if(sky.valid() && !currentConfiguration.skipSkybox)
+            sky.draw();
 
         auto models = Loader::models.getSortedView();
 

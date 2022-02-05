@@ -2,7 +2,6 @@
 #include "mesh.h"
 #include "material.h"
 #include "material_instance.h"
-#include "renderer.h"
 #include "structures/storage.h"
 #include "engine_component.h"
 #include "standard.h"
@@ -10,8 +9,8 @@
 
 struct Model : public EngineComponent
 {
-    MeshID meshID;
-    MaterialID materialID;
+    MeshID meshID = -1;
+    MaterialID materialID = -1;
     MaterialInstanceID materialInstanceID = -1;
 
     glm::mat4 transformMatrix;
@@ -27,51 +26,23 @@ struct Model : public EngineComponent
     Model(MeshID _meshID,MaterialID _materialID = 0) : meshID(_meshID), materialID(_materialID), transformMatrix(1.0f) { }
     Model(MeshID _meshID,MaterialID _materialID, MaterialInstanceID _materialInstanceID) : meshID(_meshID), materialID(_materialID), materialInstanceID(_materialInstanceID), transformMatrix(1.0f) { }
 
-    inline void draw()
-    {
-        if (cullFrontFace != lastcullFrontFace)
-        {
-            glCullFace(GL_FRONT + cullFrontFace);
-            lastcullFrontFace = cullFrontFace;
-        }  
+    void draw();
+    inline void process() { }
 
-        if (depthMask) glDepthMask(GL_FALSE);
-
-        Renderer::useMaterial(materialID);
-        if (!Standard::is_invalid(materialInstanceID)) Renderer::useMaterialInstance(materialInstanceID);
-
-        Renderer::useMesh(meshID);
-        
-        if(UNIFORMS(Standard::uTransformMatrix) != GL_INVALID_INDEX)
-        {
-            glUniformMatrix4fv(UNIFORMS(Standard::uTransformMatrix),1,false,&transformMatrix[0][0]);
-        }
-
-        if (UNIFORMS(Standard::uNormalMatrix) != GL_INVALID_INDEX)
-        {
-            normalMatrix = glm::transpose(glm::inverse(transformMatrix));
-            glUniformMatrix3fv(UNIFORMS(Standard::uNormalMatrix),1,false,&normalMatrix[0][0]);
-        }
-
-        Renderer::drawMesh(Loader::meshes[Renderer::currentMesh].indexed);
-
-        if(depthMask) glDepthMask(GL_TRUE);
-
-    }
-    inline void process() 
-    {
-
-    }
-
-    bool operator<(const Model& model) const {
+    inline bool operator<(const Model& model) const {
         return materialID < model.materialID || 
             (materialID == model.materialID && (materialInstanceID < model.materialInstanceID || 
                 (materialInstanceID == model.materialInstanceID && meshID < model.meshID)));
     }
+
+    inline bool valid() const {
+        return meshID != -1 && materialID != -1;
+    }
 };
 
-using ModelID = size_t;
 
 namespace Loader {
     extern sorted_storage<Model> models;
 }
+
+using ModelID = storage_pointer<sorted_storage<Model>,Loader::models>;

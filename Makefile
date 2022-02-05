@@ -130,560 +130,893 @@ engine/fast:
 	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/build
 .PHONY : engine/fast
 
-# target to build an object file
-src/camera.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/camera.o
+src/camera.o: src/camera.cpp.o
 .PHONY : src/camera.o
 
-# target to preprocess a source file
-src/camera.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/camera.i
+# target to build an object file
+src/camera.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/camera.cpp.o
+.PHONY : src/camera.cpp.o
+
+src/camera.i: src/camera.cpp.i
 .PHONY : src/camera.i
 
-# target to generate assembly for a file
-src/camera.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/camera.s
+# target to preprocess a source file
+src/camera.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/camera.cpp.i
+.PHONY : src/camera.cpp.i
+
+src/camera.s: src/camera.cpp.s
 .PHONY : src/camera.s
 
-# target to build an object file
-src/debug.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/debug.o
+# target to generate assembly for a file
+src/camera.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/camera.cpp.s
+.PHONY : src/camera.cpp.s
+
+src/debug.o: src/debug.cpp.o
 .PHONY : src/debug.o
 
-# target to preprocess a source file
-src/debug.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/debug.i
+# target to build an object file
+src/debug.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/debug.cpp.o
+.PHONY : src/debug.cpp.o
+
+src/debug.i: src/debug.cpp.i
 .PHONY : src/debug.i
 
-# target to generate assembly for a file
-src/debug.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/debug.s
+# target to preprocess a source file
+src/debug.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/debug.cpp.i
+.PHONY : src/debug.cpp.i
+
+src/debug.s: src/debug.cpp.s
 .PHONY : src/debug.s
 
-# target to build an object file
-src/directory.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/directory.o
+# target to generate assembly for a file
+src/debug.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/debug.cpp.s
+.PHONY : src/debug.cpp.s
+
+src/directory.o: src/directory.cpp.o
 .PHONY : src/directory.o
 
-# target to preprocess a source file
-src/directory.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/directory.i
+# target to build an object file
+src/directory.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/directory.cpp.o
+.PHONY : src/directory.cpp.o
+
+src/directory.i: src/directory.cpp.i
 .PHONY : src/directory.i
 
-# target to generate assembly for a file
-src/directory.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/directory.s
+# target to preprocess a source file
+src/directory.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/directory.cpp.i
+.PHONY : src/directory.cpp.i
+
+src/directory.s: src/directory.cpp.s
 .PHONY : src/directory.s
 
-# target to build an object file
-src/engine.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine.o
+# target to generate assembly for a file
+src/directory.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/directory.cpp.s
+.PHONY : src/directory.cpp.s
+
+src/engine.o: src/engine.cpp.o
 .PHONY : src/engine.o
 
-# target to preprocess a source file
-src/engine.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine.i
+# target to build an object file
+src/engine.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine.cpp.o
+.PHONY : src/engine.cpp.o
+
+src/engine.i: src/engine.cpp.i
 .PHONY : src/engine.i
 
-# target to generate assembly for a file
-src/engine.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine.s
+# target to preprocess a source file
+src/engine.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine.cpp.i
+.PHONY : src/engine.cpp.i
+
+src/engine.s: src/engine.cpp.s
 .PHONY : src/engine.s
 
-# target to build an object file
-src/engine_component.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine_component.o
+# target to generate assembly for a file
+src/engine.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine.cpp.s
+.PHONY : src/engine.cpp.s
+
+src/engine_component.o: src/engine_component.cpp.o
 .PHONY : src/engine_component.o
 
-# target to preprocess a source file
-src/engine_component.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine_component.i
+# target to build an object file
+src/engine_component.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine_component.cpp.o
+.PHONY : src/engine_component.cpp.o
+
+src/engine_component.i: src/engine_component.cpp.i
 .PHONY : src/engine_component.i
 
-# target to generate assembly for a file
-src/engine_component.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine_component.s
+# target to preprocess a source file
+src/engine_component.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine_component.cpp.i
+.PHONY : src/engine_component.cpp.i
+
+src/engine_component.s: src/engine_component.cpp.s
 .PHONY : src/engine_component.s
 
-# target to build an object file
-src/framebuffer.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/framebuffer.o
+# target to generate assembly for a file
+src/engine_component.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/engine_component.cpp.s
+.PHONY : src/engine_component.cpp.s
+
+src/framebuffer.o: src/framebuffer.cpp.o
 .PHONY : src/framebuffer.o
 
-# target to preprocess a source file
-src/framebuffer.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/framebuffer.i
+# target to build an object file
+src/framebuffer.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/framebuffer.cpp.o
+.PHONY : src/framebuffer.cpp.o
+
+src/framebuffer.i: src/framebuffer.cpp.i
 .PHONY : src/framebuffer.i
 
-# target to generate assembly for a file
-src/framebuffer.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/framebuffer.s
+# target to preprocess a source file
+src/framebuffer.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/framebuffer.cpp.i
+.PHONY : src/framebuffer.cpp.i
+
+src/framebuffer.s: src/framebuffer.cpp.s
 .PHONY : src/framebuffer.s
 
-# target to build an object file
-src/gui/debug/gui_debug.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/debug/gui_debug.o
+# target to generate assembly for a file
+src/framebuffer.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/framebuffer.cpp.s
+.PHONY : src/framebuffer.cpp.s
+
+src/gui/debug/gui_debug.o: src/gui/debug/gui_debug.cpp.o
 .PHONY : src/gui/debug/gui_debug.o
 
-# target to preprocess a source file
-src/gui/debug/gui_debug.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/debug/gui_debug.i
+# target to build an object file
+src/gui/debug/gui_debug.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/debug/gui_debug.cpp.o
+.PHONY : src/gui/debug/gui_debug.cpp.o
+
+src/gui/debug/gui_debug.i: src/gui/debug/gui_debug.cpp.i
 .PHONY : src/gui/debug/gui_debug.i
 
-# target to generate assembly for a file
-src/gui/debug/gui_debug.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/debug/gui_debug.s
+# target to preprocess a source file
+src/gui/debug/gui_debug.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/debug/gui_debug.cpp.i
+.PHONY : src/gui/debug/gui_debug.cpp.i
+
+src/gui/debug/gui_debug.s: src/gui/debug/gui_debug.cpp.s
 .PHONY : src/gui/debug/gui_debug.s
 
-# target to build an object file
-src/gui/fonts.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/fonts.o
+# target to generate assembly for a file
+src/gui/debug/gui_debug.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/debug/gui_debug.cpp.s
+.PHONY : src/gui/debug/gui_debug.cpp.s
+
+src/gui/fonts.o: src/gui/fonts.cpp.o
 .PHONY : src/gui/fonts.o
 
-# target to preprocess a source file
-src/gui/fonts.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/fonts.i
+# target to build an object file
+src/gui/fonts.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/fonts.cpp.o
+.PHONY : src/gui/fonts.cpp.o
+
+src/gui/fonts.i: src/gui/fonts.cpp.i
 .PHONY : src/gui/fonts.i
 
-# target to generate assembly for a file
-src/gui/fonts.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/fonts.s
+# target to preprocess a source file
+src/gui/fonts.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/fonts.cpp.i
+.PHONY : src/gui/fonts.cpp.i
+
+src/gui/fonts.s: src/gui/fonts.cpp.s
 .PHONY : src/gui/fonts.s
 
-# target to build an object file
-src/gui/gui.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui.o
+# target to generate assembly for a file
+src/gui/fonts.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/fonts.cpp.s
+.PHONY : src/gui/fonts.cpp.s
+
+src/gui/gui.o: src/gui/gui.cpp.o
 .PHONY : src/gui/gui.o
 
-# target to preprocess a source file
-src/gui/gui.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui.i
+# target to build an object file
+src/gui/gui.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui.cpp.o
+.PHONY : src/gui/gui.cpp.o
+
+src/gui/gui.i: src/gui/gui.cpp.i
 .PHONY : src/gui/gui.i
 
-# target to generate assembly for a file
-src/gui/gui.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui.s
+# target to preprocess a source file
+src/gui/gui.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui.cpp.i
+.PHONY : src/gui/gui.cpp.i
+
+src/gui/gui.s: src/gui/gui.cpp.s
 .PHONY : src/gui/gui.s
 
-# target to build an object file
-src/gui/gui_ext.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui_ext.o
+# target to generate assembly for a file
+src/gui/gui.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui.cpp.s
+.PHONY : src/gui/gui.cpp.s
+
+src/gui/gui_ext.o: src/gui/gui_ext.cpp.o
 .PHONY : src/gui/gui_ext.o
 
-# target to preprocess a source file
-src/gui/gui_ext.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui_ext.i
+# target to build an object file
+src/gui/gui_ext.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui_ext.cpp.o
+.PHONY : src/gui/gui_ext.cpp.o
+
+src/gui/gui_ext.i: src/gui/gui_ext.cpp.i
 .PHONY : src/gui/gui_ext.i
 
-# target to generate assembly for a file
-src/gui/gui_ext.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui_ext.s
+# target to preprocess a source file
+src/gui/gui_ext.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui_ext.cpp.i
+.PHONY : src/gui/gui_ext.cpp.i
+
+src/gui/gui_ext.s: src/gui/gui_ext.cpp.s
 .PHONY : src/gui/gui_ext.s
 
-# target to build an object file
-src/io/inotify/inotify_context.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_context.o
+# target to generate assembly for a file
+src/gui/gui_ext.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/gui/gui_ext.cpp.s
+.PHONY : src/gui/gui_ext.cpp.s
+
+src/io/inotify/inotify_context.o: src/io/inotify/inotify_context.cpp.o
 .PHONY : src/io/inotify/inotify_context.o
 
-# target to preprocess a source file
-src/io/inotify/inotify_context.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_context.i
+# target to build an object file
+src/io/inotify/inotify_context.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_context.cpp.o
+.PHONY : src/io/inotify/inotify_context.cpp.o
+
+src/io/inotify/inotify_context.i: src/io/inotify/inotify_context.cpp.i
 .PHONY : src/io/inotify/inotify_context.i
 
-# target to generate assembly for a file
-src/io/inotify/inotify_context.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_context.s
+# target to preprocess a source file
+src/io/inotify/inotify_context.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_context.cpp.i
+.PHONY : src/io/inotify/inotify_context.cpp.i
+
+src/io/inotify/inotify_context.s: src/io/inotify/inotify_context.cpp.s
 .PHONY : src/io/inotify/inotify_context.s
 
-# target to build an object file
-src/io/inotify/inotify_handler.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_handler.o
+# target to generate assembly for a file
+src/io/inotify/inotify_context.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_context.cpp.s
+.PHONY : src/io/inotify/inotify_context.cpp.s
+
+src/io/inotify/inotify_handler.o: src/io/inotify/inotify_handler.cpp.o
 .PHONY : src/io/inotify/inotify_handler.o
 
-# target to preprocess a source file
-src/io/inotify/inotify_handler.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_handler.i
+# target to build an object file
+src/io/inotify/inotify_handler.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_handler.cpp.o
+.PHONY : src/io/inotify/inotify_handler.cpp.o
+
+src/io/inotify/inotify_handler.i: src/io/inotify/inotify_handler.cpp.i
 .PHONY : src/io/inotify/inotify_handler.i
 
-# target to generate assembly for a file
-src/io/inotify/inotify_handler.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_handler.s
+# target to preprocess a source file
+src/io/inotify/inotify_handler.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_handler.cpp.i
+.PHONY : src/io/inotify/inotify_handler.cpp.i
+
+src/io/inotify/inotify_handler.s: src/io/inotify/inotify_handler.cpp.s
 .PHONY : src/io/inotify/inotify_handler.s
 
-# target to build an object file
-src/io/io.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/io.o
+# target to generate assembly for a file
+src/io/inotify/inotify_handler.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/inotify/inotify_handler.cpp.s
+.PHONY : src/io/inotify/inotify_handler.cpp.s
+
+src/io/io.o: src/io/io.cpp.o
 .PHONY : src/io/io.o
 
-# target to preprocess a source file
-src/io/io.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/io.i
+# target to build an object file
+src/io/io.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/io.cpp.o
+.PHONY : src/io/io.cpp.o
+
+src/io/io.i: src/io/io.cpp.i
 .PHONY : src/io/io.i
 
-# target to generate assembly for a file
-src/io/io.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/io.s
+# target to preprocess a source file
+src/io/io.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/io.cpp.i
+.PHONY : src/io/io.cpp.i
+
+src/io/io.s: src/io/io.cpp.s
 .PHONY : src/io/io.s
 
-# target to build an object file
-src/io/resource.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/resource.o
+# target to generate assembly for a file
+src/io/io.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/io.cpp.s
+.PHONY : src/io/io.cpp.s
+
+src/io/resource.o: src/io/resource.cpp.o
 .PHONY : src/io/resource.o
 
-# target to preprocess a source file
-src/io/resource.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/resource.i
+# target to build an object file
+src/io/resource.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/resource.cpp.o
+.PHONY : src/io/resource.cpp.o
+
+src/io/resource.i: src/io/resource.cpp.i
 .PHONY : src/io/resource.i
 
-# target to generate assembly for a file
-src/io/resource.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/resource.s
+# target to preprocess a source file
+src/io/resource.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/resource.cpp.i
+.PHONY : src/io/resource.cpp.i
+
+src/io/resource.s: src/io/resource.cpp.s
 .PHONY : src/io/resource.s
 
-# target to build an object file
-src/light.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/light.o
+# target to generate assembly for a file
+src/io/resource.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/io/resource.cpp.s
+.PHONY : src/io/resource.cpp.s
+
+src/light.o: src/light.cpp.o
 .PHONY : src/light.o
 
-# target to preprocess a source file
-src/light.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/light.i
+# target to build an object file
+src/light.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/light.cpp.o
+.PHONY : src/light.cpp.o
+
+src/light.i: src/light.cpp.i
 .PHONY : src/light.i
 
-# target to generate assembly for a file
-src/light.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/light.s
+# target to preprocess a source file
+src/light.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/light.cpp.i
+.PHONY : src/light.cpp.i
+
+src/light.s: src/light.cpp.s
 .PHONY : src/light.s
 
-# target to build an object file
-src/load_shader.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/load_shader.o
+# target to generate assembly for a file
+src/light.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/light.cpp.s
+.PHONY : src/light.cpp.s
+
+src/load_shader.o: src/load_shader.cpp.o
 .PHONY : src/load_shader.o
 
-# target to preprocess a source file
-src/load_shader.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/load_shader.i
+# target to build an object file
+src/load_shader.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/load_shader.cpp.o
+.PHONY : src/load_shader.cpp.o
+
+src/load_shader.i: src/load_shader.cpp.i
 .PHONY : src/load_shader.i
 
-# target to generate assembly for a file
-src/load_shader.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/load_shader.s
+# target to preprocess a source file
+src/load_shader.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/load_shader.cpp.i
+.PHONY : src/load_shader.cpp.i
+
+src/load_shader.s: src/load_shader.cpp.s
 .PHONY : src/load_shader.s
 
-# target to build an object file
-src/material.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material.o
+# target to generate assembly for a file
+src/load_shader.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/load_shader.cpp.s
+.PHONY : src/load_shader.cpp.s
+
+src/material.o: src/material.cpp.o
 .PHONY : src/material.o
 
-# target to preprocess a source file
-src/material.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material.i
+# target to build an object file
+src/material.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material.cpp.o
+.PHONY : src/material.cpp.o
+
+src/material.i: src/material.cpp.i
 .PHONY : src/material.i
 
-# target to generate assembly for a file
-src/material.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material.s
+# target to preprocess a source file
+src/material.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material.cpp.i
+.PHONY : src/material.cpp.i
+
+src/material.s: src/material.cpp.s
 .PHONY : src/material.s
 
-# target to build an object file
-src/material_instance.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material_instance.o
+# target to generate assembly for a file
+src/material.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material.cpp.s
+.PHONY : src/material.cpp.s
+
+src/material_instance.o: src/material_instance.cpp.o
 .PHONY : src/material_instance.o
 
-# target to preprocess a source file
-src/material_instance.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material_instance.i
+# target to build an object file
+src/material_instance.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material_instance.cpp.o
+.PHONY : src/material_instance.cpp.o
+
+src/material_instance.i: src/material_instance.cpp.i
 .PHONY : src/material_instance.i
 
-# target to generate assembly for a file
-src/material_instance.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material_instance.s
+# target to preprocess a source file
+src/material_instance.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material_instance.cpp.i
+.PHONY : src/material_instance.cpp.i
+
+src/material_instance.s: src/material_instance.cpp.s
 .PHONY : src/material_instance.s
 
-# target to build an object file
-src/mesh.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh.o
+# target to generate assembly for a file
+src/material_instance.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/material_instance.cpp.s
+.PHONY : src/material_instance.cpp.s
+
+src/mesh.o: src/mesh.cpp.o
 .PHONY : src/mesh.o
 
-# target to preprocess a source file
-src/mesh.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh.i
+# target to build an object file
+src/mesh.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh.cpp.o
+.PHONY : src/mesh.cpp.o
+
+src/mesh.i: src/mesh.cpp.i
 .PHONY : src/mesh.i
 
-# target to generate assembly for a file
-src/mesh.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh.s
+# target to preprocess a source file
+src/mesh.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh.cpp.i
+.PHONY : src/mesh.cpp.i
+
+src/mesh.s: src/mesh.cpp.s
 .PHONY : src/mesh.s
 
-# target to build an object file
-src/mesh/multiResPlane.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/multiResPlane.o
+# target to generate assembly for a file
+src/mesh.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh.cpp.s
+.PHONY : src/mesh.cpp.s
+
+src/mesh/multiResPlane.o: src/mesh/multiResPlane.cpp.o
 .PHONY : src/mesh/multiResPlane.o
 
-# target to preprocess a source file
-src/mesh/multiResPlane.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/multiResPlane.i
+# target to build an object file
+src/mesh/multiResPlane.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/multiResPlane.cpp.o
+.PHONY : src/mesh/multiResPlane.cpp.o
+
+src/mesh/multiResPlane.i: src/mesh/multiResPlane.cpp.i
 .PHONY : src/mesh/multiResPlane.i
 
-# target to generate assembly for a file
-src/mesh/multiResPlane.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/multiResPlane.s
+# target to preprocess a source file
+src/mesh/multiResPlane.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/multiResPlane.cpp.i
+.PHONY : src/mesh/multiResPlane.cpp.i
+
+src/mesh/multiResPlane.s: src/mesh/multiResPlane.cpp.s
 .PHONY : src/mesh/multiResPlane.s
 
-# target to build an object file
-src/mesh/primitiveMesh.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/primitiveMesh.o
+# target to generate assembly for a file
+src/mesh/multiResPlane.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/multiResPlane.cpp.s
+.PHONY : src/mesh/multiResPlane.cpp.s
+
+src/mesh/primitiveMesh.o: src/mesh/primitiveMesh.cpp.o
 .PHONY : src/mesh/primitiveMesh.o
 
-# target to preprocess a source file
-src/mesh/primitiveMesh.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/primitiveMesh.i
+# target to build an object file
+src/mesh/primitiveMesh.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/primitiveMesh.cpp.o
+.PHONY : src/mesh/primitiveMesh.cpp.o
+
+src/mesh/primitiveMesh.i: src/mesh/primitiveMesh.cpp.i
 .PHONY : src/mesh/primitiveMesh.i
 
-# target to generate assembly for a file
-src/mesh/primitiveMesh.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/primitiveMesh.s
+# target to preprocess a source file
+src/mesh/primitiveMesh.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/primitiveMesh.cpp.i
+.PHONY : src/mesh/primitiveMesh.cpp.i
+
+src/mesh/primitiveMesh.s: src/mesh/primitiveMesh.cpp.s
 .PHONY : src/mesh/primitiveMesh.s
 
-# target to build an object file
-src/mesh/sphereMesh.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/sphereMesh.o
+# target to generate assembly for a file
+src/mesh/primitiveMesh.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/primitiveMesh.cpp.s
+.PHONY : src/mesh/primitiveMesh.cpp.s
+
+src/mesh/sphereMesh.o: src/mesh/sphereMesh.cpp.o
 .PHONY : src/mesh/sphereMesh.o
 
-# target to preprocess a source file
-src/mesh/sphereMesh.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/sphereMesh.i
+# target to build an object file
+src/mesh/sphereMesh.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/sphereMesh.cpp.o
+.PHONY : src/mesh/sphereMesh.cpp.o
+
+src/mesh/sphereMesh.i: src/mesh/sphereMesh.cpp.i
 .PHONY : src/mesh/sphereMesh.i
 
-# target to generate assembly for a file
-src/mesh/sphereMesh.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/sphereMesh.s
+# target to preprocess a source file
+src/mesh/sphereMesh.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/sphereMesh.cpp.i
+.PHONY : src/mesh/sphereMesh.cpp.i
+
+src/mesh/sphereMesh.s: src/mesh/sphereMesh.cpp.s
 .PHONY : src/mesh/sphereMesh.s
 
-# target to build an object file
-src/mesh/voxel/hexelMesh.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/hexelMesh.o
+# target to generate assembly for a file
+src/mesh/sphereMesh.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/sphereMesh.cpp.s
+.PHONY : src/mesh/sphereMesh.cpp.s
+
+src/mesh/voxel/hexelMesh.o: src/mesh/voxel/hexelMesh.cpp.o
 .PHONY : src/mesh/voxel/hexelMesh.o
 
-# target to preprocess a source file
-src/mesh/voxel/hexelMesh.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/hexelMesh.i
+# target to build an object file
+src/mesh/voxel/hexelMesh.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/hexelMesh.cpp.o
+.PHONY : src/mesh/voxel/hexelMesh.cpp.o
+
+src/mesh/voxel/hexelMesh.i: src/mesh/voxel/hexelMesh.cpp.i
 .PHONY : src/mesh/voxel/hexelMesh.i
 
-# target to generate assembly for a file
-src/mesh/voxel/hexelMesh.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/hexelMesh.s
+# target to preprocess a source file
+src/mesh/voxel/hexelMesh.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/hexelMesh.cpp.i
+.PHONY : src/mesh/voxel/hexelMesh.cpp.i
+
+src/mesh/voxel/hexelMesh.s: src/mesh/voxel/hexelMesh.cpp.s
 .PHONY : src/mesh/voxel/hexelMesh.s
 
-# target to build an object file
-src/mesh/voxel/voxelMesh.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/voxelMesh.o
+# target to generate assembly for a file
+src/mesh/voxel/hexelMesh.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/hexelMesh.cpp.s
+.PHONY : src/mesh/voxel/hexelMesh.cpp.s
+
+src/mesh/voxel/voxelMesh.o: src/mesh/voxel/voxelMesh.cpp.o
 .PHONY : src/mesh/voxel/voxelMesh.o
 
-# target to preprocess a source file
-src/mesh/voxel/voxelMesh.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/voxelMesh.i
+# target to build an object file
+src/mesh/voxel/voxelMesh.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/voxelMesh.cpp.o
+.PHONY : src/mesh/voxel/voxelMesh.cpp.o
+
+src/mesh/voxel/voxelMesh.i: src/mesh/voxel/voxelMesh.cpp.i
 .PHONY : src/mesh/voxel/voxelMesh.i
 
-# target to generate assembly for a file
-src/mesh/voxel/voxelMesh.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/voxelMesh.s
+# target to preprocess a source file
+src/mesh/voxel/voxelMesh.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/voxelMesh.cpp.i
+.PHONY : src/mesh/voxel/voxelMesh.cpp.i
+
+src/mesh/voxel/voxelMesh.s: src/mesh/voxel/voxelMesh.cpp.s
 .PHONY : src/mesh/voxel/voxelMesh.s
 
-# target to build an object file
-src/mesh_buffer.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_buffer.o
+# target to generate assembly for a file
+src/mesh/voxel/voxelMesh.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh/voxel/voxelMesh.cpp.s
+.PHONY : src/mesh/voxel/voxelMesh.cpp.s
+
+src/mesh_buffer.o: src/mesh_buffer.cpp.o
 .PHONY : src/mesh_buffer.o
 
-# target to preprocess a source file
-src/mesh_buffer.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_buffer.i
+# target to build an object file
+src/mesh_buffer.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_buffer.cpp.o
+.PHONY : src/mesh_buffer.cpp.o
+
+src/mesh_buffer.i: src/mesh_buffer.cpp.i
 .PHONY : src/mesh_buffer.i
 
-# target to generate assembly for a file
-src/mesh_buffer.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_buffer.s
+# target to preprocess a source file
+src/mesh_buffer.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_buffer.cpp.i
+.PHONY : src/mesh_buffer.cpp.i
+
+src/mesh_buffer.s: src/mesh_buffer.cpp.s
 .PHONY : src/mesh_buffer.s
 
-# target to build an object file
-src/mesh_builder.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_builder.o
+# target to generate assembly for a file
+src/mesh_buffer.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_buffer.cpp.s
+.PHONY : src/mesh_buffer.cpp.s
+
+src/mesh_builder.o: src/mesh_builder.cpp.o
 .PHONY : src/mesh_builder.o
 
-# target to preprocess a source file
-src/mesh_builder.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_builder.i
+# target to build an object file
+src/mesh_builder.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_builder.cpp.o
+.PHONY : src/mesh_builder.cpp.o
+
+src/mesh_builder.i: src/mesh_builder.cpp.i
 .PHONY : src/mesh_builder.i
 
-# target to generate assembly for a file
-src/mesh_builder.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_builder.s
+# target to preprocess a source file
+src/mesh_builder.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_builder.cpp.i
+.PHONY : src/mesh_builder.cpp.i
+
+src/mesh_builder.s: src/mesh_builder.cpp.s
 .PHONY : src/mesh_builder.s
 
-# target to build an object file
-src/model.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/model.o
+# target to generate assembly for a file
+src/mesh_builder.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/mesh_builder.cpp.s
+.PHONY : src/mesh_builder.cpp.s
+
+src/model.o: src/model.cpp.o
 .PHONY : src/model.o
 
-# target to preprocess a source file
-src/model.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/model.i
+# target to build an object file
+src/model.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/model.cpp.o
+.PHONY : src/model.cpp.o
+
+src/model.i: src/model.cpp.i
 .PHONY : src/model.i
 
-# target to generate assembly for a file
-src/model.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/model.s
+# target to preprocess a source file
+src/model.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/model.cpp.i
+.PHONY : src/model.cpp.i
+
+src/model.s: src/model.cpp.s
 .PHONY : src/model.s
 
-# target to build an object file
-src/obj.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/obj.o
+# target to generate assembly for a file
+src/model.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/model.cpp.s
+.PHONY : src/model.cpp.s
+
+src/obj.o: src/obj.cpp.o
 .PHONY : src/obj.o
 
-# target to preprocess a source file
-src/obj.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/obj.i
+# target to build an object file
+src/obj.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/obj.cpp.o
+.PHONY : src/obj.cpp.o
+
+src/obj.i: src/obj.cpp.i
 .PHONY : src/obj.i
 
-# target to generate assembly for a file
-src/obj.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/obj.s
+# target to preprocess a source file
+src/obj.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/obj.cpp.i
+.PHONY : src/obj.cpp.i
+
+src/obj.s: src/obj.cpp.s
 .PHONY : src/obj.s
 
-# target to build an object file
-src/render_node.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.o
+# target to generate assembly for a file
+src/obj.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/obj.cpp.s
+.PHONY : src/obj.cpp.s
+
+src/render_node.o: src/render_node.cpp.o
 .PHONY : src/render_node.o
 
-# target to preprocess a source file
-src/render_node.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.i
+# target to build an object file
+src/render_node.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.cpp.o
+.PHONY : src/render_node.cpp.o
+
+src/render_node.i: src/render_node.cpp.i
 .PHONY : src/render_node.i
 
-# target to generate assembly for a file
-src/render_node.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.s
+# target to preprocess a source file
+src/render_node.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.cpp.i
+.PHONY : src/render_node.cpp.i
+
+src/render_node.s: src/render_node.cpp.s
 .PHONY : src/render_node.s
 
-# target to build an object file
-src/renderer.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/renderer.o
+# target to generate assembly for a file
+src/render_node.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.cpp.s
+.PHONY : src/render_node.cpp.s
+
+src/renderer.o: src/renderer.cpp.o
 .PHONY : src/renderer.o
 
-# target to preprocess a source file
-src/renderer.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/renderer.i
+# target to build an object file
+src/renderer.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/renderer.cpp.o
+.PHONY : src/renderer.cpp.o
+
+src/renderer.i: src/renderer.cpp.i
 .PHONY : src/renderer.i
 
-# target to generate assembly for a file
-src/renderer.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/renderer.s
+# target to preprocess a source file
+src/renderer.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/renderer.cpp.i
+.PHONY : src/renderer.cpp.i
+
+src/renderer.s: src/renderer.cpp.s
 .PHONY : src/renderer.s
 
-# target to build an object file
-src/scene.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene.o
+# target to generate assembly for a file
+src/renderer.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/renderer.cpp.s
+.PHONY : src/renderer.cpp.s
+
+src/scene.o: src/scene.cpp.o
 .PHONY : src/scene.o
 
-# target to preprocess a source file
-src/scene.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene.i
+# target to build an object file
+src/scene.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene.cpp.o
+.PHONY : src/scene.cpp.o
+
+src/scene.i: src/scene.cpp.i
 .PHONY : src/scene.i
 
-# target to generate assembly for a file
-src/scene.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene.s
+# target to preprocess a source file
+src/scene.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene.cpp.i
+.PHONY : src/scene.cpp.i
+
+src/scene.s: src/scene.cpp.s
 .PHONY : src/scene.s
 
+# target to generate assembly for a file
+src/scene.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene.cpp.s
+.PHONY : src/scene.cpp.s
+
+src/sky.o: src/sky.cpp.o
+.PHONY : src/sky.o
+
 # target to build an object file
-src/texture.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture.o
+src/sky.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/sky.cpp.o
+.PHONY : src/sky.cpp.o
+
+src/sky.i: src/sky.cpp.i
+.PHONY : src/sky.i
+
+# target to preprocess a source file
+src/sky.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/sky.cpp.i
+.PHONY : src/sky.cpp.i
+
+src/sky.s: src/sky.cpp.s
+.PHONY : src/sky.s
+
+# target to generate assembly for a file
+src/sky.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/sky.cpp.s
+.PHONY : src/sky.cpp.s
+
+src/texture.o: src/texture.cpp.o
 .PHONY : src/texture.o
 
-# target to preprocess a source file
-src/texture.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture.i
+# target to build an object file
+src/texture.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture.cpp.o
+.PHONY : src/texture.cpp.o
+
+src/texture.i: src/texture.cpp.i
 .PHONY : src/texture.i
 
-# target to generate assembly for a file
-src/texture.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture.s
+# target to preprocess a source file
+src/texture.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture.cpp.i
+.PHONY : src/texture.cpp.i
+
+src/texture.s: src/texture.cpp.s
 .PHONY : src/texture.s
 
-# target to build an object file
-src/texture_data.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture_data.o
+# target to generate assembly for a file
+src/texture.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture.cpp.s
+.PHONY : src/texture.cpp.s
+
+src/texture_data.o: src/texture_data.cpp.o
 .PHONY : src/texture_data.o
 
-# target to preprocess a source file
-src/texture_data.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture_data.i
+# target to build an object file
+src/texture_data.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture_data.cpp.o
+.PHONY : src/texture_data.cpp.o
+
+src/texture_data.i: src/texture_data.cpp.i
 .PHONY : src/texture_data.i
 
-# target to generate assembly for a file
-src/texture_data.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture_data.s
+# target to preprocess a source file
+src/texture_data.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture_data.cpp.i
+.PHONY : src/texture_data.cpp.i
+
+src/texture_data.s: src/texture_data.cpp.s
 .PHONY : src/texture_data.s
 
-# target to build an object file
-src/viewport.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/viewport.o
+# target to generate assembly for a file
+src/texture_data.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/texture_data.cpp.s
+.PHONY : src/texture_data.cpp.s
+
+src/viewport.o: src/viewport.cpp.o
 .PHONY : src/viewport.o
 
-# target to preprocess a source file
-src/viewport.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/viewport.i
+# target to build an object file
+src/viewport.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/viewport.cpp.o
+.PHONY : src/viewport.cpp.o
+
+src/viewport.i: src/viewport.cpp.i
 .PHONY : src/viewport.i
 
-# target to generate assembly for a file
-src/viewport.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/viewport.s
+# target to preprocess a source file
+src/viewport.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/viewport.cpp.i
+.PHONY : src/viewport.cpp.i
+
+src/viewport.s: src/viewport.cpp.s
 .PHONY : src/viewport.s
 
-# target to build an object file
-src/vrp.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/vrp.o
+# target to generate assembly for a file
+src/viewport.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/viewport.cpp.s
+.PHONY : src/viewport.cpp.s
+
+src/vrp.o: src/vrp.cpp.o
 .PHONY : src/vrp.o
 
-# target to preprocess a source file
-src/vrp.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/vrp.i
+# target to build an object file
+src/vrp.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/vrp.cpp.o
+.PHONY : src/vrp.cpp.o
+
+src/vrp.i: src/vrp.cpp.i
 .PHONY : src/vrp.i
 
-# target to generate assembly for a file
-src/vrp.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/vrp.s
+# target to preprocess a source file
+src/vrp.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/vrp.cpp.i
+.PHONY : src/vrp.cpp.i
+
+src/vrp.s: src/vrp.cpp.s
 .PHONY : src/vrp.s
 
-# target to build an object file
-src/window.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/window.o
+# target to generate assembly for a file
+src/vrp.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/vrp.cpp.s
+.PHONY : src/vrp.cpp.s
+
+src/window.o: src/window.cpp.o
 .PHONY : src/window.o
 
-# target to preprocess a source file
-src/window.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/window.i
+# target to build an object file
+src/window.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/window.cpp.o
+.PHONY : src/window.cpp.o
+
+src/window.i: src/window.cpp.i
 .PHONY : src/window.i
 
-# target to generate assembly for a file
-src/window.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/window.s
+# target to preprocess a source file
+src/window.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/window.cpp.i
+.PHONY : src/window.cpp.i
+
+src/window.s: src/window.cpp.s
 .PHONY : src/window.s
 
-# target to build an object file
-src/world_material.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/world_material.o
-.PHONY : src/world_material.o
-
-# target to preprocess a source file
-src/world_material.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/world_material.i
-.PHONY : src/world_material.i
-
 # target to generate assembly for a file
-src/world_material.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/world_material.s
-.PHONY : src/world_material.s
+src/window.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/window.cpp.s
+.PHONY : src/window.cpp.s
 
 # Help Target
 help:
@@ -787,6 +1120,9 @@ help:
 	@echo "... src/scene.o"
 	@echo "... src/scene.i"
 	@echo "... src/scene.s"
+	@echo "... src/sky.o"
+	@echo "... src/sky.i"
+	@echo "... src/sky.s"
 	@echo "... src/texture.o"
 	@echo "... src/texture.i"
 	@echo "... src/texture.s"
@@ -802,9 +1138,6 @@ help:
 	@echo "... src/window.o"
 	@echo "... src/window.i"
 	@echo "... src/window.s"
-	@echo "... src/world_material.o"
-	@echo "... src/world_material.i"
-	@echo "... src/world_material.s"
 .PHONY : help
 
 
