@@ -49,9 +49,9 @@ class Camera
     Camera();
 };
 
-using CameraID = size_t;
-
 namespace Loader
 {
     extern storage<Camera> cameras;
 }
+
+using CameraID = STORAGE_POINTER_TYPE(Loader::cameras);

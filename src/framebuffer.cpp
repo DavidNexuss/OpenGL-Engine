@@ -1,10 +1,5 @@
 #include "framebuffer.h"
-#include <vector>
 #include <iostream>
-
-namespace Loader {
-    std::vector<FrameBuffer*> framebuffers;
-}
 
 FrameBuffer::FrameBuffer(int attachmentCount) : FrameBuffer(attachmentCount, USE_DEPTH | USE_STENCIL) { }
 
@@ -179,4 +174,9 @@ GLuint FrameBuffer::getStencilBuffer() const
 {
     if(combinedDepthStencil()) return stencilDepthBuffer;
     return stencilBuffer;
+}
+
+
+namespace Loader {
+    storage<FrameBuffer> framebuffers;
 }

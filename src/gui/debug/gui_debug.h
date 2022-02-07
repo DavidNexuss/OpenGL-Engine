@@ -4,6 +4,7 @@
 #include "model.h"
 #include "material.h"
 #include "mesh.h"
+#include "framebuffer.h"
 
 namespace GUI
 {
@@ -29,8 +30,8 @@ namespace GUI
         void renderLightMenu(int lightID,bool* windowEnable);
         void renderLightWidget(int lightID);
 
-        void renderFrameBufferWidget(int framebufferId);
-        void renderFrameBufferMenu(int framebufferId,bool* windowEnable);
+        void renderFrameBufferWidget(FrameBufferID framebufferId);
+        void renderFrameBufferMenu(FrameBufferID framebufferId,bool* windowEnable);
 
         void renderMaterialTree(bool* windowEnable);
         void renderModelTree(bool* windowEnable);

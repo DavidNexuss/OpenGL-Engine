@@ -1,7 +1,7 @@
 #pragma once
 #include "core.h"
 #include "macros.h"
-#include <vector>
+#include "structures/storage.h"
 
 enum FrameBufferDescriptorFlags {
     USE_RENDER_BUFFER =         1 << 0,
@@ -61,11 +61,7 @@ class FrameBuffer
 
 namespace Loader
 {
-    extern std::vector<FrameBuffer*> framebuffers;
-
-    template <typename... Args>
-    inline FrameBuffer* createFrameBuffer(Args&&... args) {
-        framebuffers.push_back(new FrameBuffer(std::forward<Args>(args)...));
-        return framebuffers.back();
-    }
+    extern storage<FrameBuffer> framebuffers;
 };
+
+using FrameBufferID = STORAGE_POINTER_TYPE(Loader::framebuffers);

@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#include <iostream>
 
 
 template<typename T>
@@ -34,7 +33,6 @@ class storage {
             toRemove.pop_back();
             removeMarched[i] = false;
             data[i] = value;
-            std::cerr << "Reuse" << std::endl;
             return i;
         }
     }
@@ -49,7 +47,7 @@ class storage {
     }
 
     template <typename ... Args>
-    size_t emplace(Args&& ... args) {return insert(T(std::forward<Args>(args)...)); }
+    size_t emplace(Args&& ... args) {return add(T(std::forward<Args>(args)...)); }
 
     int next(int index) {
         fix();

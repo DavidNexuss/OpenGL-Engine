@@ -13,13 +13,12 @@ RenderConfiguration Renderer::currentConfiguration;
 namespace Renderer
 {
     size_t currentFrame = 1;
-    size_t currentMaterial = Standard::engineInvalid;
-    size_t currentMesh = Standard::engineInvalid;
+    MaterialID currentMaterial = Standard::engineInvalid;
+    MeshID currentMesh = Standard::engineInvalid;
 
     ModelID skyModel = -1;
     WorldMaterial worldMaterial;
-
-    RenderNode* renderPipeline = nullptr;
+    RenderCameraID mainRenderCamera;
 
     void useMaterial(MaterialID materialID)
     {
@@ -45,28 +44,8 @@ namespace Renderer
         }
     }
     
-    void useMaterialInstance(MaterialInstanceID instanceID)
-    {
-        Loader::materials[currentMaterial].useInstance(instanceID);
-    }
-    
-    void setRenderPipeline(RenderNode* rootNode){
-        renderPipeline = rootNode;
-        if(RenderNode::screenQuad == Standard::engineInvalid)
-        {
-            RenderNode::screenQuad = Loader::meshes.add(PrimitiveMesh::generateFromBuffers({
-                {Standard::aPosition,2,{
-                    -1.0,1.0,
-                     1.0,1.0,
-                    -1.0,-1.0,
-
-                     1.0,1.0,
-                     1.0,-1.0,
-                     -1.0,-1.0,
-
-                }}
-            }));
-        }
+    void useMaterialInstance(MaterialInstanceID instanceID) {
+        currentMaterial->useInstance(instanceID);
     }
 
     void configureRenderer(const RenderConfiguration& config)
@@ -111,8 +90,8 @@ namespace Renderer
         Scene::time += 0.1;
         Scene::update();
         
-        if(renderPipeline != nullptr) {
-            renderPipeline->render(Viewport::screenWidth,Viewport::screenHeight);
+        if(mainRenderCamera.valid()) {
+            mainRenderCamera->render(Viewport::screenWidth,Viewport::screenHeight);
         } else renderPass();
 
         Light::flushUniforms = false;

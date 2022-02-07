@@ -3,9 +3,11 @@
 #include <glm/glm.hpp>
 #include "standard.h"
 #include "mesh.h"
-#include "basics.h"
 #include "framebuffer.h"
 #include "sky.h"
+#include "render_node.h"
+#include "mesh.h"
+#include "material.h"
 
 
 struct RenderConfiguration
@@ -16,15 +18,15 @@ struct RenderConfiguration
     glm::vec3 clearColor;
 };
 
-class RenderNode;
 namespace Renderer
 {
     extern size_t currentFrame;
-    extern size_t currentMaterial;
-    extern size_t currentMesh;
+    extern MaterialID currentMaterial;
+    extern MeshID currentMesh;
     
     extern ModelID skyModel;
     extern WorldMaterial worldMaterial;
+    extern RenderCameraID mainRenderCamera;
     
     extern RenderConfiguration currentConfiguration;
 
@@ -42,8 +44,6 @@ namespace Renderer
         else 
             glDrawArrays(GL_TRIANGLES,0,Loader::meshes[Renderer::currentMesh].vertexCount);
     }
-
-    void setRenderPipeline(RenderNode* renderRoot);
 }
 
 #define UNIFORMS(x) Loader::materials[Renderer::currentMaterial].uniforms[x]

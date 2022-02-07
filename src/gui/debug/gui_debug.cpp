@@ -163,21 +163,21 @@ namespace GUI
         }
 
 
-        void renderFrameBufferWidget(int framebufferId) {
+        void renderFrameBufferWidget(FrameBufferID framebuffer) {
 
-            int width = 1920; //Loader::framebuffers[framebufferId]->getWidth();
-            int height = Loader::framebuffers[framebufferId]->getHeight();
+            int width = 1920;
+            int height = framebuffer->getHeight();
             ImVec2 displaySize = ImVec2(width/4, height/4);
 
             if (ImGui::TreeNode("Depth buffer")) {
-                ImGui::Image((void*)(intptr_t)Loader::framebuffers[framebufferId]->stencilDepthBuffer,displaySize);
+                ImGui::Image((void*)(intptr_t)framebuffer->stencilDepthBuffer,displaySize);
             }
 
             if (ImGui::TreeNode("Color attachments")) {
-                for (size_t i = 0; i < Loader::framebuffers[framebufferId]->colorAttachments.size(); i++)
+                for (size_t i = 0; i < framebuffer->colorAttachments.size(); i++)
                 {
                     if (ImGui::TreeNode(("Attachment " + std::to_string(i)).c_str())) {
-                        ImGui::Image((void*)(intptr_t)Loader::framebuffers[framebufferId]->colorAttachments[i],displaySize);       
+                        ImGui::Image((void*)(intptr_t)framebuffer->colorAttachments[i],displaySize);       
                     }
                 }
             }
