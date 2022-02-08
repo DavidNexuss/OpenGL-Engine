@@ -9,9 +9,9 @@
 
 struct Model : public EngineComponent
 {
-    MeshID meshID = -1;
-    MaterialID materialID = -1;
-    MaterialInstanceID materialInstanceID = -1;
+    MeshID meshID;
+    MaterialID materialID;
+    MaterialInstanceID materialInstanceID;
 
     glm::mat4 transformMatrix = glm::mat4(1.0);
     glm::mat3 normalMatrix;

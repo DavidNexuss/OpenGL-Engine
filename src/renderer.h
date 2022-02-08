@@ -5,7 +5,7 @@
 #include "mesh.h"
 #include "framebuffer.h"
 #include "sky.h"
-#include "render_node.h"
+#include "render_camera.h"
 #include "mesh.h"
 #include "material.h"
 

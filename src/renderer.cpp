@@ -6,7 +6,7 @@
 #include "world_material.h"
 #include <mesh/primitiveMesh.h>
 #include <iostream>
-#include "render_node.h"
+#include "render_camera.h"
 
 RenderConfiguration Renderer::currentConfiguration;
 
@@ -16,7 +16,7 @@ namespace Renderer
     MaterialID currentMaterial = Standard::engineInvalid;
     MeshID currentMesh = Standard::engineInvalid;
 
-    ModelID skyModel = -1;
+    ModelID skyModel;
     WorldMaterial worldMaterial;
     RenderCameraID mainRenderCamera;
 
@@ -24,13 +24,13 @@ namespace Renderer
     {
         if(currentMaterial != materialID) {
             currentMaterial = materialID;
-            Loader::materials[currentMaterial].bind(worldMaterial);
+            currentMaterial->bind(worldMaterial);
             REGISTER_MATERIAL_SWAP();
         }
 
         if (Loader::materials.updateForFrame(materialID,currentFrame)) {
             Scene::flush();
-            Light::flush();
+            Loader::lights.flush();
         }
     }
 
@@ -39,7 +39,7 @@ namespace Renderer
         if (meshID != currentMesh)
         {
             currentMesh = meshID;
-            glBindVertexArray(Loader::meshes[Renderer::currentMesh].vao);
+            glBindVertexArray(currentMesh->vao);
             REGISTER_MESH_SWAP();
         }
     }
@@ -94,6 +94,6 @@ namespace Renderer
             mainRenderCamera->render(Viewport::screenWidth,Viewport::screenHeight);
         } else renderPass();
 
-        Light::flushUniforms = false;
+        Loader::lights.flushClean();
     }
 };

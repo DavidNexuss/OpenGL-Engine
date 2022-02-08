@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <glm/glm.hpp>
 #include <engine_component.h>
@@ -11,15 +12,23 @@ using LightComponent = EngineComponent;
  * a uniform vector. In consequence Lights are managed using an ECS aproach.
  */
 
-namespace Light
+class LightLoader
 {
-    extern bool flushUniforms;
+    constexpr static glm::vec3 GLOBAL_LIGHT = glm::vec3(std::numeric_limits<float>::infinity());
 
-    extern std::vector<glm::vec3> lightsPositions;
-    extern std::vector<glm::vec3> lightsColor;
-    extern std::vector<LightComponent> lightsComponent;
+    bool flushUniforms = true;
+    public:
 
-    LightID load(glm::vec3 pos,glm::vec3 color);
+    std::vector<glm::vec3> lightsPositions;
+    std::vector<glm::vec3> lightsColor;
+    std::vector<LightComponent> lightsComponent;
+
+    LightID add(glm::vec3 pos,glm::vec3 color);
 
     void flush();
+    void flushClean();
 };
+
+namespace Loader {
+    extern LightLoader lights;
+}

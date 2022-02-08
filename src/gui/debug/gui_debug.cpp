@@ -133,8 +133,8 @@ namespace GUI
         }
         void renderLightWidget(int lightID)
         {
-            glm::vec3* lightColor = &Light::lightsColor[lightID];
-            glm::vec3* lightPosition = &Light::lightsPositions[lightID];
+            glm::vec3* lightColor = &Loader::lights.lightsColor[lightID];
+            glm::vec3* lightPosition = &Loader::lights.lightsPositions[lightID];
 
             ImGui::InputFloat3("position",&lightPosition->x);
             ImGui::ColorPicker3("color",&lightColor->x);

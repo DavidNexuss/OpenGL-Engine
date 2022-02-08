@@ -802,29 +802,29 @@ src/obj.cpp.s:
 	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/obj.cpp.s
 .PHONY : src/obj.cpp.s
 
-src/render_node.o: src/render_node.cpp.o
-.PHONY : src/render_node.o
+src/render_camera.o: src/render_camera.cpp.o
+.PHONY : src/render_camera.o
 
 # target to build an object file
-src/render_node.cpp.o:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.cpp.o
-.PHONY : src/render_node.cpp.o
+src/render_camera.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_camera.cpp.o
+.PHONY : src/render_camera.cpp.o
 
-src/render_node.i: src/render_node.cpp.i
-.PHONY : src/render_node.i
+src/render_camera.i: src/render_camera.cpp.i
+.PHONY : src/render_camera.i
 
 # target to preprocess a source file
-src/render_node.cpp.i:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.cpp.i
-.PHONY : src/render_node.cpp.i
+src/render_camera.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_camera.cpp.i
+.PHONY : src/render_camera.cpp.i
 
-src/render_node.s: src/render_node.cpp.s
-.PHONY : src/render_node.s
+src/render_camera.s: src/render_camera.cpp.s
+.PHONY : src/render_camera.s
 
 # target to generate assembly for a file
-src/render_node.cpp.s:
-	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_node.cpp.s
-.PHONY : src/render_node.cpp.s
+src/render_camera.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/render_camera.cpp.s
+.PHONY : src/render_camera.cpp.s
 
 src/renderer.o: src/renderer.cpp.o
 .PHONY : src/renderer.o
@@ -873,6 +873,30 @@ src/scene.s: src/scene.cpp.s
 src/scene.cpp.s:
 	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene.cpp.s
 .PHONY : src/scene.cpp.s
+
+src/scene/node.o: src/scene/node.cpp.o
+.PHONY : src/scene/node.o
+
+# target to build an object file
+src/scene/node.cpp.o:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene/node.cpp.o
+.PHONY : src/scene/node.cpp.o
+
+src/scene/node.i: src/scene/node.cpp.i
+.PHONY : src/scene/node.i
+
+# target to preprocess a source file
+src/scene/node.cpp.i:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene/node.cpp.i
+.PHONY : src/scene/node.cpp.i
+
+src/scene/node.s: src/scene/node.cpp.s
+.PHONY : src/scene/node.s
+
+# target to generate assembly for a file
+src/scene/node.cpp.s:
+	cd /home/david/shared/Projects/HexWorld && $(MAKE) $(MAKESILENT) -f engine/CMakeFiles/engine.dir/build.make engine/CMakeFiles/engine.dir/src/scene/node.cpp.s
+.PHONY : src/scene/node.cpp.s
 
 src/sky.o: src/sky.cpp.o
 .PHONY : src/sky.o
@@ -1111,15 +1135,18 @@ help:
 	@echo "... src/obj.o"
 	@echo "... src/obj.i"
 	@echo "... src/obj.s"
-	@echo "... src/render_node.o"
-	@echo "... src/render_node.i"
-	@echo "... src/render_node.s"
+	@echo "... src/render_camera.o"
+	@echo "... src/render_camera.i"
+	@echo "... src/render_camera.s"
 	@echo "... src/renderer.o"
 	@echo "... src/renderer.i"
 	@echo "... src/renderer.s"
 	@echo "... src/scene.o"
 	@echo "... src/scene.i"
 	@echo "... src/scene.s"
+	@echo "... src/scene/node.o"
+	@echo "... src/scene/node.i"
+	@echo "... src/scene/node.s"
 	@echo "... src/sky.o"
 	@echo "... src/sky.i"
 	@echo "... src/sky.s"
