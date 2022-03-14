@@ -2,9 +2,8 @@
 #include "mesh_builder.h"
 #include "texture.h"
 #include "renderer.h"
-#include "renderContext.h"
+
 using namespace std;
-using namespace Renderer;
 
 bool Model::lastcullFrontFace = false;
 
@@ -18,12 +17,13 @@ void Model::draw()
 
     if (depthMask) glDepthMask(GL_FALSE);
 
-    renderContext.useMaterial(materialID);
+    Renderer::useMaterial(materialID);
     
-    if (materialInstanceID.valid()) renderContext.useMaterialInstance(materialInstanceID);
+    if (materialInstanceID.valid()) 
+        Renderer::useMaterialInstance(materialInstanceID);
     
 
-    renderContext.useMesh(meshID);
+    Renderer::useMesh(meshID);
     
     if(UNIFORMS(Standard::uTransformMatrix) != GL_INVALID_INDEX)
     {

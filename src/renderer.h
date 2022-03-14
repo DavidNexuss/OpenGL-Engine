@@ -8,8 +8,7 @@
 #include "render_camera.h"
 #include "mesh.h"
 #include "material.h"
-#include "renderContext.h"
-
+#include "world_material.h"
 
 struct RenderConfiguration
 {
@@ -25,16 +24,31 @@ namespace Renderer
     extern ModelID skyModel;
     extern RenderConfiguration currentConfiguration;
 
+    extern int currentFrame;
+    extern CameraID currentCamera;
+    extern MaterialID currentMaterial;
+    extern MeshID currentMesh;
+
+    extern WorldMaterial* currentWorldMaterial;
+
+    void useMaterial(MaterialID materialID);
+    void useMesh(MeshID meshID);
+    void useCamera(CameraID cameraID);
+    void useMaterialInstance(MaterialInstanceID materialInstance);
+    void useWorldMaterial(WorldMaterial* worldMaterial);
+
+    void registerFrame();
+
     void configureRenderer(const RenderConfiguration& config);
     void render();
     void renderPass();
 
     inline void drawMesh() {
-        if(renderContext.currentMesh->indexed) 
-            glDrawElements(GL_TRIANGLES,renderContext.currentMesh->vertexCount,Standard::meshIndexGL,(void*)0);
+        if(currentMesh->indexed) 
+            glDrawElements(GL_TRIANGLES,currentMesh->vertexCount,Standard::meshIndexGL,(void*)0);
         else 
-            glDrawArrays(GL_TRIANGLES,0,renderContext.currentMesh->vertexCount);
+            glDrawArrays(GL_TRIANGLES,0,currentMesh->vertexCount);
     }
 }
 
-#define UNIFORMS(x) Renderer::renderContext.currentMaterial->uniforms[x]
+#define UNIFORMS(x) Renderer::currentMaterial->uniforms[x]

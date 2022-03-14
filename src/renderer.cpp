@@ -6,7 +6,6 @@
 #include <mesh/primitiveMesh.h>
 #include <iostream>
 #include "render_camera.h"
-#include "renderContext.h"
 
 RenderConfiguration Renderer::currentConfiguration;
 
@@ -14,6 +13,63 @@ namespace Renderer
 {
     RenderCameraID mainRenderCamera;
     ModelID skyModel;
+
+    int currentFrame = 1;
+    CameraID currentCamera = 0;
+    MaterialID currentMaterial;
+    MeshID currentMesh;
+
+    WorldMaterial* currentWorldMaterial = nullptr;
+
+
+    void useMaterial(MaterialID materialID)
+    {
+        if(currentMaterial != materialID) {
+            currentMaterial = materialID;
+            currentMaterial->bind();
+            REGISTER_MATERIAL_SWAP();
+        }
+    
+        if (Loader::materials.updateForFrame(materialID,currentFrame)) {
+            Loader::lights.flush(currentMaterial);
+    
+            if(currentCamera.valid()) 
+                currentCamera->bind(currentMaterial);        
+            
+            if(currentWorldMaterial != nullptr)
+                currentWorldMaterial->bind(currentMaterial);
+        }
+    
+    }
+    
+    void useMesh(MeshID meshID)
+    {
+        if (meshID != currentMesh) {
+            currentMesh = meshID;
+            glBindVertexArray(currentMesh->vao);
+            REGISTER_MESH_SWAP();
+        }
+    }
+    
+    void useCamera(CameraID cameraID) {
+        if(cameraID != currentCamera) {
+            currentCamera = cameraID;
+            currentCamera->bind(currentMaterial);
+        }
+    }   
+    
+    void useMaterialInstance(MaterialInstanceID instanceID) {
+        currentMaterial->useInstance(instanceID);
+    }
+    
+    void useWorldMaterial(WorldMaterial* worldMaterial) {
+        currentWorldMaterial = worldMaterial;
+    }
+    
+    void registerFrame() {
+        currentFrame++;
+        if(currentCamera.valid()) currentCamera->update();
+    }
 
     void configureRenderer(const RenderConfiguration& config)
     {
@@ -32,6 +88,7 @@ namespace Renderer
 
     void renderPass()
     {
+        registerFrame();
         glCullFace(GL_BACK);
 
         if(skyModel.valid() && skyModel->ready() && !currentConfiguration.skipSkybox)
@@ -48,8 +105,6 @@ namespace Renderer
         }
     }
     void render() {
-        renderContext.registerFrame();
-
         glClearColor(currentConfiguration.clearColor.x, currentConfiguration.clearColor.y, currentConfiguration.clearColor.z,1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         

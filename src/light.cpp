@@ -1,6 +1,5 @@
 #include "light.h"
 #include "material.h"
-#include "renderContext.h"
 #include <iostream>
 
 

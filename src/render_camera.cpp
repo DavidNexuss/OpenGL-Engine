@@ -2,7 +2,6 @@
 #include "material.h"
 #include "mesh/primitiveMesh.h"
 #include "renderer.h"
-#include "renderContext.h"
 
 MeshID RenderCamera::screenQuad;
 
@@ -43,8 +42,8 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
         glCullFace(GL_FRONT);
         if(!screenQuad.valid()) createScreenQuad();
 
-        Renderer::renderContext.useMesh(screenQuad);
-        Renderer::renderContext.useMaterial(postProcessEffect);
+        Renderer::useMesh(screenQuad);
+        Renderer::useMaterial(postProcessEffect);
         Renderer::drawMesh();
     }
     else if (renderBuffer.valid()) {
@@ -53,7 +52,7 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
         glCullFace(GL_FRONT);  
         glEnable(GL_DEPTH_TEST); 
         
-        Renderer::renderContext.useCamera(camera);
+        Renderer::useCamera(camera);
         Renderer::renderPass();
         renderBuffer->end();
     }
