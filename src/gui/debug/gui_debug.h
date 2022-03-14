@@ -24,8 +24,8 @@ namespace GUI
         void renderMeshMenu(int meshID,bool* windowEnable);
         void renderMeshWidget(int meshID);
 
-        void renderModelMenu(int modelID,bool* windowEnable);
-        void renderModelWidget(int modelID);
+        void renderModelMenu(ModelID modelID,bool* windowEnable);
+        void renderModelWidget(ModelID modelID);
         
         void renderLightMenu(int lightID,bool* windowEnable);
         void renderLightWidget(int lightID);

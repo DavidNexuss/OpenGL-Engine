@@ -3,6 +3,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include "structures/storage.h"
+#include "material.h"
 
 enum CameraType
 {
@@ -44,7 +45,7 @@ class Camera
     /**
      * @brief sends camera uniforms to the shaders
      */
-    void flush();
+    void bind(MaterialID material);
 
     Camera();
 };

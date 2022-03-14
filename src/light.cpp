@@ -1,6 +1,6 @@
 #include "light.h"
 #include "material.h"
-#include "renderer.h"
+#include "renderContext.h"
 #include <iostream>
 
 
@@ -13,13 +13,12 @@ LightID LightLoader::add(glm::vec3 pos,glm::vec3 color)
     return lightsPositions.size() - 1;
 }
 
-void LightLoader::flush()
+void LightLoader::flush(MaterialID mat)
 {
-    Material& mat = Loader::materials[Renderer::currentMaterial];
-    if (flushUniforms && mat.isLightSensitive()) {
-        glUniform3fv(mat.uniforms[Standard::uLightPosition],lightsPositions.size(),(GLfloat*)&lightsPositions[0]);
-        glUniform3fv(mat.uniforms[Standard::uLightColor],lightsColor.size(),(GLfloat*)&lightsColor[0]);
-        glUniform1i(mat.uniforms[Standard::uLightCount],lightsColor.size());
+    if (flushUniforms && mat->isLightSensitive()) {
+        glUniform3fv(mat->uniforms[Standard::uLightPosition],lightsPositions.size(),(GLfloat*)&lightsPositions[0]);
+        glUniform3fv(mat->uniforms[Standard::uLightColor],lightsColor.size(),(GLfloat*)&lightsColor[0]);
+        glUniform1i(mat->uniforms[Standard::uLightCount],lightsColor.size());
         
         REGISTER_LIGHT_FLUSH();
     }

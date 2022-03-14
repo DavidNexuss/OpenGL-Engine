@@ -10,9 +10,9 @@ VRP Util::getSceneVRP()
 
     for (size_t i = 0; i <models.size(); i++)
     {
-        Mesh& mesh = Loader::meshes[Loader::models[i].meshID];
-        auto buffer = mesh.getMeshBuffer();
-        for (size_t j = 0; j < mesh.vertexCount; j++)
+        MeshID mesh = ModelID(i)->meshID;
+        auto buffer = mesh->getMeshBuffer();
+        for (size_t j = 0; j < mesh->vertexCount; j++)
         {
             size_t b = buffer->getVertexStride() * j;
             vec4 v = models[i].transformMatrix * vec4(buffer->raw()[b],buffer->raw()[b + 1],buffer->raw()[b + 2],1.0);

@@ -21,6 +21,7 @@ Camera::Camera()
     d = 5.0;
     type = THIRDPERSON;
     gamma = 0.0;
+
     zheta = 0.0;
     phi = 0.0;
 }
@@ -64,17 +65,16 @@ void Camera::update()
 
 }
 
-void Camera::flush()
+void Camera::bind(MaterialID current)
 {
-        Material& current = Loader::materials[Renderer::currentMaterial];
-        glUniformMatrix4fv(current.uniforms[Standard::uProjectionMatrix],1,false,&projectionMatrix[0][0]);
-        glUniform3fv(current.uniforms[Standard::uViewPos],1,&invViewMatrix[3][0]);
-        
-        if(current.isSkyboxMaterial)
-        {
-            mat4 skyView = mat4(mat3(viewMatrix));
-            glUniformMatrix4fv(current.uniforms[Standard::uViewMatrix],1,false,&skyView[0][0]);
-        }else glUniformMatrix4fv(current.uniforms[Standard::uViewMatrix],1,false,&viewMatrix[0][0]);
+    glUniformMatrix4fv(current->uniforms[Standard::uProjectionMatrix],1,false,&projectionMatrix[0][0]);
+    glUniform3fv(current->uniforms[Standard::uViewPos],1,&invViewMatrix[3][0]);
+    
+    if(current->isSkyboxMaterial) {
+        mat4 skyView = mat4(mat3(viewMatrix));
+        glUniformMatrix4fv(current->uniforms[Standard::uViewMatrix],1,false,&skyView[0][0]);
+    }else 
+        glUniformMatrix4fv(current->uniforms[Standard::uViewMatrix],1,false,&viewMatrix[0][0]);
 }
 
 namespace Loader

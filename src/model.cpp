@@ -2,9 +2,9 @@
 #include "mesh_builder.h"
 #include "texture.h"
 #include "renderer.h"
+#include "renderContext.h"
 using namespace std;
-
-sorted_storage<Model> Loader::models;
+using namespace Renderer;
 
 bool Model::lastcullFrontFace = false;
 
@@ -18,25 +18,29 @@ void Model::draw()
 
     if (depthMask) glDepthMask(GL_FALSE);
 
-    Renderer::useMaterial(materialID);
+    renderContext.useMaterial(materialID);
     
-    if (!Standard::is_invalid(materialInstanceID)) Renderer::useMaterialInstance(materialInstanceID);
+    if (materialInstanceID.valid()) renderContext.useMaterialInstance(materialInstanceID);
     
-    Renderer::useMesh(meshID);
+
+    renderContext.useMesh(meshID);
     
     if(UNIFORMS(Standard::uTransformMatrix) != GL_INVALID_INDEX)
     {
         glUniformMatrix4fv(UNIFORMS(Standard::uTransformMatrix),1,false,&transformMatrix[0][0]);
     }
     
-    if (UNIFORMS(Standard::uNormalMatrix) != GL_INVALID_INDEX)
-    {
+    if (UNIFORMS(Standard::uNormalMatrix) != GL_INVALID_INDEX) {
         normalMatrix = glm::transpose(glm::inverse(transformMatrix));
         glUniformMatrix3fv(UNIFORMS(Standard::uNormalMatrix),1,false,&normalMatrix[0][0]);
     }
     
-    Renderer::drawMesh(Loader::meshes[Renderer::currentMesh].indexed);
+    Renderer::drawMesh();
     
     if(depthMask) glDepthMask(GL_TRUE);
 
+}
+
+namespace Loader {
+    sorted_storage<Model> models;
 }

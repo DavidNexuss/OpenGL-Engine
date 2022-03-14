@@ -15,7 +15,8 @@ struct ModelGroupID
     {
         std::cerr << first << " " << last << std::endl;
         for(size_t i = first; i <= last; i++) {
-            Loader::models[i].transformMatrix = func(Loader::models[i].transformMatrix);
+            ModelID model = ModelID(i);
+            model->transformMatrix = func(model->transformMatrix);
         }
     }
 };

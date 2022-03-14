@@ -35,7 +35,7 @@ struct Model : public EngineComponent
                 (materialInstanceID == model.materialInstanceID && meshID < model.meshID)));
     }
 
-    inline bool valid() const {
+    inline bool ready() const {
         return meshID.valid() && materialID.valid();
     }
 };

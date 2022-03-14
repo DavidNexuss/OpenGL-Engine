@@ -176,7 +176,7 @@ GLuint FrameBuffer::getStencilBuffer() const
     return stencilBuffer;
 }
 
-
-namespace Loader {
+namespace Loader
+{
     storage<FrameBuffer> framebuffers;
-}
+};

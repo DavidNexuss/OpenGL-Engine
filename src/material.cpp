@@ -108,5 +108,7 @@ Material Material::createDefaultMaterial()
     return Material(Directory::getDefaultFragemntShaderPath(),Directory::getDefaultVertexShaderPath(),{});
 }
 
-
-Loader::MaterialLoader Loader::materials;
+namespace Loader
+{
+    MaterialLoader materials;
+};

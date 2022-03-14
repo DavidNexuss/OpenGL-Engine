@@ -100,28 +100,27 @@ namespace GUI
 
         }
 
-        void renderModelMenu(int modelID,bool* windowEnable)
+        void renderModelMenu(ModelID modelID,bool* windowEnable)
         {
             if(ImGui::Begin("ModelWidget",windowEnable)) {
                 renderModelWidget(modelID);
             }
             ImGui::End();
         }
-        void renderModelWidget(int modelID)
+        void renderModelWidget(ModelID model)
         {
-            Model& model = Loader::models[modelID];
-            ImGui::InputInt("meshID",(int*)&model.meshID);
-            ImGui::InputInt("materialID",(int*)&model.materialID);
-            ImGui::InputInt("materialInstanceID",(int*)&model.materialInstanceID);
+            ImGui::InputInt("meshID",(int*)&model->meshID);
+            ImGui::InputInt("materialID",(int*)&model->materialID);
+            ImGui::InputInt("materialInstanceID",(int*)&model->materialInstanceID);
             
             ImGui::Text("TransformMatrix"); 
-            ImGui::InputFloat4("0",&model.transformMatrix[0].x);
-            ImGui::InputFloat4("1",&model.transformMatrix[1].x);
-            ImGui::InputFloat4("2",&model.transformMatrix[2].x);
-            ImGui::InputFloat4("3",&model.transformMatrix[3].x);
+            ImGui::InputFloat4("0",&model->transformMatrix[0].x);
+            ImGui::InputFloat4("1",&model->transformMatrix[1].x);
+            ImGui::InputFloat4("2",&model->transformMatrix[2].x);
+            ImGui::InputFloat4("3",&model->transformMatrix[3].x);
 
-            ImGui::Checkbox("DepthMask",&model.depthMask);
-            ImGui::Checkbox("CullFrontFace",&model.cullFrontFace);
+            ImGui::Checkbox("DepthMask",&model->depthMask);
+            ImGui::Checkbox("CullFrontFace",&model->cullFrontFace);
         }
         
         void renderLightMenu(int lightID,bool* windowEnable)
@@ -140,8 +139,8 @@ namespace GUI
             ImGui::ColorPicker3("color",&lightColor->x);
         }
 
-        template <typename T>
-        void renderTree(const char* treeName,bool* window,storage<T>& vec,void (*func)(int,bool*))
+        template <typename T,typename U>
+        void renderTree(const char* treeName,bool* window,storage<T>& vec,void (*func)(U,bool*))
         {
             std::vector<int> windows;
 

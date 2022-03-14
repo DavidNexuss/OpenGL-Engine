@@ -77,11 +77,7 @@ namespace Standard
     const static uint32_t meshIndexGL = GL_UNSIGNED_SHORT;  //For glDrawElements call
     const static bool interleaveVBOData = true;
     
-    const static size_t engineInvalid = -1;
     const static unsigned int glInvalid = -1;
 
-    template <typename T>
-    bool is_invalid(const T& val) {
-        return val == T(-1);
-    }
+    inline bool is_invalid(unsigned int glVal) {return glVal == glInvalid; }
 }

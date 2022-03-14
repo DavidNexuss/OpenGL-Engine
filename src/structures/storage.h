@@ -122,14 +122,21 @@ template <typename Container, Container& cont>
 struct storage_pointer
 {
     using type = typename Container::type;
-    size_t index;
+    size_t index = -1;
 
     storage_pointer() : index(validId()) { }
     storage_pointer(size_t _index) { index = _index; }
 
-    type* operator->() const {
-        return &cont[index];
+    /*
+    auto operator->() const {
+        return &(*cont)[index];
     }
+
+    auto& operator*() const {
+        return (*cont)[index];
+    }*/
+
+    type* operator->() const { return &cont[index]; }
 
     operator size_t () const { return index; }
     bool valid() const { return index != validId(); }

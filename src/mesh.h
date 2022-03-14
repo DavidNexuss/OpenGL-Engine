@@ -23,8 +23,7 @@ struct Mesh {
 
 };
 
-namespace Loader
-{
+namespace Loader {
     extern storage<Mesh> meshes;
 }
 

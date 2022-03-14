@@ -1,7 +1,6 @@
 #pragma once
 #include "material_instance.h"
 #include "texture.h"
-#include "world_material.h"
 #include "standard.h"
 #include "core.h"
 #include "framebuffer.h"
@@ -31,16 +30,8 @@ struct Material : public EngineComponent
     void useInstance(MaterialInstanceID materialInstanceID);
     int useScreenAttachments(const FrameBuffer& buffer,int startingTexture = 0);
 
-    inline void bind(const WorldMaterial& world) const {
+    inline void bind() const {
         glUseProgram(programID);
-
-        //Enable skybox if present and compatible with shader
-        Texture skyTexture;
-        if ((skyTexture = world.skyTexture) && isSkyBoxSensitive())
-        {
-            TextureLoader::useTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP);
-            glUniform1i(uniforms[Standard::uSkyBox],Standard::tSkyBox);
-        }
     }
     
     inline bool isSkyBoxSensitive() const {
