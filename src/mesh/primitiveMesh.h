@@ -8,12 +8,11 @@
 struct PrimitiveMesh
 {
     struct MeshAttribute{
-        std::vector<glm::vec3> buffer;
         int size;
         int attributeid;
+        std::vector<glm::vec3> buffer;
 
         MeshAttribute(int n = 0) : buffer(n) { }
-
         MeshAttribute(size_t capacity,int _size,int _attributeid) : size(_size), attributeid(_attributeid) { buffer.reserve(capacity); }
     };
 
@@ -44,7 +43,7 @@ struct PrimitiveMesh
     };
     
     static std::vector<float> interleavedData(const std::vector<MeshGenerationBuffer>& buffers);
-    static Mesh generateFromBuffers(const std::vector<MeshGenerationBuffer>& buffers,int genrationFlags = 0);
+    static Mesh generateFromBuffers(const std::vector<MeshGenerationBuffer>& buffers);
     
     static std::vector<Standard::meshIndex> triangulateMesh(const std::vector<std::pair<int,int>>& edges);
 };

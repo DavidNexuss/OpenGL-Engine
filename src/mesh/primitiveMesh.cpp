@@ -33,7 +33,7 @@ std::vector<float> PrimitiveMesh::interleavedData(int& vertexSize) const{
 int PrimitiveMesh::initiliazeAttribute(size_t count,int size,int attributeid)
 {
     int idx = attributes.size();
-    attributes.emplace_back(MeshAttribute(count));
+    attributes.emplace_back(count);
     attributes[idx].size = size;
     attributes[idx].attributeid = attributeid;
     return idx;
@@ -144,7 +144,7 @@ std::vector<float> PrimitiveMesh::interleavedData(const std::vector<MeshGenerati
     assert(dataIdx == result.size());
     return result;
 }
-Mesh PrimitiveMesh::generateFromBuffers(const std::vector<MeshGenerationBuffer>& buffers,int generationFlags)
+Mesh PrimitiveMesh::generateFromBuffers(const std::vector<MeshGenerationBuffer>& buffers)
 {
     std::vector<float> readyData = interleavedData(buffers);
     std::vector<pair<int,int>> attributes(buffers.size());

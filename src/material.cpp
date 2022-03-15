@@ -10,9 +10,8 @@ Material::Material(const std::string& fragmentShaderPath,const std::string& vert
 {
     programID = compileShader(vertexShaderPath.c_str(),fragmentShaderPath.c_str());
     
-    if (programID < 0)
-    {
-        cerr << "Error loading shaders!!!" << endl;
+    if (programID == Standard::glInvalid)  {
+		std::cerr << "Error loading shaders: " << programID << std::endl;
         throw std::runtime_error("Error compiling shader");
     }
 
@@ -62,6 +61,7 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
 
 int Material::useScreenAttachments(const FrameBuffer& buffer,int startingIndex)
 {
+	//TODO: Fix
     /*
     size_t i = 0;
     for (i = 0; i < buffer.textureAttachments.size() && (i + startingIndex) < screenTextureUniforms.size(); ++i) {

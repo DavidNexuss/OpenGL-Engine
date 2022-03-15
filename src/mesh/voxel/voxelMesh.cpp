@@ -64,9 +64,9 @@ std::vector<VoxelMesh> VoxelMeshWorld::rasterize()
 }
 void VoxelMeshGenerator::create()
 {
-    attributes.emplace_back(MeshAttribute());
-    attributes.emplace_back(MeshAttribute());
-    attributes.emplace_back(MeshAttribute());
+    attributes.emplace_back();
+    attributes.emplace_back();
+    attributes.emplace_back();
 
     attributes[0].attributeid = Standard::aPosition;
     attributes[1].attributeid = Standard::aNormal;

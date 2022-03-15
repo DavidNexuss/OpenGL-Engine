@@ -16,9 +16,9 @@ void SphereMesh::create() {
     //VBO Cretion
     int n = (rings + 1) * (segments + 1);
 
-    attributes.emplace_back(MeshAttribute(n));
-    attributes.emplace_back(MeshAttribute(n));
-    attributes.emplace_back(MeshAttribute(n));
+    attributes.emplace_back(n);
+    attributes.emplace_back(n);
+    attributes.emplace_back(n);
     
     attributes[0].size = 3;
     attributes[1].size = 2;
