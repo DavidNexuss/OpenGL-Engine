@@ -71,7 +71,6 @@ class Debug
     }
 };
 
-#define DEBUG
 // Debug macros, disable debug logging in non debug builds
 #ifndef NDEBUG
     #ifndef DEBUG

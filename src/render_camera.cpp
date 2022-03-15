@@ -33,6 +33,7 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
 	// Render post effect shader if valid
     if(postProcessEffect.valid()) {
 
+        Renderer::useMaterial(postProcessEffect);
         int last = 0;
         for (size_t i = 0; i < renderCameraChildren.size(); i++) {
             RenderCameraID child = renderCameraChildren[i];
@@ -46,7 +47,6 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
         if(!screenQuad.valid()) createScreenQuad();
 
         Renderer::useMesh(screenQuad);
-        Renderer::useMaterial(postProcessEffect);
         Renderer::drawMesh();
     }
 	//If not do a render pass for the renderCamera buffer and camera

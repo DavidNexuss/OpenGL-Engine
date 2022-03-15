@@ -63,11 +63,11 @@ GLuint FrameBuffer::createDepthStencilTexture()
 void FrameBuffer::initialize() {
     glGenFramebuffers(1,&framebuffer);
     glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
-
+	glGenTextures(colorAttachments.size(),&colorAttachments[0]);
+	
     //Generate color attachments
     for (size_t i = 0; i < colorAttachments.size(); i++) {
-        GLuint texture;
-        glGenTextures(1,&texture);
+        GLuint texture = colorAttachments[i];
         glBindTexture(GL_TEXTURE_2D,texture);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bufferWidth, bufferHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
@@ -75,12 +75,9 @@ void FrameBuffer::initialize() {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); 
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, texture, 0);  
-        colorAttachments[i] = texture; 
-        
     }
 
-    if(combinedDepthStencil())
-    {
+    if(combinedDepthStencil()) {
         if(configuration & USE_RENDER_BUFFER) {
             stencilDepthBuffer = createDepthStencilBuffer(); 
             glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, stencilDepthBuffer);
@@ -143,15 +140,16 @@ void FrameBuffer::resize(int screenWidth, int screenHeight) {
 
     bufferWidth = screenWidth;
     bufferHeight = screenHeight;
-
+	
     initialize();
+	check();
 }
 
 void FrameBuffer::check() { 
     bool error = glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE;
     if(error) {
-        //Do error handling here
-    }
+    
+	}
 }
 
 void FrameBuffer::begin(int screenWidth, int screenHeight) {
