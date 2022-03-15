@@ -24,10 +24,13 @@ void RenderCamera::createScreenQuad()
 }
 void RenderCamera::render(int screenWidth,int screenHeight) { 
 
+	//Render each child
     for (size_t i = 0; i < renderCameraChildren.size(); i++) {
         RenderCameraID child = RenderCameraID(renderCameraChildren[i]);
         child->render(screenWidth, screenHeight);
     }
+	
+	// Render post effect shader if valid
     if(postProcessEffect.valid()) {
 
         int last = 0;
@@ -46,6 +49,7 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
         Renderer::useMaterial(postProcessEffect);
         Renderer::drawMesh();
     }
+	//If not do a render pass for the renderCamera buffer and camera
     else if (renderBuffer.valid()) {
         renderBuffer->begin(screenWidth,screenHeight);
         glEnable(GL_CULL_FACE);

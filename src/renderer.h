@@ -4,24 +4,22 @@
 #include "standard.h"
 #include "mesh.h"
 #include "framebuffer.h"
-#include "sky.h"
 #include "render_camera.h"
 #include "mesh.h"
 #include "material.h"
 #include "world_material.h"
+#include "model.h"
 
 struct RenderConfiguration
 {
     int mssaLevel;
     bool wireRendering;
-    bool skipSkybox;
     glm::vec3 clearColor;
 };
 
 namespace Renderer
 {   
     extern RenderCameraID mainRenderCamera;
-    extern ModelID skyModel;
     extern RenderConfiguration currentConfiguration;
 
     extern int currentFrame;

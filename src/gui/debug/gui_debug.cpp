@@ -226,7 +226,6 @@ namespace GUI
             if(ImGui::Begin("RenderConfiguration", windowEnable)) {
                 ImGui::Checkbox("useWiredRendering",&config.wireRendering);
                 ImGui::ColorPicker3("clearColor",&config.clearColor.x);
-                ImGui::Checkbox("skipSkyBox",&config.skipSkybox);
                 ImGui::InputInt("mssaLevel",&config.mssaLevel);
             }
             ImGui::End();

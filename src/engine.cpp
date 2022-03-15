@@ -18,6 +18,7 @@ namespace Engine
     EngineConfiguration configuration;
     RenderConfiguration renderConfiguration;
 
+
     Window *window;
     float currentFrameTime = 0.0f;
     float lastFrameTime = 0.0f;

@@ -32,7 +32,8 @@ namespace Renderer
     
         if (Loader::materials.updateForFrame(materialID,currentFrame)) {
             Loader::lights.flush(currentMaterial);
-    
+			
+			//TODO: Should refactor this to enable multiple uniforms subsystems
             if(currentCamera.valid()) 
                 currentCamera->bind(currentMaterial);        
             
@@ -52,7 +53,8 @@ namespace Renderer
     }
     
     void useCamera(CameraID cameraID) {
-        if(cameraID != currentCamera) {
+        
+		if(cameraID != currentCamera) {
             currentCamera = cameraID;
             currentCamera->bind(currentMaterial);
         }
@@ -90,12 +92,9 @@ namespace Renderer
     {
         registerFrame();
         glCullFace(GL_BACK);
-
-        if(skyModel.valid() && skyModel->ready() && !currentConfiguration.skipSkybox)
-            skyModel->draw();
-
+        
         auto models = Loader::models.getSortedView();
-
+		
         //Render world
         for(size_t i = 0; i < models.size(); i++) {
             if(!models[i].enabled) continue;
@@ -107,7 +106,7 @@ namespace Renderer
     void render() {
         glClearColor(currentConfiguration.clearColor.x, currentConfiguration.clearColor.y, currentConfiguration.clearColor.z,1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
+		
         if(mainRenderCamera.valid()) {
             mainRenderCamera->render(Viewport::screenWidth,Viewport::screenHeight);
         } else renderPass();

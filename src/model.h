@@ -9,6 +9,7 @@
 
 struct Model : public EngineComponent
 {
+    int zIndex = 0;
     MeshID meshID;
     MaterialID materialID;
     MaterialInstanceID materialInstanceID;
@@ -27,12 +28,14 @@ struct Model : public EngineComponent
     Model(MeshID _meshID,MaterialID _materialID, MaterialInstanceID _materialInstanceID) : meshID(_meshID), materialID(_materialID), materialInstanceID(_materialInstanceID) { }
 
     void draw();
+	//TODO implement as virtual function
     inline void process() { }
 
+	//TODO: Refactor this comparison
     inline bool operator<(const Model& model) const {
-        return materialID < model.materialID || 
+        return zIndex < model.zIndex || (zIndex == model.zIndex && (materialID < model.materialID || 
             (materialID == model.materialID && (materialInstanceID < model.materialInstanceID || 
-                (materialInstanceID == model.materialInstanceID && meshID < model.meshID)));
+                (materialInstanceID == model.materialInstanceID && meshID < model.meshID)))));
     }
 
     inline bool ready() const {

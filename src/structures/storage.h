@@ -127,15 +127,6 @@ struct storage_pointer
     storage_pointer() : index(validId()) { }
     storage_pointer(size_t _index) { index = _index; }
 
-    /*
-    auto operator->() const {
-        return &(*cont)[index];
-    }
-
-    auto& operator*() const {
-        return (*cont)[index];
-    }*/
-
     type* operator->() const { return &cont[index]; }
 
     operator size_t () const { return index; }

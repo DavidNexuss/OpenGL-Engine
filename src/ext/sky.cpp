@@ -16,7 +16,7 @@ ModelID SkyCreator::createSkyBox()
     
     skyModel.depthMask = true;
     skyModel.cullFrontFace = true;
-    skyModel.enabled = false;
-
+    skyModel.zIndex = -1;
+    
     return Loader::models.add(skyModel);
 }

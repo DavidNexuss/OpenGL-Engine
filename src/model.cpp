@@ -9,8 +9,7 @@ bool Model::lastcullFrontFace = false;
 
 void Model::draw()
 {
-    if (cullFrontFace != lastcullFrontFace)
-    {
+    if (cullFrontFace != lastcullFrontFace) {
         glCullFace(GL_FRONT + cullFrontFace);
         lastcullFrontFace = cullFrontFace;
     }  
@@ -25,8 +24,7 @@ void Model::draw()
 
     Renderer::useMesh(meshID);
     
-    if(UNIFORMS(Standard::uTransformMatrix) != GL_INVALID_INDEX)
-    {
+    if(UNIFORMS(Standard::uTransformMatrix) != GL_INVALID_INDEX) {
         glUniformMatrix4fv(UNIFORMS(Standard::uTransformMatrix),1,false,&transformMatrix[0][0]);
     }
     
