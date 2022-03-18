@@ -2,6 +2,7 @@
 using namespace std;
 
 std::vector<Texture> TextureLoader::texturesUnits(TextureLoader::maxTextureUnits,-1);             // slot -> textureID
+int TextureLoader::currentActiveUnit = 0;
 
 int getInternalFormat(int c)
 {
@@ -19,7 +20,7 @@ Texture TextureLoader::loadTexture(const TextureData& textureData,bool filter)
     if (!textureData.data ) return -1;
     GLuint texId;
     glGenTextures(1,&texId);
-    glBindTexture(GL_TEXTURE_2D,texId);
+    TextureLoader::bindTexture(texId,GL_TEXTURE_2D);
     //TextureLoader filtering
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -48,7 +49,7 @@ Texture TextureLoader::loadCubemap(const vector<TextureData> &cubemaps)
             return -1;
     GLuint texId;
     glGenTextures(1, &texId);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, texId);
+    TextureLoader::bindTexture(texId, GL_TEXTURE_CUBE_MAP);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

@@ -21,9 +21,12 @@ namespace Renderer
 
     WorldMaterial* currentWorldMaterial = nullptr;
 
+    bool materialOverride = false;
 
     void useMaterial(MaterialID materialID)
     {
+        if(materialOverride) return;
+
         if(currentMaterial != materialID) {
             currentMaterial = materialID;
             currentMaterial->bind();
@@ -67,6 +70,15 @@ namespace Renderer
     void useWorldMaterial(WorldMaterial* worldMaterial) {
         currentWorldMaterial = worldMaterial;
     }
+
+    void overrideMaterial(MaterialID material) {
+        if(material.valid()) {
+            useMaterial(material);
+            materialOverride = true;
+        } else { 
+            materialOverride = false;
+        }
+    }
     
     void registerFrame() {
         currentFrame++;
@@ -92,7 +104,6 @@ namespace Renderer
     {
         registerFrame();
         glCullFace(GL_BACK);
-        
         auto models = Loader::models.getSortedView();
 		
         //Render world

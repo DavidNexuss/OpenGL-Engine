@@ -137,6 +137,8 @@ struct storage_pointer
     bool operator <(size_t other) const { return index < other; }
     bool operator <=(size_t other) const { return index <= other; }
     bool operator ==(size_t other) const { return index == other; }
+
+    static storage_pointer invalidInstance() { return storage_pointer(-1); }
 };
 
 #define STORAGE_POINTER_TYPE(x) storage_pointer<decltype(x),x>

@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-LightID LightLoader::add(glm::vec3 pos,glm::vec3 color)
+size_t LightLoader::add(glm::vec3 pos,glm::vec3 color)
 {
     lightsPositions.push_back(pos);
     lightsColor.push_back(color);

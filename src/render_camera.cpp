@@ -6,7 +6,7 @@
 MeshID RenderCamera::screenQuad;
 
 RenderCamera::RenderCamera(CameraID _camera) : camera(_camera) { }
-
+RenderCamera::RenderCamera() { }
 void RenderCamera::createScreenQuad()
 {
     screenQuad = Loader::meshes.add(PrimitiveMesh::generateFromBuffers({
@@ -24,7 +24,10 @@ void RenderCamera::createScreenQuad()
 }
 void RenderCamera::render(int screenWidth,int screenHeight) { 
 
-	//Render each child
+    if(!(renderAlways || renderCurrentFrame)) return;
+    renderCurrentFrame = false;
+	
+    //Render each child
     for (size_t i = 0; i < renderCameraChildren.size(); i++) {
         RenderCameraID child = RenderCameraID(renderCameraChildren[i]);
         child->render(screenWidth, screenHeight);
@@ -52,17 +55,26 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
 	//If not do a render pass for the renderCamera buffer and camera
     else if (renderBuffer.valid()) {
         renderBuffer->begin(screenWidth,screenHeight);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);  
-        glEnable(GL_DEPTH_TEST); 
         
+        if(overrideMaterial.valid()) Renderer::overrideMaterial(overrideMaterial);
         Renderer::useCamera(camera);
         Renderer::renderPass();
+        if(overrideMaterial.valid()) Renderer::overrideMaterial(MaterialID::invalidInstance());
+        
         renderBuffer->end();
+    }
+    else {
+        Renderer::useCamera(camera);
+        Renderer::renderPass();
     }
 }
 
-
+void RenderCamera::setForRendering(bool enable) {
+    renderCurrentFrame = enable;
+}
+void RenderCamera::setForAlwaysRendering(bool enable) {
+    renderAlways = enable;
+}
 namespace Loader
 {
     storage<RenderCamera> renderCameras;

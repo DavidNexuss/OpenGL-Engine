@@ -78,7 +78,6 @@ int Material::useScreenAttachments(const FrameBuffer& buffer,int startingIndex)
 void Material::useInstance(MaterialInstanceID matInstance)
 {
     bool swap = false;
-
     // Set all uniforms
     for (size_t i = 0; i < usedInstances.size(); i++)
     {

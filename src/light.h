@@ -4,7 +4,6 @@
 #include <engine_component.h>
 #include "material.h"
 
-using LightID = size_t;
 using LightComponent = EngineComponent;
 
 /**
@@ -24,12 +23,25 @@ class LightLoader
     std::vector<glm::vec3> lightsColor;
     std::vector<LightComponent> lightsComponent;
 
-    LightID add(glm::vec3 pos,glm::vec3 color);
+    size_t add(glm::vec3 pos,glm::vec3 color);
 
     void flush(MaterialID mat);
     void flushClean();
 };
-
 namespace Loader {
     extern LightLoader lights;
 }
+
+struct LightID
+{
+	size_t id;
+    LightID() { }
+	LightID(size_t _id) : id(_id) { }
+	inline glm::vec3& pos() const {
+		return Loader::lights.lightsPositions[id];
+	}
+	
+	inline glm::vec3& color() const {
+		return Loader::lights.lightsColor[id]; 
+	}
+};

@@ -53,6 +53,7 @@ namespace Standard
     //Engine reserved textureUnits
     enum TextureUnits
     {
+        tCreation = 14,
         tSkyBox = 15
     };
 

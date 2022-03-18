@@ -1,5 +1,6 @@
 #include "framebuffer.h"
 #include <iostream>
+#include "texture.h"
 
 FrameBuffer::FrameBuffer(int attachmentCount) : FrameBuffer(attachmentCount, USE_DEPTH | USE_STENCIL) { }
 
@@ -12,7 +13,7 @@ FrameBuffer::FrameBuffer(int attachmentCount, FrameBufferDescriptorFlags flags) 
 GLuint FrameBuffer::createDepthTexture() {
     GLuint depthTexture;
     glGenTextures(1, &depthTexture);
-    glBindTexture(GL_TEXTURE_2D, depthTexture);
+    TextureLoader::bindTexture(depthTexture,GL_TEXTURE_2D);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 
              bufferWidth, bufferHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
@@ -26,7 +27,7 @@ GLuint FrameBuffer::createDepthTexture() {
 GLuint FrameBuffer::createStencilTexture() {
     GLuint stencilTexture;
     glGenTextures(1, &stencilTexture);
-    glBindTexture(GL_TEXTURE_2D, stencilTexture);
+    TextureLoader::bindTexture(stencilTexture,GL_TEXTURE_2D);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 
              bufferWidth, bufferHeight, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
@@ -51,8 +52,8 @@ GLuint FrameBuffer::createDepthStencilTexture()
 {
     GLuint rbot;
     glGenTextures(1,&rbot);
-    glBindTexture(GL_TEXTURE_2D, rbot);
-
+    TextureLoader::bindTexture(rbot, GL_TEXTURE_2D);
+    
     glTexImage2D(
       GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, bufferWidth, bufferHeight, 0, 
       GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL
@@ -68,7 +69,7 @@ void FrameBuffer::initialize() {
     //Generate color attachments
     for (size_t i = 0; i < colorAttachments.size(); i++) {
         GLuint texture = colorAttachments[i];
-        glBindTexture(GL_TEXTURE_2D,texture);
+        TextureLoader::bindTexture(texture,GL_TEXTURE_2D);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bufferWidth, bufferHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 

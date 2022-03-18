@@ -26,15 +26,17 @@ namespace Renderer
     extern CameraID currentCamera;
     extern MaterialID currentMaterial;
     extern MeshID currentMesh;
-
     extern WorldMaterial* currentWorldMaterial;
+
+    extern bool materialOverride;
 
     void useMaterial(MaterialID materialID);
     void useMesh(MeshID meshID);
     void useCamera(CameraID cameraID);
     void useMaterialInstance(MaterialInstanceID materialInstance);
     void useWorldMaterial(WorldMaterial* worldMaterial);
-
+    
+    void overrideMaterial(MaterialID overrideMaterial);
     void registerFrame();
 
     void configureRenderer(const RenderConfiguration& config);
