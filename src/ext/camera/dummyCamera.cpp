@@ -4,66 +4,65 @@
 #include "renderer.h"
 #include <glm/ext.hpp>
 #include <iostream>
-
+#include <standard.h>
 using namespace glm;
 using namespace std;
 
 DummyCamera::DummyCamera()
 {
-    fov = 90.0f;
-    focusOrigin = vec3(0,0,0);
+    fov = Standard::Configuration::defaultFov;
+    zNear = Standard::Configuration::defaultZnear;
+    zFar = Standard::Configuration::defaultZfar;
+
+    useZoom = false;
     l = b = -1.0f;
     r = t = 1.0f;
     zmin = -2.0;
     zmax = 2.0;
     zoomSpeed = 0.0;
     zoomFactor = 1.0;
-    d = 5.0;
-    type = THIRDPERSON;
-    gamma = 0.0;
+    
+    useOrthographic = false;
+}
+glm::mat4 DummyCamera::createProjectionMatrix() {
 
-    zheta = 0.0;
-    phi = 0.0;
+    float zoom = useZoom ? zoomFactor : 1.0f;
 
-    setFrameUpdate(true);
+    const auto deltaTime = 0.1f;
+    zoomSpeed += Viewport::scrollY * deltaTime;
+    zoomFactor -= zoomSpeed * deltaTime;
+    zoomSpeed -= zoomSpeed * deltaTime * zoomDamping;
+    zoomFactor = std::max(zoomFactor,0.0f);
+
+    return glm::perspective(glm::radians(fov * zoom), float(Viewport::screenWidth) / float(Viewport::screenHeight), zNear, zFar);
+}
+glm::mat4 DummyCamera::createOrthoMatrix() {
+    return glm::ortho(l,r,b,t,zmin,zmax);
+}
+    
+void DummyCamera::defaultViewMatrix() {
+    glm::mat4 viewMatrix = glm::lookAt(origin,target,glm::vec3(0,1,0));
+    setViewMatrix(viewMatrix);
+}
+void DummyCamera::defaultProjectionMatrix() {
+    setProjectionMatrix(useOrthographic ? createOrthoMatrix() : createProjectionMatrix());
 }
 
+void DummyCamera::updateMatrices() {
+    combinedMatrix = projectionMatrix * viewMatrix;
+    invViewMatrix = glm::inverse(viewMatrix);
+}
+
+void DummyCamera::lookAt(const glm::vec3& origin,const glm::vec3& target) {
+    this->origin = origin;
+    this->target = target;
+}
 
 void DummyCamera::update()
 {
-    if(type == THIRDPERSON || type == THIRDPERSON_MANUAL)
-    {
-        projectionMatrix = glm::perspective(glm::radians(fov * zoomFactor), float(Viewport::screenWidth) / float(Viewport::screenHeight), 0.1f, 500.0f);
-        float a = gamma,b = zheta;
-        if(type == THIRDPERSON)
-        {
-            a = ((Viewport::xpos / Viewport::screenWidth) - 0.5) * M_PI * 3;
-            b = ((Viewport::ypos / Viewport::screenHeight) - 0.5) * M_PI * 3;
-        }
-
-        const auto deltaTime = 0.1f;
-        zoomSpeed += Viewport::scrollY * deltaTime;
-        zoomFactor -= zoomSpeed * deltaTime;
-        zoomSpeed -= zoomSpeed * deltaTime * zoomDamping;
-        
-        zoomFactor = std::max(zoomFactor,0.0f);
-
-        Viewport::scrollY = 0.0;
-
-        viewMatrix = mat4(1.0);
-        viewMatrix = translate(viewMatrix,vec3(0,0,-d));
-
-        viewMatrix = rotate(viewMatrix,-glm::radians(phi),vec3(0,0,1));
-        viewMatrix = rotate(viewMatrix,b,vec3(1,0,0));          //  b
-        viewMatrix = rotate(viewMatrix,a,vec3(0,1,0));          // -a
-        viewMatrix = translate(viewMatrix,-focusOrigin);
-    }
-
-    if  (type == ORTHOGONAL)
-    {
-        projectionMatrix = glm::ortho(l,r,b,t,zmin,zmax);
-    }
-    invViewMatrix = glm::inverse(viewMatrix);
+    defaultProjectionMatrix();
+    defaultViewMatrix();
+    updateMatrices();
 }
 
 void DummyCamera::bind(MaterialID current)

@@ -49,9 +49,7 @@ void Engine::createEngine(const std::string& titleName,const EngineConfiguration
     configuration.openglMinorVersion,
     configuration.mssaLevel);
     
-    glfwSetCursorPosCallback(window, Viewport::cursor_position_callback);
-    glfwSetFramebufferSizeCallback(window, Viewport::framebuffer_size_callback);
-    glfwSetScrollCallback(window, Viewport::scroll_callback);
+    Viewport::init_callbacks(window);
 
     //#ifdef DEBUG
         glDebugMessageCallback(&Debug::glError,NULL);
@@ -59,7 +57,7 @@ void Engine::createEngine(const std::string& titleName,const EngineConfiguration
     //#endif
 
     Renderer::mainRenderCamera = 
-        Loader::renderCameras.add(RenderCamera(FlyCamera::create()));
+        Loader::renderCameras.add(RenderCamera(new FlyCamera()));
 
     GUI::initialize(window,configuration.glslVersion().c_str());
 

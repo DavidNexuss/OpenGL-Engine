@@ -4,15 +4,6 @@
 #include "structures/storage.h"
 #include "material.h"
 
-enum DummyCameraType
-{
-    THIRDPERSON = 0,
-    THIRDPERSON_MANUAL,
-    ORTHOGONAL,
-    FLY,
-    CUSTOM
-};
-
 /** 
  * @class DummyCamera
  * @brief Engine Camera abstraction
@@ -20,21 +11,40 @@ enum DummyCameraType
 
 class DummyCamera : public Camera
 {
-    public:
-    DummyCameraType type;
-    
-    glm::vec3 focusOrigin;
-    glm::mat4 projectionMatrix;
+    glm::vec3 origin;
+    glm::vec3 target;
+
     glm::mat4 viewMatrix;
     glm::mat4 invViewMatrix;
+    glm::mat4 projectionMatrix;
+    glm::mat4 combinedMatrix;
 
+    public:
+
+    float fov;
     float zoomDamping = 0.6;
     float zoomFactor;
     float zoomSpeed;
-    float fov;
-    float phi,zheta,gamma;       
-    float d;
+    float zNear;
+    float zFar;
+    bool useZoom;
+    bool useOrthographic;
+
     float l,r,b,t,zmin,zmax;
+
+    glm::mat4 createProjectionMatrix();
+    glm::mat4 createOrthoMatrix();
+    
+
+    void updateMatrices();
+
+    inline void setViewMatrix(const glm::mat4& _viewMatrix) { viewMatrix = _viewMatrix; }
+    inline void setProjectionMatrix(const glm::mat4& _projectionMatrix) { projectionMatrix = _projectionMatrix; }
+    
+    void defaultProjectionMatrix();
+    void defaultViewMatrix();
+    
+    void lookAt(const glm::vec3& position,const glm::vec3& target);
 
     /**
      * @brief updates camera matrices using the currnet camera configuration
@@ -47,6 +57,4 @@ class DummyCamera : public Camera
     virtual void bind(MaterialID material);
 
     DummyCamera();
-
-    inline static CameraID create() { return new DummyCamera(); }
 };

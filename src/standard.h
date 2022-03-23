@@ -89,4 +89,15 @@ namespace Standard
     const static unsigned int glInvalid = -1;
 
     inline bool is_invalid(unsigned int glVal) {return glVal == glInvalid; }
+
+
+    //Module Configurations
+
+    namespace Configuration {
+        //Camera configuration
+        inline float defaultFov = 90.0f;
+        inline float defaultZnear = 0.5f;
+        inline float defaultZfar = 500.0f;
+        inline float defaultZoomDamping = 0.6f;
+    };
 }

@@ -1,29 +1,15 @@
 #pragma once
-#include <ext/camera/camera.h>
-class FlyCamera : public Camera
+#include <ext/camera/dummyCamera.h>
+class FlyCamera : public DummyCamera
 {
     glm::vec3 position;
     glm::vec3 velocity;
-    float velocityDamping;
     
-    glm::mat4 viewMatrix;
-    glm::mat4 invViewMatrix;
-    glm::mat4 projectionMatrix;
-    glm::mat4 combinedMatrix;
-
-    float phi;
-    float fov;
-    float zoomFactor;
-    float zoomDamping;
-    float zoomSpeed;
-
-    void createProjectionMatrix();
-    void createCombinedMatrix();
+    float velocityDamping;
+    int advanceKey; 
 
     public:
     virtual void update();
-    virtual void bind(MaterialID material);
-    inline static CameraID create() { return new FlyCamera(); }
 
     FlyCamera();
 };
