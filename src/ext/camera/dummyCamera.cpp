@@ -28,12 +28,13 @@ glm::mat4 DummyCamera::createProjectionMatrix() {
 
     float zoom = useZoom ? zoomFactor : 1.0f;
 
-    const auto deltaTime = 0.1f;
-    zoomSpeed += Viewport::scrollY * deltaTime;
-    zoomFactor -= zoomSpeed * deltaTime;
-    zoomSpeed -= zoomSpeed * deltaTime * zoomDamping;
-    zoomFactor = std::max(zoomFactor,0.0f);
-
+    if(useZoom) {
+        const auto deltaTime = 0.1f;
+        zoomSpeed += Viewport::scrollY * deltaTime;
+        zoomFactor -= zoomSpeed * deltaTime;
+        zoomSpeed -= zoomSpeed * deltaTime * zoomDamping;
+        zoomFactor = std::max(zoomFactor,0.0f);
+    }
     return glm::perspective(glm::radians(fov * zoom), float(Viewport::screenWidth) / float(Viewport::screenHeight), zNear, zFar);
 }
 glm::mat4 DummyCamera::createOrthoMatrix() {

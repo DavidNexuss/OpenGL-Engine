@@ -12,6 +12,7 @@ FlyCamera::FlyCamera() {
 
 void FlyCamera::update() {
 
+    Viewport::hideMouse(true);
     float a = ((Viewport::xpos / Viewport::screenWidth) - 0.5) * M_PI * 2;
     float b = ((Viewport::ypos / Viewport::screenHeight) - 0.5) * M_PI * 2;
     const auto deltaTime = 0.1f;

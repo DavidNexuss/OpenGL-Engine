@@ -96,7 +96,7 @@ namespace Standard
     namespace Configuration {
         //Camera configuration
         inline float defaultFov = 90.0f;
-        inline float defaultZnear = 0.5f;
+        inline float defaultZnear = 0.05f;
         inline float defaultZfar = 500.0f;
         inline float defaultZoomDamping = 0.6f;
     };

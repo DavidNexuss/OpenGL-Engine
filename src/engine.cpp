@@ -49,7 +49,7 @@ void Engine::createEngine(const std::string& titleName,const EngineConfiguration
     configuration.openglMinorVersion,
     configuration.mssaLevel);
     
-    Viewport::init_callbacks(window);
+    Viewport::initCallbacks(window);
 
     //#ifdef DEBUG
         glDebugMessageCallback(&Debug::glError,NULL);
