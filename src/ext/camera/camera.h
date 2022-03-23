@@ -3,11 +3,11 @@
 #include <world_material.h>
 
 /** 
- * @class DummyCamera
+ * @class Camera
  * @brief Engine Camera abstraction
  */
 
-class DummyCamera : public WorldMaterial
+class Camera : public WorldMaterial
 {
     glm::vec3 origin;
     glm::vec3 target;
@@ -54,7 +54,7 @@ class DummyCamera : public WorldMaterial
      */
     virtual void bind(MaterialID material);
 
-    DummyCamera();
+    Camera();
 };
 
-using CameraID = DummyCamera*;
+using CameraID = Camera*;

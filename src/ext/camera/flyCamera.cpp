@@ -28,5 +28,5 @@ void FlyCamera::update() {
     position += (acceleration)  * deltaTime;
 
     lookAt(position, position + viewDir);
-    DummyCamera::update();
+    Camera::update();
 }

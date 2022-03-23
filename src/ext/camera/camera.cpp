@@ -8,7 +8,7 @@
 using namespace glm;
 using namespace std;
 
-DummyCamera::DummyCamera()
+Camera::Camera()
 {
     fov = Standard::Configuration::defaultFov;
     zNear = Standard::Configuration::defaultZnear;
@@ -24,7 +24,7 @@ DummyCamera::DummyCamera()
     
     useOrthographic = false;
 }
-glm::mat4 DummyCamera::createProjectionMatrix() {
+glm::mat4 Camera::createProjectionMatrix() {
 
     float zoom = useZoom ? zoomFactor : 1.0f;
 
@@ -37,36 +37,36 @@ glm::mat4 DummyCamera::createProjectionMatrix() {
     }
     return glm::perspective(glm::radians(fov * zoom), float(Viewport::screenWidth) / float(Viewport::screenHeight), zNear, zFar);
 }
-glm::mat4 DummyCamera::createOrthoMatrix() {
+glm::mat4 Camera::createOrthoMatrix() {
     return glm::ortho(l,r,b,t,zmin,zmax);
 }
     
-void DummyCamera::defaultViewMatrix() {
+void Camera::defaultViewMatrix() {
     glm::mat4 viewMatrix = glm::lookAt(origin,target,glm::vec3(0,1,0));
     setViewMatrix(viewMatrix);
 }
-void DummyCamera::defaultProjectionMatrix() {
+void Camera::defaultProjectionMatrix() {
     setProjectionMatrix(useOrthographic ? createOrthoMatrix() : createProjectionMatrix());
 }
 
-void DummyCamera::updateMatrices() {
+void Camera::updateMatrices() {
     combinedMatrix = projectionMatrix * viewMatrix;
     invViewMatrix = glm::inverse(viewMatrix);
 }
 
-void DummyCamera::lookAt(const glm::vec3& origin,const glm::vec3& target) {
+void Camera::lookAt(const glm::vec3& origin,const glm::vec3& target) {
     this->origin = origin;
     this->target = target;
 }
 
-void DummyCamera::update()
+void Camera::update()
 {
     defaultProjectionMatrix();
     defaultViewMatrix();
     updateMatrices();
 }
 
-void DummyCamera::bind(MaterialID current)
+void Camera::bind(MaterialID current)
 {
     glUniformMatrix4fv(current->uniforms[Standard::uProjectionMatrix],1,false,&projectionMatrix[0][0]);
     glUniform3fv(current->uniforms[Standard::uViewPos],1,&invViewMatrix[3][0]);
