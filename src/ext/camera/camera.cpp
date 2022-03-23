@@ -1,4 +1,4 @@
-#include <ext/camera/dummyCamera.h>
+#include <ext/camera/camera.h>
 #include "viewport.h"
 #include "material.h"
 #include "renderer.h"

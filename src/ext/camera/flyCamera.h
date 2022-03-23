@@ -1,5 +1,5 @@
 #pragma once
-#include <ext/camera/dummyCamera.h>
+#include <ext/camera/camera.h>
 class FlyCamera : public DummyCamera
 {
     glm::vec3 position;
