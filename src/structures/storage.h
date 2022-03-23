@@ -56,6 +56,14 @@ class storage {
         return i;
     }
 
+    template <typename F>
+    void iterate(F&& func) {
+        fix();
+        for(size_t i = 0; i < data.size(); i++) {
+            while(removeMarched[i]) i++;
+            func(at(i));
+        }
+    }
     bool valid(int index) const {
         return !removeMarched[index];
     }

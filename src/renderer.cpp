@@ -4,6 +4,7 @@
 #include "light.h"
 #include "world_material.h"
 #include <mesh/primitiveMesh.h>
+#include <unordered_map>
 #include <iostream>
 #include "render_camera.h"
 
@@ -15,12 +16,11 @@ namespace Renderer
     ModelID skyModel;
 
     int currentFrame = 1;
-    CameraID currentCamera = 0;
     MaterialID currentMaterial;
     MeshID currentMesh;
 
-    WorldMaterial* currentWorldMaterial = nullptr;
-
+    std::vector<WorldMaterial*> worldMaterials;
+    std::unordered_map<Standard::WorldMaterialAspect,WorldMaterial*> registeredWorldMaterials;
     bool materialOverride = false;
 
     void useMaterial(MaterialID materialID)
@@ -35,13 +35,8 @@ namespace Renderer
     
         if (Loader::materials.updateForFrame(materialID,currentFrame)) {
             Loader::lights.flush(currentMaterial);
-			
-			//TODO: Should refactor this to enable multiple uniforms subsystems
-            if(currentCamera.valid()) 
-                currentCamera->bind(currentMaterial);        
-            
-            if(currentWorldMaterial != nullptr)
-                currentWorldMaterial->bind(currentMaterial);
+            for(WorldMaterial* mat : worldMaterials) mat->bind(currentMaterial);
+            for(auto it : registeredWorldMaterials) it.second->bind(currentMaterial);
         }
     
     }
@@ -55,20 +50,16 @@ namespace Renderer
         }
     }
     
-    void useCamera(CameraID cameraID) {
-        
-		if(cameraID != currentCamera) {
-            currentCamera = cameraID;
-            currentCamera->bind(currentMaterial);
-        }
-    }   
-    
     void useMaterialInstance(MaterialInstanceID instanceID) {
         currentMaterial->useInstance(instanceID);
     }
     
-    void useWorldMaterial(WorldMaterial* worldMaterial) {
-        currentWorldMaterial = worldMaterial;
+    void addWorldMaterial(WorldMaterial* worldMaterial) {
+        worldMaterials.push_back(worldMaterial);
+    }
+
+    void useWorldMaterial(Standard::WorldMaterialAspect aspect, WorldMaterial* worldMaterial) {
+        registeredWorldMaterials[aspect] = worldMaterial;
     }
 
     void overrideMaterial(MaterialID material) {
@@ -82,7 +73,11 @@ namespace Renderer
     
     void registerFrame() {
         currentFrame++;
-        if(currentCamera.valid()) currentCamera->update();
+        for(WorldMaterial* worldMaterial : worldMaterials) 
+            if(worldMaterial->needsFrameUpdate())worldMaterial->update();
+        
+        for(auto it : registeredWorldMaterials) 
+            if(it.second->needsFrameUpdate()) it.second->update();
     }
 
     void configureRenderer(const RenderConfiguration& config)

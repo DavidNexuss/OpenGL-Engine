@@ -1,4 +1,4 @@
-#include "camera.h"
+#include <ext/camera/dummyCamera.h>
 #include "viewport.h"
 #include "material.h"
 #include "renderer.h"
@@ -8,7 +8,7 @@
 using namespace glm;
 using namespace std;
 
-Camera::Camera()
+DummyCamera::DummyCamera()
 {
     fov = 90.0f;
     focusOrigin = vec3(0,0,0);
@@ -24,10 +24,12 @@ Camera::Camera()
 
     zheta = 0.0;
     phi = 0.0;
+
+    setFrameUpdate(true);
 }
 
 
-void Camera::update()
+void DummyCamera::update()
 {
     if(type == THIRDPERSON || type == THIRDPERSON_MANUAL)
     {
@@ -62,10 +64,9 @@ void Camera::update()
         projectionMatrix = glm::ortho(l,r,b,t,zmin,zmax);
     }
     invViewMatrix = glm::inverse(viewMatrix);
-
 }
 
-void Camera::bind(MaterialID current)
+void DummyCamera::bind(MaterialID current)
 {
     glUniformMatrix4fv(current->uniforms[Standard::uProjectionMatrix],1,false,&projectionMatrix[0][0]);
     glUniform3fv(current->uniforms[Standard::uViewPos],1,&invViewMatrix[3][0]);
@@ -75,9 +76,4 @@ void Camera::bind(MaterialID current)
         glUniformMatrix4fv(current->uniforms[Standard::uViewMatrix],1,false,&skyView[0][0]);
     }else 
         glUniformMatrix4fv(current->uniforms[Standard::uViewMatrix],1,false,&viewMatrix[0][0]);
-}
-
-namespace Loader
-{
-    storage<Camera> cameras;
 }

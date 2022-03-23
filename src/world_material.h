@@ -1,9 +1,15 @@
 #pragma once
-#include "texture.h"
 #include "material.h"
-#include "camera.h"
 
 struct WorldMaterial {
-    Texture skyTexture = -1;
-    void bind(MaterialID currentMaterial);
+    bool _needsFrameUpdate = false;
+
+    virtual void bind(MaterialID currentMaterial) = 0;
+    virtual void update() { }
+    
+    inline void setFrameUpdate(bool p_needsFrameUpdate) {
+        _needsFrameUpdate = p_needsFrameUpdate;
+    }
+
+    inline bool needsFrameUpdate() const { return _needsFrameUpdate; }
 };

@@ -9,7 +9,7 @@
 #include "material.h"
 #include "world_material.h"
 #include "model.h"
-
+#include <vector>
 struct RenderConfiguration
 {
     int mssaLevel;
@@ -23,18 +23,18 @@ namespace Renderer
     extern RenderConfiguration currentConfiguration;
 
     extern int currentFrame;
-    extern CameraID currentCamera;
     extern MaterialID currentMaterial;
     extern MeshID currentMesh;
-    extern WorldMaterial* currentWorldMaterial;
-
     extern bool materialOverride;
+
+    extern std::vector<WorldMaterial*> worldMaterials;
 
     void useMaterial(MaterialID materialID);
     void useMesh(MeshID meshID);
-    void useCamera(CameraID cameraID);
     void useMaterialInstance(MaterialInstanceID materialInstance);
-    void useWorldMaterial(WorldMaterial* worldMaterial);
+
+    void addWorldMaterial(WorldMaterial* worldMaterial);
+    void useWorldMaterial(Standard::WorldMaterialAspect aspect, WorldMaterial* worldMaterial);
     
     void overrideMaterial(MaterialID overrideMaterial);
     void registerFrame();

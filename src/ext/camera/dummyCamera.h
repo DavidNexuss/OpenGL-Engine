@@ -1,11 +1,10 @@
 #pragma once
-
-#include <vector>
+#include "camera.h"
 #include <glm/glm.hpp>
 #include "structures/storage.h"
 #include "material.h"
 
-enum CameraType
+enum DummyCameraType
 {
     THIRDPERSON = 0,
     THIRDPERSON_MANUAL,
@@ -15,14 +14,14 @@ enum CameraType
 };
 
 /** 
- * @class Camera
+ * @class DummyCamera
  * @brief Engine Camera abstraction
  */
 
-class Camera
+class DummyCamera : public Camera
 {
     public:
-    CameraType type;
+    DummyCameraType type;
     
     glm::vec3 focusOrigin;
     glm::mat4 projectionMatrix;
@@ -33,26 +32,21 @@ class Camera
     float zoomFactor;
     float zoomSpeed;
     float fov;
-    float phi,zheta,gamma;       //For manual controlling
+    float phi,zheta,gamma;       
     float d;
     float l,r,b,t,zmin,zmax;
 
     /**
      * @brief updates camera matrices using the currnet camera configuration
      */
-    void update();
+    virtual void update();
 
     /**
      * @brief sends camera uniforms to the shaders
      */
-    void bind(MaterialID material);
+    virtual void bind(MaterialID material);
 
-    Camera();
+    DummyCamera();
+
+    inline static CameraID create() { return new DummyCamera(); }
 };
-
-namespace Loader
-{
-    extern storage<Camera> cameras;
-}
-
-using CameraID = STORAGE_POINTER_TYPE(Loader::cameras);

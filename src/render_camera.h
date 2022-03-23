@@ -1,7 +1,7 @@
 #pragma once
 #include "mesh.h"
 #include "material.h"
-#include "camera.h"
+#include "ext/camera/camera.h"
 
 class RenderCamera
 {

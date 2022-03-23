@@ -1,7 +1,7 @@
 #include "engine.h"
 #include "core.h"
 #include "renderer.h"
-#include "camera.h"
+#include <ext/camera/dummyCamera.h>
 #include "viewport.h"
 #include <gui/gui.h>
 #include <gui/debug/gui_debug.h>
@@ -57,9 +57,9 @@ void Engine::createEngine(const std::string& titleName,const EngineConfiguration
         glDebugMessageCallback(&Debug::glError,NULL);
         glEnable(GL_DEBUG_OUTPUT);
     //#endif
-
+    
     Renderer::mainRenderCamera = 
-        Loader::renderCameras.add(CameraID(Loader::cameras.add(Camera())));
+        Loader::renderCameras.add(RenderCamera(DummyCamera::create()));
 
     GUI::initialize(window,configuration.glslVersion().c_str());
 

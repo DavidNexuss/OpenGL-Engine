@@ -5,7 +5,6 @@
 #include "model.h"
 #include "sky.h"
 
-
 ModelID SkyCreator::createSkyBox()
 {
     Material skyMaterial("cubemap",{});
@@ -19,4 +18,12 @@ ModelID SkyCreator::createSkyBox()
     skyModel.zIndex = -1;
     
     return Loader::models.add(skyModel);
+}
+
+void SkyWorldMaterial::bind(MaterialID material) {
+    //Flush sky texture
+    if (skyTexture && material->isSkyBoxSensitive()) {
+        TextureLoader::useTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP);
+        glUniform1i(material->uniforms[Standard::uSkyBox],Standard::tSkyBox);
+    }
 }

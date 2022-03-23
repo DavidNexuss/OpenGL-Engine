@@ -34,7 +34,13 @@ namespace Standard
         uLightCount =            7,      /* int        Light Count */
         uViewPos =               8,      /* vec3       World camera position */
         uSkyBox =                9,      /* sampler2D  SkyBox cubemap */
+        uShadowMap =            10,      /* sampler2D  ShadowMap depth information */
         uniformCount                           // Used internally to get the count of engine uniforms
+    };
+
+    enum WorldMaterialAspect {
+        wCamera,
+        wSky,
     };
 
     const static std::array<const char*,uniformCount> UniformsNames =  {
@@ -47,12 +53,14 @@ namespace Standard
         "uLightPosition",
         "uLightCount",
         "uViewPos",
-        "uSkybox"
+        "uSkybox",
+        "uShadowMap"
     };
 
     //Engine reserved textureUnits
     enum TextureUnits
     {
+        tShadowMap = 13,
         tCreation = 14,
         tSkyBox = 15
     };

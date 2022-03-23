@@ -57,14 +57,14 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
         renderBuffer->begin(screenWidth,screenHeight);
         
         if(overrideMaterial.valid()) Renderer::overrideMaterial(overrideMaterial);
-        Renderer::useCamera(camera);
+        Renderer::useWorldMaterial(Standard::wCamera,camera);
         Renderer::renderPass();
         if(overrideMaterial.valid()) Renderer::overrideMaterial(MaterialID::invalidInstance());
         
         renderBuffer->end();
     }
     else {
-        Renderer::useCamera(camera);
+        Renderer::useWorldMaterial(Standard::wCamera,camera);
         Renderer::renderPass();
     }
 }
