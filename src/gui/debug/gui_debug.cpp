@@ -12,19 +12,18 @@ namespace GUI
 {
     namespace Debug
     {
-        void renderUniformMenu(const char* uniformName,int uniformID,int materialInstanceID,bool* windowEnable)
+        void renderUniformMenu(const std::string& uniformName,int materialInstanceID,bool* windowEnable)
         {
             if(ImGui::Begin("UniformWidget",windowEnable)) {
-                renderUniformWidget(uniformName,uniformID,materialInstanceID);
+                renderUniformWidget(uniformName,materialInstanceID);
             }
             ImGui::End();
         }
 
-        void renderUniformWidget(const char* uniformName,int uniformID,MaterialInstanceID materialInstance)
+        void renderUniformWidget(const std::string& uniformName,MaterialInstanceID materialInstance)
         {
-            auto& uniform = materialInstance->getUniform(uniformID);
-
-            const char* variableName = uniformName ? uniformName : "value";
+            auto& uniform = materialInstance->getUniform(uniformName);
+            const char* variableName = uniformName.c_str();
             switch(uniform.type)
             {
                 case UniformType::INT:      
@@ -75,10 +74,11 @@ namespace GUI
         }
         void renderMaterialInstanceWidget(MaterialID material,MaterialInstanceID materialInstance)
         {
+
             for (size_t i = 0; i < material->uniformNames.size(); i++)
             {
                 const char* uniformName = material->uniformNames[i].c_str();
-                renderUniformWidget(uniformName,i,materialInstance);   
+                //renderUniformWidget(uniformName,i,materialInstance);   
             }
         }
 
@@ -194,7 +194,7 @@ namespace GUI
         }
         void renderMaterialTree(bool* windowEnable)
         {
-            renderTree("MaterialTree",windowEnable,Loader::materials,renderMaterialMenu);
+            //renderTree("MaterialTree",windowEnable,Loader::materials,renderMaterialMenu);
         }
         void renderModelTree(bool* windowEnable)
         {

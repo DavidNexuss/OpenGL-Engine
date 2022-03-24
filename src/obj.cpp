@@ -120,15 +120,15 @@ MaterialInstanceID createMaterial(aiMesh* mesh,const aiScene* scene)
     material->Get(AI_MATKEY_SHININESS,shinness);
     
     MaterialInstance minstance({
-        glm::vec3(ka.r, ka.g, ka.b),
-        glm::vec3(kd.r, kd.g, kd.b),
-        glm::vec3(ks.r, ks.g, ks.b),
-        shinness
+        {"ka",glm::vec3(ka.r, ka.g, ka.b)},
+        {"kd",glm::vec3(kd.r, kd.g, kd.b)},
+        {"ks",glm::vec3(ks.r, ks.g, ks.b)},
+        {"shinness",shinness}
     });
 
-    if(diffuseTextures.size() > 0)  minstance.setTexture(diffuseTextures[0],0);
-    if(specularTextures.size() > 0) minstance.setTexture(specularTextures[0],1);
-    if(normalTextures.size() > 0)   minstance.setTexture(normalTextures[0],2);
+    if(diffuseTextures.size() > 0)  minstance.set("diffuseMap",UTexture(diffuseTextures[0],0));
+    if(specularTextures.size() > 0) minstance.set("specularMap",UTexture(specularTextures[0],1));
+    if(normalTextures.size() > 0)   minstance.set("normalMap",UTexture(normalTextures[0],2));
 
     return ctx.loadedMaterials[material] = Loader::materialInstances.add(minstance);
 }

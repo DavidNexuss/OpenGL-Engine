@@ -6,6 +6,8 @@
 #include "framebuffer.h"
 #include "structures/storage.h"
 #include <vector>
+#include <unordered_map>
+#include <string>
 
 struct Material : public EngineComponent
 {
@@ -13,10 +15,12 @@ struct Material : public EngineComponent
 
     std::vector<std::string> uniformNames;
     std::vector<GLuint> uniforms;
-    std::vector<MaterialInstanceID> usedInstances;
+    std::unordered_map<std::string,MaterialInstanceID> usedInstances;
     
     std::vector<GLuint> textureUniforms;
     std::vector<GLuint> screenTextureUniforms;
+
+    std::unordered_map<std::string,GLuint> uniformsMap;
 
     bool isSkyboxMaterial = false;
 
@@ -48,6 +52,9 @@ struct Material : public EngineComponent
         TextureLoader::useTexture(textureID,textureUnit,GL_TEXTURE_2D);
         glUniform1i(screenTextureUniforms[screenTextureID],textureUnit);
     }
+
+    bool bindUniform(const std::string& uniformName,Uniform& uniformValue,MaterialInstanceID materialInstanceID = -1);
+    
 };
 
 namespace Loader {

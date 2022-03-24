@@ -60,6 +60,7 @@ namespace Renderer
 
     void useWorldMaterial(Standard::WorldMaterialAspect aspect, WorldMaterial* worldMaterial) {
         registeredWorldMaterials[aspect] = worldMaterial;
+        if(currentMaterial.valid()) worldMaterial->bind(currentMaterial);
     }
 
     void overrideMaterial(MaterialID material) {

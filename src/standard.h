@@ -35,12 +35,16 @@ namespace Standard
         uViewPos =               8,      /* vec3       World camera position */
         uSkyBox =                9,      /* sampler2D  SkyBox cubemap */
         uShadowMap =            10,      /* sampler2D  ShadowMap depth information */
+        uLightSpaceMatrix =     11,      /* mat4 Light space matrix */
+        
         uniformCount                           // Used internally to get the count of engine uniforms
     };
 
     enum WorldMaterialAspect {
+        wGlobal = 0,
         wCamera,
         wSky,
+        wCount
     };
 
     const static std::array<const char*,uniformCount> UniformsNames =  {
@@ -89,15 +93,4 @@ namespace Standard
     const static unsigned int glInvalid = -1;
 
     inline bool is_invalid(unsigned int glVal) {return glVal == glInvalid; }
-
-
-    //Module Configurations
-
-    namespace Configuration {
-        //Camera configuration
-        inline float defaultFov = 90.0f;
-        inline float defaultZnear = 0.05f;
-        inline float defaultZfar = 500.0f;
-        inline float defaultZoomDamping = 0.6f;
-    };
 }

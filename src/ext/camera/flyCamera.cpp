@@ -12,7 +12,7 @@ FlyCamera::FlyCamera() {
 
 void FlyCamera::update() {
 
-    Viewport::hideMouse(true);
+    //Viewport::hideMouse(true);
     float a = ((Viewport::xpos / Viewport::screenWidth) - 0.5) * M_PI * 2;
     float b = ((Viewport::ypos / Viewport::screenHeight) - 0.5) * M_PI * 2;
     const auto deltaTime = 0.1f;
@@ -23,7 +23,15 @@ void FlyCamera::update() {
     viewDir.y = sin(b);
     viewDir.z = sin(a) * cos(b);
 
-    glm::vec3 acceleration = viewDir * deltaTime * float(Viewport::isKeyPressed(advanceKey));
+    int ad = Viewport::isKeyPressed(GLFW_KEY_D) - Viewport::isKeyPressed(GLFW_KEY_A);
+    int ws = Viewport::isKeyPressed(GLFW_KEY_W) - Viewport::isKeyPressed(GLFW_KEY_S);
+
+    glm::vec3 input = glm::vec3(ad,0,ws);
+
+    glm::vec3 accZ = viewDir * deltaTime * float(ws);
+    glm::vec3 accX = glm::cross(viewDir,glm::vec3(0,1,0)) * deltaTime * float(ad);
+
+    glm::vec3 acceleration = (accX + accZ) * 4.0f;
     velocity += acceleration * deltaTime;
     position += (acceleration)  * deltaTime;
 

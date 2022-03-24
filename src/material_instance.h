@@ -5,6 +5,7 @@
 #include "texture.h"
 #include "engine_component.h"
 #include "structures/storage.h"
+#include <unordered_map>
 
 /**
  * @class MaterialInstance
@@ -20,49 +21,25 @@
 class MaterialInstance : public EngineComponent
 {
     public:
-    std::vector<Uniform> uniformValues;
-    std::vector<Texture> assignedTextureUnits;
+    using uniformCollection = std::unordered_map<std::string, Uniform>;
+    uniformCollection uniforms;
 
-    inline MaterialInstance(size_t size = 0) : uniformValues(size), 
-    assignedTextureUnits(TextureLoader::maxTextureUnits,-1) { }
-
-    inline MaterialInstance(const std::vector<Uniform>& _uniformValues) : uniformValues(_uniformValues), 
-    assignedTextureUnits(TextureLoader::maxTextureUnits,-1)
-    {}
-    
-    /**
-     * @brief flush uniform value of slot id to shader if necessary
-     */
-    void useUniform(UniformID id,GLuint glUniformID);
-    
-    /** @brief sets textureID to assignedTextureUnits
-     */
-    inline void setTexture(Texture textureID,size_t unitID) {
-        assignedTextureUnits[unitID] = textureID;
-    }
-
-    /**
-     * @brief Returns uniform value given a Material Value index, assumes uniform value will be modified
-     * and marks uniform as dirty.
-     * @returns Uniform value
-     */
-    inline Uniform& getUniform(size_t index) {
-        uniformValues[index].setDirty();
-        return uniformValues[index];
-    }
-    /**
-     * @brief Returns uniform value given a Material Value index.
-     * @returns Uniform value
-     */
-    inline const Uniform& getUniform(size_t index) const {
-        return uniformValues[index];
-    }
+    inline MaterialInstance(const uniformCollection& _uniformValues) : uniforms(_uniformValues) { }
 
     #define UNIFORMS_FUNC_DECLARATION(v,T) \
-    inline void set(UniformID id,const T& a) { uniformValues[id].v = a; uniformValues[id].dirty = true; uniformValues[id].type = UniformType::v; }
-
+    inline void set(const std::string& name,const T& a) { \
+        Uniform val; \
+        val.v = a; \
+        val.dirty = true; \
+        val.type = UniformType::v;\
+        uniforms[name] = val; \
+    }
+        
     UNIFORMS_LIST(UNIFORMS_FUNC_DECLARATION)
     #undef UNIFORMS_FUNC_DECLARATION
+
+    inline uniformCollection& getUniformCollection() { return uniforms; }
+    Uniform& getUniform(const std::string& name) { return uniforms[name]; }
 };
 
 namespace Loader {

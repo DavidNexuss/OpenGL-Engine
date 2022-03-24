@@ -40,7 +40,6 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
             throw std::runtime_error("Asked uniform " + uniform + " not found");
         }
         uniforms.emplace_back(uniform_location);
-        usedInstances.emplace_back();
     }
     
     const auto uniformListLookup = [](GLuint programID,vector<GLuint>& uniforms,const string& pattern){
@@ -57,49 +56,44 @@ void Material::loadShaderUniforms(const vector<string>& uniformsList)
 
     uniformListLookup(programID,textureUniforms,"texture");
     uniformListLookup(programID,screenTextureUniforms,"screenTexture");
+
+    // Read all uniforms
+    int count;
+    glGetProgramiv(programID, GL_ACTIVE_UNIFORMS, &count);
+    for (int i = 0; i < count; i++)
+    {
+        int bufSize = 256;
+        char nameBuffer[bufSize];
+        GLint length;
+        GLenum type;
+        int size;
+        glGetActiveUniform(programID, (GLuint)i, bufSize, &length, &size, &type, nameBuffer);
+        
+        uniformsMap[string(nameBuffer,length)] = glGetUniformLocation(programID, nameBuffer);
+    }
+    
 }
 
+bool Material::bindUniform(const std::string& uniformName,Uniform& uniformValue,MaterialInstanceID materialInstanceID) {
+    decltype(uniformsMap)::const_iterator it;
+    if((it = uniformsMap.find(uniformName)) == uniformsMap.end()) return false; //TODO: generateWarning
+    
+    if(!materialInstanceID.valid() || (usedInstances[it->first] != materialInstanceID) || uniformValue.dirty) {
+        usedInstances[it->first] = materialInstanceID;
+        return uniformValue.bind(it->second);
+    }
+    return false;
+}
 int Material::useScreenAttachments(const FrameBuffer& buffer,int startingIndex)
 {
-	//TODO: Fix
-    /*
-    size_t i = 0;
-    for (i = 0; i < buffer.textureAttachments.size() && (i + startingIndex) < screenTextureUniforms.size(); ++i) {
-        size_t texId = textureUniforms.size() + i + startingIndex;
-        size_t uniformId = i + startingIndex;
 
-        if(texId >= Standard::maxUserTextureUnits) return i + startingIndex;
-
-        TextureLoader::useTexture(buffer.textureAttachments[i],texId,GL_TEXTURE_2D);
-        glUniform1i(screenTextureUniforms[uniformId],texId);
-    }   
-    return i + startingIndex;*/
 }
 void Material::useInstance(MaterialInstanceID matInstance)
 {
-    bool swap = false;
-    // Set all uniforms
-    for (size_t i = 0; i < usedInstances.size(); i++)
-    {
-        bool different;
-        if ((different = usedInstances[i] != matInstance) || matInstance->uniformValues[i].dirty)
-        {
-            usedInstances[i] = matInstance;
-            matInstance->useUniform(i,uniforms[i + Standard::uniformCount]);
-            swap |= different;
-        }
+    MaterialInstance::uniformCollection& matUniforms = matInstance->getUniformCollection();
+    for(auto& uniform : matUniforms) {
+        bindUniform(uniform.first, uniform.second);
     }
-
-    for (size_t i = 0; i < textureUniforms.size(); i++)
-    {
-        if (!Standard::is_invalid(matInstance->assignedTextureUnits[i]))
-        {
-            TextureLoader::useTexture(matInstance->assignedTextureUnits[i],i,isSkyboxMaterial ? GL_TEXTURE_CUBE_MAP : GL_TEXTURE_2D);
-            glUniform1i(textureUniforms[i],i);
-        }
-    }
-    
-    if (swap) REGISTER_MATERIAL_INSTANCE_SWAP();
 }
 
 Material Material::createDefaultMaterial()

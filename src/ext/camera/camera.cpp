@@ -5,14 +5,15 @@
 #include <glm/ext.hpp>
 #include <iostream>
 #include <standard.h>
+
 using namespace glm;
 using namespace std;
 
 Camera::Camera()
 {
-    fov = Standard::Configuration::defaultFov;
-    zNear = Standard::Configuration::defaultZnear;
-    zFar = Standard::Configuration::defaultZfar;
+    fov = 90.0f;
+    zNear = 0.1f;
+    zFar = 500.0f;
 
     useZoom = false;
     l = b = -1.0f;

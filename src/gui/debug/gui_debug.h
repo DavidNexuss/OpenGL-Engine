@@ -12,8 +12,8 @@ namespace GUI
     {
 
         //Engine units menu
-        void renderUniformMenu(const char* uniformName,int uniformID,MaterialInstanceID materialInstanceID,bool* windowEnable);
-        void renderUniformWidget(const char* uniformName,int uniformID,MaterialInstanceID materialInstanceID);
+        void renderUniformMenu(const std::string& uniformID,MaterialInstanceID materialInstanceID,bool* windowEnable);
+        void renderUniformWidget(const std::string& uniformID,MaterialInstanceID materialInstanceID);
 
         void renderMaterialInstanceMenu(MaterialID materialID,MaterialInstanceID materialInstanceID,bool* windowEnable);
         void renderMaterialInstanceWidget(MaterialID materialID,MaterialInstanceID materialInstanceID);

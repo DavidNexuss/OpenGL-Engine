@@ -1,11 +1,18 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "core.h"
 
+struct UTexture {
+    int texID;
+    int unit;
+    GLenum mode = GL_TEXTURE_2D;
+    UTexture(int _texID, int _unit) : texID(_texID), unit(_unit) {}
+};
 
 #define UNIFORMS_LIST(o) \
     o(VEC2,glm::vec2) o(VEC3,glm::vec3) o(VEC4,glm::vec4) \
     o(MAT2,glm::mat2) o(MAT3,glm::mat3) o(MAT4,glm::mat4) \
-    o(FLOAT,float) o(BOOL,bool) o(INT,int)
+    o(FLOAT,float) o(BOOL,bool) o(INT,int) o(SAMPLER2D,UTexture)
 
 enum UniformType
 {
@@ -38,6 +45,7 @@ class Uniform
     #undef UNIFORMS_CONSTRUCTOR
 
     inline void setDirty() { dirty = true; }
+    bool bind(GLuint glUniformID);
     
 };
 
