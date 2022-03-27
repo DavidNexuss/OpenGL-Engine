@@ -22,6 +22,7 @@ namespace Renderer
     std::vector<WorldMaterial*> worldMaterials;
     std::unordered_map<Standard::WorldMaterialAspect,WorldMaterial*> registeredWorldMaterials;
     bool materialOverride = false;
+    GlobalWorldMaterial* globalWorldMaterial = new GlobalWorldMaterial();
 
     void useMaterial(MaterialID materialID)
     {

@@ -7,7 +7,7 @@
 
 ModelID SkyCreator::createSkyBox()
 {
-    Material skyMaterial("cubemap",{});
+    Material skyMaterial("cubemap");
     skyMaterial.isSkyboxMaterial = true;
 
     MeshID skyMesh = Loader::meshes.add(MeshBuilder::createPrimitiveMesh(MeshBuilder::SkyBox,true));
@@ -22,8 +22,7 @@ ModelID SkyCreator::createSkyBox()
 
 void SkyWorldMaterial::bind(MaterialID material) {
     //Flush sky texture
-    if (skyTexture && material->isSkyBoxSensitive()) {
-        TextureLoader::useTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP);
-        glUniform1i(material->uniforms[Standard::uSkyBox],Standard::tSkyBox);
+    if (skyTexture && material->hasUniform(Standard::uSkyBox)) {
+        material->bindUniform(Standard::uSkyBox,UTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP));
     }
 }

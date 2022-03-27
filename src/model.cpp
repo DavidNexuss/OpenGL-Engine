@@ -22,17 +22,11 @@ void Model::draw()
         Renderer::useMaterialInstance(materialInstanceID);
     
 
+
+    materialID->bindUniform(Standard::uTransformMatrix,Uniform(transformMatrix));
+    materialID->bindUniform(Standard::uNormalMatrix,Uniform(normalMatrix));
+
     Renderer::useMesh(meshID);
-    
-    if(UNIFORMS(Standard::uTransformMatrix) != GL_INVALID_INDEX) {
-        glUniformMatrix4fv(UNIFORMS(Standard::uTransformMatrix),1,false,&transformMatrix[0][0]);
-    }
-    
-    if (UNIFORMS(Standard::uNormalMatrix) != GL_INVALID_INDEX) {
-        normalMatrix = glm::transpose(glm::inverse(transformMatrix));
-        glUniformMatrix3fv(UNIFORMS(Standard::uNormalMatrix),1,false,&normalMatrix[0][0]);
-    }
-    
     Renderer::drawMesh();
     
     if(depthMask) glDepthMask(GL_TRUE);

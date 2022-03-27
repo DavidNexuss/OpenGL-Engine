@@ -74,12 +74,12 @@ namespace GUI
         }
         void renderMaterialInstanceWidget(MaterialID material,MaterialInstanceID materialInstance)
         {
-
+    /*
             for (size_t i = 0; i < material->uniformNames.size(); i++)
             {
                 const char* uniformName = material->uniformNames[i].c_str();
                 //renderUniformWidget(uniformName,i,materialInstance);   
-            }
+            }*/
         }
 
         void renderMaterialMenu(int materialID,bool* windowEnable)

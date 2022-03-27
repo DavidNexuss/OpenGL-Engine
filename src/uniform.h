@@ -7,11 +7,12 @@ struct UTexture {
     int unit;
     GLenum mode = GL_TEXTURE_2D;
     UTexture(int _texID, int _unit) : texID(_texID), unit(_unit) {}
+    UTexture(int _texID, int _unit,GLenum _mode) : texID(_texID), unit(_unit), mode(_mode) {}
 };
 
 #define UNIFORMS_LIST(o) \
-    o(VEC2,glm::vec2) o(VEC3,glm::vec3) o(VEC4,glm::vec4) \
-    o(MAT2,glm::mat2) o(MAT3,glm::mat3) o(MAT4,glm::mat4) \
+    o(VEC2,glm::vec2) o(VEC3,glm::vec3) o(VEC4,glm::vec4) o(VEC3PTR,const glm::vec3*) o(VEC4PTR,const glm::vec4*)\
+    o(MAT2,glm::mat2) o(MAT3,glm::mat3) o(MAT4,glm::mat4) o(MAT4PTR,const glm::mat4*)\
     o(FLOAT,float) o(BOOL,bool) o(INT,int) o(SAMPLER2D,UTexture)
 
 enum UniformType
@@ -38,12 +39,16 @@ class Uniform
 
     UniformType type;
     bool dirty;
+    int count = 1;
 
     Uniform() { }
-    #define UNIFORMS_CONSTRUCTOR(v,T) constexpr Uniform(const T& _##v) : v(_##v),type(UniformType::v),dirty(true) { }
+    #define UNIFORMS_CONSTRUCTOR(v,T) Uniform(T _##v) : v(_##v),type(UniformType::v),dirty(true) { }
     UNIFORMS_LIST(UNIFORMS_CONSTRUCTOR)
     #undef UNIFORMS_CONSTRUCTOR
-
+    #define UNIFORMS_CONSTRUCTOR(v,T) Uniform(T _##v,int _count) : v(_##v),type(UniformType::v),dirty(true),count(_count) { }
+    UNIFORMS_LIST(UNIFORMS_CONSTRUCTOR)
+    #undef UNIFORMS_CONSTRUCTOR
+    
     inline void setDirty() { dirty = true; }
     bool bind(GLuint glUniformID);
     

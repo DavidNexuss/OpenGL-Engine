@@ -69,12 +69,12 @@ void Camera::update()
 
 void Camera::bind(MaterialID current)
 {
-    glUniformMatrix4fv(current->uniforms[Standard::uProjectionMatrix],1,false,&projectionMatrix[0][0]);
-    glUniform3fv(current->uniforms[Standard::uViewPos],1,&invViewMatrix[3][0]);
+    current->bindUniform(Standard::uProjectionMatrix,Uniform(&projectionMatrix));
+    current->bindUniform(Standard::uViewPos,Uniform(&invViewMatrix[3]));
     
     if(current->isSkyboxMaterial) {
         mat4 skyView = mat4(mat3(viewMatrix));
-        glUniformMatrix4fv(current->uniforms[Standard::uViewMatrix],1,false,&skyView[0][0]);
+        current->bindUniform(Standard::uViewMatrix,Uniform(&skyView));
     }else 
-        glUniformMatrix4fv(current->uniforms[Standard::uViewMatrix],1,false,&viewMatrix[0][0]);
+        current->bindUniform(Standard::uViewMatrix,Uniform(&viewMatrix));
 }

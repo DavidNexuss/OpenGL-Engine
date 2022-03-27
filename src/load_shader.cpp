@@ -21,7 +21,7 @@ GLuint compileShader(const char * vertex_file_path,const char * fragment_file_pa
 	}else{
 		printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", vertex_file_path);
 		getchar();
-		return 0;
+		return GL_INVALID_INDEX;
 	}
 
 	// Read the Fragment Shader code from the file

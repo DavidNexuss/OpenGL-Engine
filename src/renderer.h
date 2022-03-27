@@ -9,7 +9,9 @@
 #include "material.h"
 #include "world_material.h"
 #include "model.h"
+#include "ext/globalWorldMaterial.h"
 #include <vector>
+
 struct RenderConfiguration
 {
     int mssaLevel;
@@ -28,7 +30,8 @@ namespace Renderer
     extern bool materialOverride;
 
     extern std::vector<WorldMaterial*> worldMaterials;
-
+    extern GlobalWorldMaterial* globalWorldMaterial;
+    
     void useMaterial(MaterialID materialID);
     void useMesh(MeshID meshID);
     void useMaterialInstance(MaterialInstanceID materialInstance);
@@ -50,5 +53,3 @@ namespace Renderer
             glDrawArrays(GL_TRIANGLES,0,currentMesh->vertexCount);
     }
 }
-
-#define UNIFORMS(x) Renderer::currentMaterial->uniforms[x]

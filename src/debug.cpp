@@ -24,6 +24,6 @@ void Debug::glError(GLenum source,
         const GLchar *message,
         const void *userParam)
 {
-   std::cerr << message << std::endl;
-   //throw new std::runtime_error("GL error"); 
+   std::cerr << "[GL " << severity << "] " << message << std::endl;
+    if(severity > 35000) throw new std::runtime_error("");
 }

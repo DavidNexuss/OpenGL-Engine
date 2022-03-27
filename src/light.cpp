@@ -14,11 +14,10 @@ size_t LightLoader::add(glm::vec3 pos,glm::vec3 color)
 
 void LightLoader::flush(MaterialID mat)
 {
-    if (flushUniforms && mat->isLightSensitive()) {
-        glUniform3fv(mat->uniforms[Standard::uLightPosition],lightsPositions.size(),(GLfloat*)&lightsPositions[0]);
-        glUniform3fv(mat->uniforms[Standard::uLightColor],lightsColor.size(),(GLfloat*)&lightsColor[0]);
-        glUniform1i(mat->uniforms[Standard::uLightCount],lightsColor.size());
-        
+    if (flushUniforms) {
+        mat->bindUniform(Standard::uLightPosition,Uniform(lightsPositions.data(),lightsPositions.size()));
+        mat->bindUniform(Standard::uLightColor,Uniform(lightsColor.data(),lightsColor.size()));
+        mat->bindUniform(Standard::uLightCount,Uniform(int(lightsPositions.size())));
         REGISTER_LIGHT_FLUSH();
     }
 }

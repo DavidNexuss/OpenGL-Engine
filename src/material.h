@@ -13,48 +13,25 @@ struct Material : public EngineComponent
 {
     GLuint programID;
 
-    std::vector<std::string> uniformNames;
-    std::vector<GLuint> uniforms;
     std::unordered_map<std::string,MaterialInstanceID> usedInstances;
-    
-    std::vector<GLuint> textureUniforms;
-    std::vector<GLuint> screenTextureUniforms;
-
-    std::unordered_map<std::string,GLuint> uniformsMap;
+    std::unordered_map<std::string,Standard::GLIdentifier> uniformsMap;
 
     bool isSkyboxMaterial = false;
 
-    Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath,const std::vector<std::string>& uniforms);
-    Material(const std::string& materialName,const std::vector<std::string>& uniforms);
+    Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath);
     Material(const std::string& materialName);
 
-    void loadShaderUniforms(const std::vector<std::string>& uniformsList);
-    bool addTexture(Texture textureID,int textureUnit);
-    
     void useInstance(MaterialInstanceID materialInstanceID);
-    int useScreenAttachments(const FrameBuffer& buffer,int startingTexture = 0);
-
+    
     inline void bind() const {
         glUseProgram(programID);
     }
-    
-    inline bool isSkyBoxSensitive() const {
-        return uniforms[Standard::uSkyBox] != GL_INVALID_INDEX;
-    }
-    inline bool isLightSensitive() const {
-        return uniforms[Standard::uLightPosition] != GL_INVALID_INDEX;
-    }
+    inline bool hasUniform(const std::string& name) const { return uniformsMap.find(name) != uniformsMap.end(); }
 
     static Material createDefaultMaterial();
 
-    inline void bindScreenTexture(GLuint textureID,int screenTextureID) {
-        size_t textureUnit = textureUniforms.size() + screenTextureID;
-        TextureLoader::useTexture(textureID,textureUnit,GL_TEXTURE_2D);
-        glUniform1i(screenTextureUniforms[screenTextureID],textureUnit);
-    }
-
-    bool bindUniform(const std::string& uniformName,Uniform& uniformValue,MaterialInstanceID materialInstanceID = -1);
-    
+    bool bindUniform(const std::string& uniformName,Uniform& uniformValue,MaterialInstanceID materialInstanceID);
+    bool bindUniform(const std::string& uniformName,Uniform uniformValue) { return bindUniform(uniformName,uniformValue,-1); }
 };
 
 namespace Loader {

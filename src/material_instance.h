@@ -27,7 +27,7 @@ class MaterialInstance : public EngineComponent
     inline MaterialInstance(const uniformCollection& _uniformValues) : uniforms(_uniformValues) { }
 
     #define UNIFORMS_FUNC_DECLARATION(v,T) \
-    inline void set(const std::string& name,const T& a) { \
+    inline void set(const std::string& name,T a) { \
         Uniform val; \
         val.v = a; \
         val.dirty = true; \

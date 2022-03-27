@@ -1,6 +1,6 @@
 #pragma once
 #include <cstddef>
-#include <array>
+#include <string>
 #include "glfw.h"
 
 /**
@@ -20,26 +20,8 @@ namespace Standard
         aTangent =      4,
         aBiTangent =    5
     };
-    
-    //Engine uniforms
-    enum Uniforms
-    {
-        uProjectionMatrix =      0,      /* mat4       Camera projection matrix */
-        uViewMatrix =            1,      /* mat4       Camera view matrix */
-        uTransformMatrix =       2,      /* mat4       Camera transformation matrix */
-        uNormalMatrix =          3,      /* mat3       Camera normal matrix */
-        uTime =                  4,      /* float      Global world time in seconds */
-        uLightColor =            5,      /* vec3       Light color */
-        uLightPosition =         6,      /* vec3       World Light position */
-        uLightCount =            7,      /* int        Light Count */
-        uViewPos =               8,      /* vec3       World camera position */
-        uSkyBox =                9,      /* sampler2D  SkyBox cubemap */
-        uShadowMap =            10,      /* sampler2D  ShadowMap depth information */
-        uLightSpaceMatrix =     11,      /* mat4 Light space matrix */
-        
-        uniformCount                           // Used internally to get the count of engine uniforms
-    };
 
+    //Engine world aspect materials
     enum WorldMaterialAspect {
         wGlobal = 0,
         wCamera,
@@ -47,19 +29,27 @@ namespace Standard
         wCount
     };
 
-    const static std::array<const char*,uniformCount> UniformsNames =  {
-        "uProjectionMatrix", 
-        "uViewMatrix", 
-        "uTransformMatrix",
-        "uNormalMatrix",
-        "uTime",
-        "uLightColor",
-        "uLightPosition",
-        "uLightCount",
-        "uViewPos",
-        "uSkybox",
-        "uShadowMap"
-    };
+    //Engine uniforms
+    #define UNIFORM_LIST(f)\
+        f(uProjectionMatrix)              /* mat4       Camera projection matrix */ \
+        f(uViewMatrix)                    /* mat4       Camera view matrix */ \
+        f(uTransformMatrix)               /* mat4       Camera transformation matrix */ \
+        f(uNormalMatrix)                  /* mat3       Camera normal matrix */ \
+        f(uTime)                          /* float      Global world time in seconds */ \
+        f(uLightColor)                    /* vec3       Light color */ \
+        f(uLightPosition)                 /* vec3       World Light position */ \
+        f(uLightCount)                    /* int        Light Count */ \
+        f(uViewPos)                       /* vec3       World camera position */ \
+        f(uSkyBox)                        /* sampler2D  SkyBox cubemap */ \
+        f(uShadowMap)                     /* sampler2D  ShadowMap depth information */ \
+        f(uLightSpaceMatrix)              /* mat4 Light space matrix */ \
+        
+    #define CHARACTER_LIST(O) const static std::string O = #O;
+    
+    UNIFORM_LIST(CHARACTER_LIST)
+    
+    #undef UNIFORM_LIST
+    #undef CHARACTER_LIST
 
     //Engine reserved textureUnits
     enum TextureUnits
@@ -93,4 +83,10 @@ namespace Standard
     const static unsigned int glInvalid = -1;
 
     inline bool is_invalid(unsigned int glVal) {return glVal == glInvalid; }
+
+    struct GLIdentifier {
+        GLuint identifier = GL_INVALID_INDEX;
+        inline void operator=(GLuint identifier) {this->identifier = identifier;}
+        inline operator GLuint() const {return identifier; }
+    };
 }

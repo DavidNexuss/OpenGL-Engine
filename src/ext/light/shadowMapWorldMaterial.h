@@ -6,10 +6,11 @@ class ShadowMapWorldMaterial : public WorldMaterial {
     public:
     ShadowMapWorldMaterial(FrameBufferID _shadowMapFramebuffer) : shadowMapFramebuffer(_shadowMapFramebuffer) { }
     inline void bind(MaterialID material) {
+        /*
         if(material->uniforms[Standard::uShadowMap] != Standard::glInvalid) {
             Texture shadowMap = shadowMapFramebuffer->getDepthBuffer();
             TextureLoader::useTexture(shadowMap,Standard::tShadowMap,GL_TEXTURE_2D);
             glUniform1i(material->uniforms[Standard::uShadowMap],Standard::tShadowMap);
-        }
+        }*/
     }
 };
