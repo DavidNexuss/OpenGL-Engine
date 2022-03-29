@@ -2,7 +2,7 @@
 #include "core.h"
 #include "debug.h"
 #include "texture.h"
-
+#include <iostream>
 bool Uniform::bind(GLuint glUniformID) {
 
     switch(type)
@@ -12,19 +12,15 @@ bool Uniform::bind(GLuint glUniformID) {
         case UniformType::VEC3:
             glUniform3fv(glUniformID,count,&VEC3[0]); break;
         case UniformType::VEC3PTR:
-            glUniform3fv(glUniformID,count,(const float*)VEC3PTR); break;
+            glUniform3fv(glUniformID,count,&(*VEC3PTR)[0]); break;
         case UniformType::VEC4:
             glUniform4fv(glUniformID,count,&VEC4[0]); break;
-        case UniformType::VEC4PTR:
-            glUniform4fv(glUniformID,count,(const float*)VEC4PTR); break;
         case UniformType::MAT2:
             glUniformMatrix2fv(glUniformID,count,false,&MAT2[0][0]); break;
         case UniformType::MAT3:
             glUniformMatrix3fv(glUniformID,count,false,&MAT3[0][0]); break;
         case UniformType::MAT4:
             glUniformMatrix4fv(glUniformID,count,false,&MAT4[0][0]); break;
-        case UniformType::MAT4PTR:
-            glUniformMatrix4fv(glUniformID,count,false,(&(*MAT4PTR)[0][0])); break;
         case UniformType::FLOAT:
             glUniform1f(glUniformID,FLOAT); break;
         case UniformType::BOOL:

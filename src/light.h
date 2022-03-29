@@ -2,7 +2,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <engine_component.h>
-#include "material.h"
+#include "activeMaterial.h"
 
 using LightComponent = EngineComponent;
 
@@ -25,7 +25,7 @@ class LightLoader
 
     size_t add(glm::vec3 pos,glm::vec3 color);
 
-    void flush(MaterialID mat);
+    void flush(ActiveMaterial mat);
     void flushClean();
 };
 namespace Loader {

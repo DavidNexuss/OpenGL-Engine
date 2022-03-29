@@ -1,5 +1,5 @@
 #include "light.h"
-#include "material.h"
+#include "activeMaterial.h"
 #include <iostream>
 
 
@@ -12,14 +12,12 @@ size_t LightLoader::add(glm::vec3 pos,glm::vec3 color)
     return lightsPositions.size() - 1;
 }
 
-void LightLoader::flush(MaterialID mat)
+void LightLoader::flush(ActiveMaterial mat)
 {
-    if (flushUniforms) {
-        mat->bindUniform(Standard::uLightPosition,Uniform(lightsPositions.data(),lightsPositions.size()));
-        mat->bindUniform(Standard::uLightColor,Uniform(lightsColor.data(),lightsColor.size()));
-        mat->bindUniform(Standard::uLightCount,Uniform(int(lightsPositions.size())));
+        mat.bindUniform(Standard::uLightPosition,Uniform(lightsPositions.data(),lightsPositions.size()));
+        mat.bindUniform(Standard::uLightColor,Uniform(lightsColor.data(),lightsColor.size()));
+        mat.bindUniform(Standard::uLightCount,Uniform(int(lightsPositions.size())));
         REGISTER_LIGHT_FLUSH();
-    }
 }
 
 void LightLoader::flushClean() {

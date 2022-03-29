@@ -7,5 +7,5 @@ namespace SkyCreator {
 }
 struct SkyWorldMaterial : public WorldMaterial {
     Texture skyTexture = -1;
-    virtual void bind(MaterialID currentMaterial);
+    virtual void bind(ActiveMaterial currentMaterial);
 };

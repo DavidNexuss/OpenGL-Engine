@@ -10,6 +10,7 @@
 #include "world_material.h"
 #include "model.h"
 #include "ext/globalWorldMaterial.h"
+#include "activeMaterial.h"
 #include <vector>
 
 struct RenderConfiguration
@@ -25,7 +26,7 @@ namespace Renderer
     extern RenderConfiguration currentConfiguration;
 
     extern int currentFrame;
-    extern MaterialID currentMaterial;
+    extern ActiveMaterial currentMaterial;
     extern MeshID currentMesh;
     extern bool materialOverride;
 

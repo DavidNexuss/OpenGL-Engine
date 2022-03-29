@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <world_material.h>
+#include <activeMaterial.h>
 
 /** 
  * @class Camera
@@ -52,7 +53,7 @@ class Camera : public WorldMaterial
     /**
      * @brief sends camera uniforms to the shaders
      */
-    virtual void bind(MaterialID material);
+    virtual void bind(ActiveMaterial material);
 
     Camera();
 };

@@ -1,9 +1,11 @@
 #include "mesh_builder.h"
 #include "texture.h"
 #include "world_material.h"
+#include "activeMaterial.h"
 #include "material.h"
 #include "model.h"
 #include "sky.h"
+#include <iostream>
 
 ModelID SkyCreator::createSkyBox()
 {
@@ -20,9 +22,9 @@ ModelID SkyCreator::createSkyBox()
     return Loader::models.add(skyModel);
 }
 
-void SkyWorldMaterial::bind(MaterialID material) {
+void SkyWorldMaterial::bind(ActiveMaterial material) {
     //Flush sky texture
-    if (skyTexture && material->hasUniform(Standard::uSkyBox)) {
-        material->bindUniform(Standard::uSkyBox,UTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP));
+    if (skyTexture) {
+        material.bindUniform(Standard::uSkyBox,UTexture(skyTexture,Standard::tSkyBox,GL_TEXTURE_CUBE_MAP));
     }
 }

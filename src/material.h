@@ -14,24 +14,15 @@ struct Material : public EngineComponent
     GLuint programID;
 
     std::unordered_map<std::string,MaterialInstanceID> usedInstances;
-    std::unordered_map<std::string,Standard::GLIdentifier> uniformsMap;
+    std::unordered_map<std::string,GLuint> uniformsMap;
 
     bool isSkyboxMaterial = false;
 
     Material(const std::string& fragmentShaderPath,const std::string& vertexShaderPath);
     Material(const std::string& materialName);
-
-    void useInstance(MaterialInstanceID materialInstanceID);
-    
-    inline void bind() const {
-        glUseProgram(programID);
-    }
-    inline bool hasUniform(const std::string& name) const { return uniformsMap.find(name) != uniformsMap.end(); }
+    GLuint getUniform(const std::string& name);
 
     static Material createDefaultMaterial();
-
-    bool bindUniform(const std::string& uniformName,Uniform& uniformValue,MaterialInstanceID materialInstanceID);
-    bool bindUniform(const std::string& uniformName,Uniform uniformValue) { return bindUniform(uniformName,uniformValue,-1); }
 };
 
 namespace Loader {

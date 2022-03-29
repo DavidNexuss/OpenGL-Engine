@@ -53,7 +53,7 @@ void RenderCamera::render(int screenWidth,int screenHeight) {
 
         Renderer::useMaterial(postProcessEffect);
         for(BindingDescriptor& desc : bindingsDescriptors) {
-            postProcessEffect->bindUniform(desc.uniformname, getRenderResult(desc));
+            Renderer::currentMaterial.bindUniform(desc.uniformname, getRenderResult(desc));
         }
         /*
         int last = 0;

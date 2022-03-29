@@ -16,17 +16,15 @@ void Model::draw()
 
     if (depthMask) glDepthMask(GL_FALSE);
 
+    Renderer::useMesh(meshID);
     Renderer::useMaterial(materialID);
     
     if (materialInstanceID.valid()) 
         Renderer::useMaterialInstance(materialInstanceID);
-    
 
+    Renderer::currentMaterial.bindUniform(Standard::uNormalMatrix,Uniform(normalMatrix));
+    Renderer::currentMaterial.bindUniform(Standard::uTransformMatrix,Uniform(transformMatrix));
 
-    materialID->bindUniform(Standard::uTransformMatrix,Uniform(transformMatrix));
-    materialID->bindUniform(Standard::uNormalMatrix,Uniform(normalMatrix));
-
-    Renderer::useMesh(meshID);
     Renderer::drawMesh();
     
     if(depthMask) glDepthMask(GL_TRUE);

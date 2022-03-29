@@ -11,9 +11,10 @@ struct UTexture {
 };
 
 #define UNIFORMS_LIST(o) \
-    o(VEC2,glm::vec2) o(VEC3,glm::vec3) o(VEC4,glm::vec4) o(VEC3PTR,const glm::vec3*) o(VEC4PTR,const glm::vec4*)\
-    o(MAT2,glm::mat2) o(MAT3,glm::mat3) o(MAT4,glm::mat4) o(MAT4PTR,const glm::mat4*)\
-    o(FLOAT,float) o(BOOL,bool) o(INT,int) o(SAMPLER2D,UTexture)
+    o(VEC2,glm::vec2) o(VEC3,glm::vec3) o(VEC4,glm::vec4)\
+    o(MAT2,glm::mat2) o(MAT3,glm::mat3) o(MAT4,glm::mat4)\
+    o(FLOAT,float) o(BOOL,bool) o(INT,int) o(SAMPLER2D,UTexture) \
+    o(VEC3PTR,const glm::vec3*)
 
 enum UniformType
 {

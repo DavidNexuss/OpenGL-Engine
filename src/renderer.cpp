@@ -16,7 +16,7 @@ namespace Renderer
     ModelID skyModel;
 
     int currentFrame = 1;
-    MaterialID currentMaterial;
+    ActiveMaterial currentMaterial;
     MeshID currentMesh;
 
     std::vector<WorldMaterial*> worldMaterials;
@@ -27,13 +27,8 @@ namespace Renderer
     void useMaterial(MaterialID materialID)
     {
         if(materialOverride) return;
+        currentMaterial.setActiveMaterial(materialID);
 
-        if(currentMaterial != materialID) {
-            currentMaterial = materialID;
-            currentMaterial->bind();
-            REGISTER_MATERIAL_SWAP();
-        }
-    
         if (Loader::materials.updateForFrame(materialID,currentFrame)) {
             Loader::lights.flush(currentMaterial);
             for(WorldMaterial* mat : worldMaterials) mat->bind(currentMaterial);
@@ -52,7 +47,7 @@ namespace Renderer
     }
     
     void useMaterialInstance(MaterialInstanceID instanceID) {
-        currentMaterial->useInstance(instanceID);
+        currentMaterial.bindInstance(instanceID);
     }
     
     void addWorldMaterial(WorldMaterial* worldMaterial) {
@@ -80,6 +75,7 @@ namespace Renderer
         
         for(auto it : registeredWorldMaterials) 
             if(it.second->needsFrameUpdate()) it.second->update();
+
     }
 
     void configureRenderer(const RenderConfiguration& config)

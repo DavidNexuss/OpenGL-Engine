@@ -67,14 +67,14 @@ void Camera::update()
     updateMatrices();
 }
 
-void Camera::bind(MaterialID current)
+void Camera::bind(ActiveMaterial current)
 {
-    current->bindUniform(Standard::uProjectionMatrix,Uniform(&projectionMatrix));
-    current->bindUniform(Standard::uViewPos,Uniform(&invViewMatrix[3]));
-    
+    current.bindUniform(Standard::uProjectionMatrix,Uniform(projectionMatrix));
+    current.bindUniform(Standard::uViewPos,Uniform(glm::vec3(invViewMatrix[3])));
+
     if(current->isSkyboxMaterial) {
         mat4 skyView = mat4(mat3(viewMatrix));
-        current->bindUniform(Standard::uViewMatrix,Uniform(&skyView));
+        current.bindUniform(Standard::uViewMatrix,Uniform(skyView));
     }else 
-        current->bindUniform(Standard::uViewMatrix,Uniform(&viewMatrix));
+        current.bindUniform(Standard::uViewMatrix,Uniform(viewMatrix));
 }
